@@ -1,0 +1,2059 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- (c) Art. Lebedev Studio | http://www.artlebedev.ru/ -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang='ru-RU'>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>Расширенный поиск</title>
+<link rel="icon" href="http://www.cian.ru/favicon.ico" type="image/x-icon"/>
+
+<script>
+    var _errs=["50797c0f556f12ff69015dc5"];(function(a,b){a.onerror=function(){_errs.push(arguments)};
+    var d=function(){var a=b.createElement("script"),c=b.getElementsByTagName("script")[0];
+    a.src="http://www.cian.ru/d15qhc0lu1ghnk.cloudfront.net/beacon.js";a.async=!0;
+    c.parentNode.insertBefore(a,c)};a.addEventListener?a.addEventListener("load",d,!1):
+    a.attachEvent("onload",d)})(window,document);
+</script>
+
+<link rel="stylesheet" type="text/css" href="http://www.cian.ru/nd/global/ui/jquery-ui-1.8.17.custom.min.css" media="all"/>
+<link rel="stylesheet" type="text/css" href="http://www.cian.ru/nd/global/main.css" media="all"/>
+<link rel="stylesheet" type="text/css" href="http://www.cian.ru/nd/global/note.css" media="all"/>
+<link rel="stylesheet" type="text/css" href="http://www.cian.ru/nd/global/form.css" media="all"/>
+<link rel="stylesheet" type="text/css" href="http://www.cian.ru/nd/address/iframe/popups.css" media="all"/>
+<link rel="stylesheet" type="text/css" href="http://www.cian.ru/nd/global/zf/css/ZForms-screen.css" media="all"/>
+<link rel="stylesheet" type="text/css" href="http://www.cian.ru/nd/global/print.css" media="all"/>
+<link rel="stylesheet" type="text/css" href="http://www.cian.ru/nd/global/extended_search.css?1357954139" media="all"/>
+<link rel="stylesheet" type="text/css" href="http://www.cian.ru/nd/global/metro/metro.css?1357954139" media="all"/>
+<link rel="stylesheet" type="text/css" href="http://www.cian.ru/nd/global/map_draw.css" media="all"/>
+<link rel="stylesheet" type="text/css" href="http://www.cian.ru/nd/address/iframe/dropkick.css" media="all"/>
+<script type="text/javascript" src="http://www.cian.ru/nd/global/jquery-1.7.1.min.js"></script>
+<!--[if lt IE 9]>
+<script src="http://www.cian.ru/http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<!--<script src="http://www.cian.ru/nd/global/excanvas.js"></script>-->
+<script type="text/javascript" src="http://www.cian.ru/nd/global/jquery-ui-1.8.17.custom.min.js"></script>
+<script type="text/javascript" src="http://www.cian.ru/nd/global/jquery.ui.datepicker-ru.js"></script>
+<script type="text/javascript" src="http://www.cian.ru/nd/global/jquery.ba-bbq.min.js"></script>
+<script type="text/javascript" src="http://www.cian.ru/nd/global/body.js"></script>
+<script type="text/javascript" src="http://www.cian.ru/nd/global/note.js"></script>
+<script type="text/javascript" src="http://www.cian.ru/nd/global/form.js?1357954139"></script>
+<script type="text/javascript" src="http://www.cian.ru/nd/global/popups.js?1357954139"></script>
+<script type="text/javascript" src="http://www.cian.ru/nd/global/regions.js?1357954139"></script>
+<script type="text/javascript" src="http://www.cian.ru/nd/global/raion_obl.js"></script>
+<script type="text/javascript" src="http://www.cian.ru/nd/global/nas_punkts.js"></script>
+<script type="text/javascript" src="http://www.cian.ru/nd/global/streets.js?1357954139"></script>
+<script type="text/javascript" src="http://www.cian.ru/nd/global/highway.js"></script>
+<script type="text/javascript" src="http://www.cian.ru/nd/global/extended_search.js"></script>
+<script type="text/javascript" src="http://www.cian.ru/nd/global/jquery.ba-resize.min.js"></script>
+<script type="text/javascript" src="http://www.cian.ru/nd/global/form_params.js?1357954139"></script>
+<!--<script type="text/javascript" src="http://www.cian.ru/http://api-maps.yandex.ru/2.0/?load=package.map,package.controls,package.geoObjects,package.editor&lang=ru-RU&coordorder=longlat"></script>-->
+<script type="text/javascript" src="http://www.cian.ru/nd/global/map_manager.js"></script>
+<script type="text/javascript" src="http://www.cian.ru/nd/global/draw.js?1357954139"></script>
+<script type="text/javascript" src="http://www.cian.ru/nd/global/gdouglaspeuker.js"></script>
+<script type="text/javascript" src="http://www.cian.ru/nd/global/metro.js?1357954139"></script>
+<script type="text/javascript" src="http://www.cian.ru/nd/address/iframe/jquery.dropkick.js"></script>
+<!--<script type="text/javascript" src="http://www.cian.ru/scrollability.min.js"></script>-->
+<link rel="start" href="http://www.cian.ru//"/>
+<link rel="next" href="http://www.cian.ru/rent_object_full_info/"/>
+<link rel="prev" href="http://www.cian.ru/rent_search_result_map/"/>
+<style>
+	html, body{
+		//overflow-y: auto;
+		overflow-y: auto\9;
+		*overflow-y: auto;
+	}
+	body{
+		//position: relative;
+		position: relative\9;
+		*position: relative;
+	}
+	body, #extended_form{
+		background:	#EDF3FA;
+/*		background: -moz-linear-gradient(top, #F0F5F9 0%, #E4EDF4 100%);
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#F0F5F9), color-stop(100%,#E4EDF4));
+		background: -webkit-linear-gradient(top, #F0F5F9 0%,#E4EDF4 100%);
+		background: -o-linear-gradient(top, #F0F5F9 0%, #E4EDF4 100%);
+		background: -ms-linear-gradient(top, #F0F5F9 0%,#E4EDF4 100%);
+		background: linear-gradient(top, #F0F5F9 0%,#E4EDF4 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0f5f9', endColorstr='#e4edf4',GradientType=0 );*/
+	}
+	
+	.extended_form_deal_trigger_enter,
+	.extended_form_deal_trigger_act{
+				margin: 0 20px 0 0;
+				font: 18px Times New Roman;
+			}
+	
+			.extended_form_deal_trigger_active,
+			.extended_form_deal_trigger_active:hover {
+				margin: 0 6px 0 0;
+				padding: 2px 6px 2px;
+	
+				display: inline-block;
+				position: relative;
+				left: -7px;
+				border-radius: 4px;
+	
+				background: #cde3ee;
+				background: -moz-linear-gradient(top, #cde3ee 0%, #e9f0f8 100%);
+				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cde3ee), color-stop(100%,#e9f0f8));
+				background: -webkit-linear-gradient(top, #cde3ee 0%,#e9f0f8 100%);
+				background: -o-linear-gradient(top, #cde3ee 0%,#e9f0f8 100%);
+				background: -ms-linear-gradient(top, #cde3ee 0%,#e9f0f8 100%);
+				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cde3ee', endColorstr='#e9f0f8',GradientType=0 );
+				background: linear-gradient(top, #cde3ee 0%,#e9f0f8 100%);
+	
+				box-shadow: inset 0 1px 1px #96acc1;
+				border: 1px solid #cdd5e0 !important;
+				border-top-color: #96acc1 !important;
+				border-bottom-color: #e9eaee !important;
+	
+				color:#000 !important;
+				cursor: default;
+			}
+		.extended_form_deal_trigger_act	input {display: none;}
+	.top-line{
+		border-top-left-radius: 15px;
+		width: 100%;
+		height: 20px;
+		border-top-right-radius: 15px;		
+	}
+		.top-line .modal-closer{
+			width: 7px;
+			height: 7px;
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			z-index: 10;
+			border: 5px solid #F0F5F9;
+			background: url('nd/global/popup_closer.gif') no-repeat 0 0;
+			cursor: pointer;
+		}
+		
+		.top-line .modal-closer:hover{
+			background-position: 0 100%;
+		}
+		
+		#stickyheader{
+			position: fixed;
+			display: none;
+			top: 0;
+			left: 0;
+			padding: 10px 5px 10px 5px;
+			border-bottom: 3px solid #0A7D8E;
+			font-size: 14px;
+			z-index: 10000;
+			min-width: 990px;
+			width: 100%;
+/*			background: white url('nd/global/note_wave.gif') repeat-x 0 100%;*/
+			background: white;
+			box-shadow: 0px 2px 6px -1px #ddd;
+			-moz-box-shadow: 0px 2px 6px -1px #ddd;
+			-webkit-box-shadow: 0px 2px 6px -1px #ddd;
+			
+			/*background: #f7fbfe;
+			background: -moz-linear-gradient(top,  #d9ecfa 0%, #a8c5db 100%);
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#d9ecfa), color-stop(100%,#a8c5db));
+			background: -webkit-linear-gradient(top,  #d9ecfa 0%,#a8c5db 100%);
+			background: -o-linear-gradient(top,  #d9ecfa 0%,#a8c5db 100%);
+			background: -ms-linear-gradient(top,  #d9ecfa 0%,#a8c5db 100%);
+			background: linear-gradient(top,  #d9ecfa 0%,#a8c5db 100%);
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d9ecfa', endColorstr='#a8c5db',GradientType=0 );*/
+			zoom:1;
+			border-radius: 4px 4px 0 0;
+		}
+		#stickyheader td{
+			display: inline-block;
+			/*margin: 0 20px 0 0;	*/
+		}
+		
+		#stickyheader a {
+						border-width: 0;
+						color: #808080;
+					}
+			#stickyheader a span {
+
+				color: #0055cc;
+				border-bottom: 1px solid #b2ccf0;
+			}
+			#stickyheader a:hover span {
+				color: #cc0000 !important;
+					border-color: #f0b2b2 !important;
+			}
+			
+		#stickyheader .wave{
+			background: url('nd/global/note_wave.gif') repeat-x 0 0;
+			height: 2px;
+			margin: 0 0 0 -10px;
+		}
+		
+		.map_info{
+			z-index: 100;
+		}
+		
+		.map_error{
+			position: absolute;
+			padding: 5px 10px;
+			left: 215px;
+			top: 5px;
+			font-size: 21px;
+			max-width: 800px;
+				
+		    background-color: transparent;
+		    background-color: rgba(0, 0, 0, 0.9); 
+		    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#00000090,endColorstr=#00000090);
+		    zoom: 1;
+		    color: white;        
+			border-radius: 2px;
+			-webkit-border-radius: 2px;
+			-moz-border-radius: 2px;
+			border: 1px solid transparent;
+	    	box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.8);
+			-webkit-box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.8);
+			-moz-box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.8);
+			z-index: 1000;
+				
+		}
+		
+		.sf_body_table tr,td{
+			vertical-align: baseline;
+		}
+		
+		.ex_params_w tr,td{
+			vertical-align: top;
+		}
+		
+		
+		.nowrap{
+			white-space: nowrap;
+		}
+		
+		.has_dk{
+			padding: 0 0 20px 0;			
+		}
+		
+		.inlined dd, .inlined dt, .inlined .ex_form_checkboxes_any{
+			display: inline;
+			margin-right: 5px;
+		}
+			.inlined label{
+				white-space: nowrap;
+			}
+		
+		.ex_form_box_tab td{
+			vertical-align: baseline;
+		}	
+		
+		.dk_container{
+			white-space: nowrap;
+		}
+		
+		.dk_hide{
+			display: none;
+		}
+
+</style>
+<script>
+	$(function(){
+//		
+//		if (top != self){
+			//$(parent.document).find('body').css('overflow','hidden');
+//			$('.top-line')
+//						 .find('h1')
+//						 .html($(parent.document.getElementById('extended-search-modal')).attr('title'));
+//						if (top != self) parent.ResizeModal($(this).height(), $(this).width());
+//		}
+			
+//		$('.modal-closer').click(function(){
+//			if (top != self){
+//				$(parent.document).find('body').css('overflow','auto');
+//				parent.$.modal.close();
+//			}	
+//		});	
+		
+//		$('#extended_form').bind('resize', function(){
+//			if (top != self) parent.ResizeModal($(this).height());
+//		});
+	if (!(/MSIE (\d+\.\d+);/.test(navigator.userAgent))){
+		$('.dk').dropkick({
+		  change: function () {
+		    $(this).change();
+		  }
+		});
+		
+	}
+	
+	});
+
+</script>
+
+</head>
+<body>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-30374201-1']);
+    _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<script type="text/javascript">
+$('body').append('<div id="liveinternet" style="display:none;position:absolute;left:-1000px;top:-1000px;"></div>');
+$("#liveinternet").append("<a href='http://www.liveinternet.ru/click' "+
+"target=_blank><img src='http://counter.yadro.ru/hit?t14.1;r"+
+escape(document.referrer)+((typeof(screen)=="undefined")?"":
+";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+";"+Math.random()+
+"' alt='' title='LiveInternet: показано число просмотров за 24"+
+" часа, посетителей за 24 часа и за сегодня' "+
+"border=0 width=88 height=31><\/a>"+
+"<a href='http://top100.rambler.ru/top100/'>"+
+"<img src='http://counter.rambler.ru/top100.cnt?388140' alt='' width=1 height=1 border=0><\/a>"+
+"<a href='http://top100.rambler.ru/top100/'>"+
+"<img src='http://top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif' alt=\"Rambler's Top100\" width=88 height=31 border=0><\/a>");
+</script>
+<!--<div class="top-line"><h1></h1><div class="modal-closer"></div></div>-->
+<div id="stickyheader" style="display:block">
+	<table style="width: 100%;">
+		<tbody>
+			<tr>
+				<td style="width: 33%;">
+					<!--<a href="http://www.cian.ru/#" style="margin-left: 10px;"><&nbsp;<span>Вернуться к результатам поиска</span></a>-->
+														</td>
+				<td style="width: 33%; text-align: center;">
+					<span style="font: bold 20px Times New Roman;">Условия поиска</span>
+				</td>
+<!--				<td style="top: 9px;position: absolute;right: 20px;">-->
+				<td style="width: 33%;text-align: right;">	
+					<div style="white-space: nowrap;">
+						<!--<span class="pseudo reset_form_trigger" style="margin-right: 10px;">очистить условия</span>-->
+												<span class="sf_submit_w"><input type="submit" class="sf_submit" value="Показать предложения"></span>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+<!--	<div class="wave"></div>-->
+</div>
+<div id="layout" style="margin-top:85px;"><div id="content" style="padding: 0;-webkit-overflow-scrolling:touch;-webkit-user-select: none;"><div class="main main_first">
+<div class="note" style="margin-top:0; box-shadow: none;">
+<div id="extended_form" class="ex">
+		
+		<form id="extended_search_form_act" class="sf_form zf" rel="rent" onsubmit="" method="POST" action="http://www.cian.ru/cat.php">
+			<div class="sf_body" style="">
+				
+				<table class="sf_body_table" style="margin: 0;">
+				<tbody>
+				<tr>
+					<td style="width: 15%;padding-left: 20px;" class="nowrap">
+						<span class="pseudo extended_form_deal_trigger_act extended_form_deal_trigger_enter extended_form_deal_trigger_active" rel="rent"><input type="radio" name="deal_type" value="1" checked="checked">Аренда</span><span class="pseudo extended_form_deal_trigger_act" rel="sell"><input type="radio" name="deal_type" value="2" >Продажа</span>
+						<div style="margin: 14px 0px 0px -7px;">
+							<select name="type" tabindex="3" class="dk " >
+								<option value="0" selected="selected">любой срок аренды</option>
+								<option value="2" >посуточно</option>
+								<option value="4" >от месяца и более</option>
+								<option value="3" >несколько месяцев</option>
+								<option value="-2" >длительный срок</option>
+							</select>
+						</div>
+					</td>
+					<td class="sf_body_td_l">
+						<div class="sf_object_type_select">
+							<span class="sf_object_type_select_button sf_object_type_select_button_left sf_object_type_select_button_active"><input type="checkbox" name="type_select" value="flat" checked="checked">квартира </span><span class="sf_object_type_select_button sf_object_type_select_button_center"><input type="checkbox" name="type_select" value="house" >дом, участок </span><span class="sf_object_type_select_button sf_object_type_select_button_right"><input type="checkbox" name="type_select" value="commercial" >нежилое помещение </span>
+						</div>
+						<div class="sf_object_params" rel="flat">
+							<div class="sf_object_params_checkboxes">
+								<span class="sf_checkbox"><input type="checkbox" name="room0" value="1" >комната</span>
+								<span class="sf_checkbox"><input type="checkbox" name="room1" value="1" >1</span><span class="sf_checkbox"><input type="checkbox" name="room2" value="1" >2</span><span class="sf_checkbox"><input type="checkbox" name="room3" value="1" >3</span><span class="sf_checkbox"><input type="checkbox" name="room4" value="1" >4</span><span class="sf_checkbox"><input type="checkbox" name="room5" value="1" >5</span><span class="sf_checkbox"><input type="checkbox" name="room6" value="1" >6+</span><span style="white-space: nowrap;">&nbsp;-комнатная&nbsp;</span><div class="sf_param_flat_special" rel="sell" style="display: none;"><span class="sf_checkbox"><input type="checkbox" name="room7" value="1" >своб. план</span><span class="sf_checkbox"><input type="checkbox" name="room8" value="1" >доля</span></div>
+								
+							</div>
+						</div>
+						<div class="sf_object_params" rel="house" style="display:none">
+							<div class="sf_object_params_checkboxes">
+								<span class="sf_checkbox"><input type="checkbox" name="object_type[]" value="1" >дом</span><span class="sf_checkbox"><input type="checkbox" name="object_type[]" value="2" >часть дома</span><span class="sf_checkbox"><input type="checkbox" name="object_type[]" value="4" >таунхаус</span><span class="sf_checkbox"><input type="checkbox" name="object_type[]" value="3" >участок</span>
+							</div>
+						</div>
+						<div class="sf_object_params" rel="commercial" style="display:none">
+							<div class="sf_object_params_checkboxes">
+								<span class="sf_checkbox"><input type="checkbox" name="office_type[]" value="1" >офис</span><span class="sf_checkbox"><input type="checkbox" name="office_type[]" value="2" >торговая площадь</span><span class="sf_checkbox"><input type="checkbox" name="office_type[]" value="3" >склад</span><span class="sf_checkbox"><input type="checkbox" name="office_type[]" value="5" >своб. назнач.</span><span class="sf_checkbox"><input type="checkbox" name="office_type[]" value="4" >общепит</span><span class="sf_checkbox"><input type="checkbox" name="office_type[]" value="6" >гараж</span><span class="sf_checkbox"><input type="checkbox" name="office_type[]" value="7" >производство</span><span class="sf_checkbox"><input type="checkbox" name="office_type[]" value="9" >автосервис</span><span class="sf_checkbox"><input type="checkbox" name="office_type[]" value="10" >продажа бизнеса</span><span class="sf_checkbox"><input type="checkbox" name="office_type[]" value="11" >здание</span><span class="sf_checkbox"><input type="checkbox" name="office_type[]" value="12" >бытовые услуги</span><span class="sf_checkbox"><input type="checkbox" name="office_type[]" value="8" >юр. адрес</span>
+							</div>
+						</div>
+					</td>
+					<td class="sf_body_td_r">
+							<div class="sf_price_range nowrap" style="padding: 0 0 15px;">
+								<strong class="sf_price_title">Цена</strong>&nbsp;от<input type="text" name="minprice" class="sf_price_from" value="">до<input type="text" name="maxprice" class="sf_price_to" value="">
+								<nobr>
+									<span class="pseudo sf_price_currency">
+										<input type="hidden" name="currency" value="2">
+											<span>
+												<span class="rur">р<span>уб.</span></span>											</span>
+									</span>
+									<span style="margin-right: -4px" class="sf_price_period_for_title">&nbsp;за&nbsp;</span>
+									<span class="pseudo sf_price_period" style="display:none;">
+										<input type="hidden" name="rent_period" value="month"/>
+										<span>месяц</span>
+									</span>
+									<span class="pseudo sf_price_payfor" style="display:none;">
+										<input type="hidden" name="rent_payfor" value="month"/>
+										<input type="hidden" name="m2" value="0"/>
+										<span>месяц</span>
+									</span>
+										<!--<input type="hidden" name="price_type" value="1"/>-->
+									<span rell="sell" class="pseudo sf_price_payfor_sell_flatroom" style="display:none;">
+										<input type="hidden" name="sell_payfor" value="all"/>
+										<span>все</span>
+									</span>
+								</nobr>
+							</div>
+							<div>
+								<select name="maxprepay" tabindex="4" class="dk ">
+									<option value="0" checked="checked">любая предоплата</option>
+									<option value="1" >предоплата до 1 мес.</option>
+									<option value="2" >предоплата до 2 мес.</option>
+									<option value="3" >предоплата до 3 мес.</option>
+									<option value="4" >предоплата до 4 мес.</option>
+									<option value="5" >предоплата до 5 мес.</option>
+									<option value="6" >предоплата до 6 мес.</option>
+									<option value="12" >предоплата до года</option>
+								</select>
+								<select name="pledge" tabindex="5" class="dk ">
+									<option value="0" selected="selected">залог не важен</option>
+									<option value="-1" >без залога</option>
+									<option value="1" >с залогом</option>
+								</select>
+							</div>	
+							<script>
+								//$('input[name=type_test]').change
+							</script>
+					</td>
+				</tr>
+				</tbody>
+				</table>
+				<div class="ex_params" rel="rent">
+					<div class="ex_object_params" rel="flat">
+						<div class="ex_params_w">
+							<div>
+										<select name="rf_wp" class="dk" tabindex="5">
+											<option value="0" selected="selected">можно без фото</option>
+											<option value="1" >с фото</option>
+											<option value="-1" >без фото</option>
+										</select>
+										<select name="rf_zerocom" class="dk" tabindex="6">
+											<option value="0" selected="selected">любая комиссия</option>
+											<option value="1" >эксклюзивная комиссия</option>
+											<option value="-1" >без комиссии</option>
+										</select>
+										<select name="rf_totime" class="dk" tabindex="7">
+											<option value="-1" >за любую дату</option>
+											<option value="-2" >за сегодня</option>
+											<option value="300" >за 5 мин.</option>
+											<option value="600" >за 10 мин.</option>
+											<option value="900" >за 15 мин.</option>
+											<option value="1200" >за 20 мин.</option>
+											<option value="1800" >за 30 мин.</option>
+											<option value="3600" >за час</option>
+											<option value="7200" >за 2 часа</option>
+											<option value="10800" >за 3 часа</option>
+											<option value="14400" >за 4 часа</option>
+											<option value="18000" >за 5 часа</option>
+											<option value="21600" >за 6 часа</option>
+											<option value="43200" >за 12 часов</option>
+											<option value="64800" >за 18 часов</option>
+											<option value="86400" >за сутки</option>
+											<option value="129600" >за 36 часов</option>
+											<option value="172800" >за 2 дня</option>
+											<option value="259200" >за 3 дня</option>
+											<option value="432000" >за 5 дней</option>
+											<option value="864000" >за 10 дней</option>
+											<option value="2592000" >за месяц</option>
+										</select>
+								
+		<label><input name="rf_cl" type="checkbox" value="-1" />без "агентам не звонить"</label>
+							</div>
+							<table class="ex_params_tab" rel="3">
+							<tbody>
+							<tr>
+								<td class="ex_params_td nowrap">
+									<div class="ex_form_box">
+										<div class="ex_form_box_title">
+											Метраж
+										</div>
+										<table class="ex_form_box_tab">
+										<tbody>
+										<tr>
+											<th>
+												кухня
+											</th>
+											<td>
+												 от <input name="minkarea" type="text" style="width:30px" value=""><span style="vertical-align: baseline;"> м<sup>2</sup></span> 
+												 &nbsp;до <input name="maxkarea" type="text" style="width:30px" value=""><span style="vertical-align: baseline;"> м<sup>2</sup></span>
+											</td>
+										</tr>
+										<tr>
+											<th>
+												жилая
+											</th>
+											<td>
+												 от <input name="minlarea" type="text" style="width:30px" value=""> м<sup>2</sup>
+										         &nbsp;до <input name="maxlarea" type="text" style="width:30px" value=""><span style="vertical-align: baseline;"> м<sup>2</sup></span>
+											</td>
+										</tr>
+										<tr>
+											<th>
+												общая
+											</th>
+											<td>
+												 от <input name="minarea" type="text" style="width:30px" value=""> м<sup>2</sup>
+											&nbsp;до <input name="maxarea" type="text" style="width:30px" value=""><span style="vertical-align: baseline;"> м<sup>2</sup></span>
+											</td>
+										</tr>
+										</tbody>
+										</table>
+									</div>
+									</td>
+									<td class="ex_params_td nowrap">
+									<div class="ex_form_box">
+										<div class="ex_form_box_title">
+											Этажность
+										</div>
+										<table class="ex_form_box_tab">
+										<tbody>
+										<tr>
+											<th>
+												этаж&nbsp;
+											</th>
+											<td>
+												 от <input name="minfloor" type="text" style="width:30px" value=""> до <input name="maxfloor" type="text" style="width:30px" value="">
+											</td>
+										</tr>
+										<tr>
+											<th>
+											</th>
+											<td style="display:inline-block;margin-left: -21px;">
+												<label style="white-space: nowrap;"><input type="checkbox" name="floornl" value="1" style="margin-left:2.8ex" > не&nbsp;последний </label>
+											</td>
+										</tr>
+										<tr>
+											<th>
+												этажей&nbsp;
+											</th>
+											<td>
+												 от <input name="minfloorn" type="text" style="width:30px" value=""> до <input name="maxfloorn" type="text" style="width:30px" value="">
+											</td>
+										</tr>
+										</tbody>
+										</table>
+									</div>
+								</td>
+								<td class="ex_params_td">
+									
+									<div class="ex_form_box">
+										<div class="ex_form_box_title">
+											Поиск в комментарии
+										</div>
+										<div>
+											<dd>
+											наличие слова <input type="text" name="context" style="width:100px" value="">
+											</dd>
+											<dd>
+											но исключить <input type="text" name="acontext" style="width:100px;margin-left:3px" value=""> 
+											</dd>
+										</div>
+									</div>
+								</td>
+								<td class="ex_params_td">
+																	</td>
+							</tr>
+							</tbody>
+							</table>
+						</div>
+						
+					</div>
+					<div class="ex_object_params" rel="house" style="display:none">
+						<div class="ex_params_w">
+							<div style="padding-bottom: 0px;">
+										<select name="rh_wp" class="dk" tabindex="9">
+											<option value="0" selected="selected">можно без фото</option>
+											<option value="1" >с фото</option>
+											<option value="-1" >без фото</option>
+										</select>
+										<select name="rh_zerocom" class="dk" tabindex="11">
+											<option value="0" selected="selected">любая комиссия</option>
+											<option value="1" >эксклюзивная комиссия</option>
+											<option value="-1" >без комиссии</option>
+										</select>													
+									<select name="rh_totime" class="dk" tabindex="12">
+										<option value="-1" >за любую дату</option>
+										<option value="-2" >за сегодня</option>
+										<option value="300" >за 5 мин.</option>
+										<option value="600" >за 10 мин.</option>
+										<option value="900" >за 15 мин.</option>
+										<option value="1200" >за 20 мин.</option>
+										<option value="1800" >за 30 мин.</option>
+										<option value="3600" >за час</option>
+										<option value="7200" >за 2 часа</option>
+										<option value="10800" >за 3 часа</option>
+										<option value="14400" >за 4 часа</option>
+										<option value="18000" >за 5 часа</option>
+										<option value="21600" >за 6 часа</option>
+										<option value="43200" >за 12 часов</option>
+										<option value="64800" >за 18 часов</option>
+										<option value="86400" >за сутки</option>
+										<option value="129600" >за 36 часов</option>
+										<option value="172800" >за 2 дня</option>
+										<option value="259200" >за 3 дня</option>
+										<option value="432000" >за 5 дней</option>
+										<option value="864000" >за 10 дней</option>
+										<option value="2592000" >за месяц</option>
+									</select>
+								
+		<label><input name="rh_cl" type="checkbox" value="-1" />без "агентам не звонить"</label>
+							</div>
+							<table class="ex_params_tab">
+							<tbody>
+							<tr>
+								<td class="ex_params_td">
+									<div class="ex_form_box nowrap">
+										<div class="ex_form_box_title">
+											Минимальная площадь
+										</div>
+										<table class="ex_form_box_tab">
+										<tbody>
+										<tr>
+											<th>
+												дом
+											</th>
+											<td>
+												от
+												<input name="minarea" type="text" style="width:30px" value=""> м<sup>2</sup>
+											</td>
+											<td>
+												&nbsp;до
+												<input name="maxarea" type="text" style="width:30px" value=""> м<sup>2</sup>
+											</td>
+										</tr>
+										<tr>
+											<th>
+												участок
+											</th>
+											<td>
+												от
+												<input name="minsite" type="text" style="width:30px" value="">
+											</td>
+											<td>
+												&nbsp;до
+												<input name="maxsite" type="text" style="width:30px" value=""> соток
+											</td>
+										</tr>
+										</tbody>
+										</table>
+									</div>
+								</td>
+								<td class="ex_params_td">
+									<div class="ex_form_box">
+										<div class="ex_form_box_title">
+											Поиск в комментарии
+										</div>
+										<div>
+											<dd>
+											наличие слова <input type="text" name="context" style="width:100px" value="">
+											</dd>
+											<dd>
+											но исключить <input type="text" name="acontext" style="width:100px;margin-left:3px" value=""> 
+											</dd>
+										</div>
+									</div>
+								</td>
+															</tr>
+							</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="ex_object_params" rel="commercial" style="display:none">
+						<div class="ex_params_w">
+							<div style="padding-bottom: 40px;">
+									<select name="rc_enter" class="dk" tabindex="13">
+										<option value="0" selected="selected">с любым входом</option>
+										<option value="-1" >свободный вход</option>
+										<option value="1" >вход по пропускам</option>
+									</select>
+									<select name="rc_b_type[]" id="rc_b_type" class="dk" tabindex="14">
+										<option value="0" selected="selected">любое здание</option>
+										<option value="1" >нежилое здание</option>
+										<option value="2" >жилое здание</option>
+									</select>		
+									<select name="rc_zerocom" class="dk" tabindex="15">
+										<option value="0" selected="selected">любая комиссия</option>
+										<option value="1" >эксклюзивная комиссия</option>
+										<option value="-1" >без комиссии</option>
+									</select>		
+									<select name="rc_wp" class="dk" tabindex="16">
+										<option value="0" selected="selected">можно без фото</option>
+										<option value="1" >с фото</option>
+										<option value="-1" >без фото</option>
+									</select>
+									<select name="rc_mebel" class="dk" tabindex="15">
+										<option value="0" selected="selected">можно без мебели</option>
+										<option value="1" >с мебелью</option>
+										<option value="-1" >без мебели</option>
+									</select>
+									<select name="rc_totime" class="dk" tabindex="17">
+										<option value="-1" >за любую дату</option>
+										<option value="-2" >за сегодня</option>
+										<option value="300" >за 5 мин.</option>
+										<option value="600" >за 10 мин.</option>
+										<option value="900" >за 15 мин.</option>
+										<option value="1200" >за 20 мин.</option>
+										<option value="1800" >за 30 мин.</option>
+										<option value="3600" >за час</option>
+										<option value="7200" >за 2 часа</option>
+										<option value="10800" >за 3 часа</option>
+										<option value="14400" >за 4 часа</option>
+										<option value="18000" >за 5 часа</option>
+										<option value="21600" >за 6 часа</option>
+										<option value="43200" >за 12 часов</option>
+										<option value="64800" >за 18 часов</option>
+										<option value="86400" >за сутки</option>
+										<option value="129600" >за 36 часов</option>
+										<option value="172800" >за 2 дня</option>
+										<option value="259200" >за 3 дня</option>
+										<option value="432000" >за 5 дней</option>
+										<option value="864000" >за 10 дней</option>
+										<option value="2592000" >за месяц</option>
+									</select>
+							</div>
+							<table class="ex_params_tab" rel="3">
+							<tbody>
+							<tr>
+								<td class="ex_params_td">
+									<div class="ex_form_box">
+										<div class="ex_form_box_title">
+											Параметры помещения
+										</div>
+										<table class="ex_form_box_tab nowrap">
+										<tbody>
+										<tr>
+											<th>
+												общая площадь
+											</th>
+											<td>
+												 от <input name="minarea" type="text" style="width:30px" value=""> м<sup>2</sup>
+												 до <input name="maxarea" type="text" style="width:30px" value=""> м<sup>2</sup>
+											</td>
+										</tr>
+										<tr>
+											<th>
+												количество комнат
+											</th>
+											<td>
+												 от <input name="minroom" type="text" style="width:30px;margin-right: 19px;" value="">
+												 до <input name="maxroom" type="text" style="width:30px" value="">
+											</td>
+										</tr>
+										<tr>
+											<th>
+												телефонные линии 
+											</th>
+											<td>
+												от <input name="minphone" type="text" style="width:30px;" value=""> шт.
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<label><input name="add_phone" type="checkbox" > с возм. увеличения</label>
+											</td>
+										</tr>
+										</tbody>
+										</table>
+									</div>
+								</td>
+								<td class="ex_params_td">
+										<div class="ex_form_box">
+										<table class="ex_form_box_tab nowrap">
+										<tbody>
+										<tr>
+											<th>
+												<strong>Этаж</strong> от
+											</th>
+											<td>
+												<input type="text" name="minfloor" style="width:30px"> до <input type="text" name="maxfloor" style="width:30px">
+											</td>
+										</tr>
+										<tr>
+											<th>
+											</th>
+											<td>
+												<div style="color: #666;font-size: 14px;margin-bottom: 2px;">-1 &ndash; полуподвал<br>-2 &ndash; подвал</div>
+												<!--<div>
+													<label><input type="checkbox" name="minfloor" value="-1"> полуподвал</label>
+												</div>
+												<div>
+													<label><input type="checkbox" name="minfloor" value="-2"> подвал</label>
+												</div>-->
+											</td>
+										</tr>
+										<tr>
+											<th></th>
+											<td style="width: 120px;">
+												<label><input type="checkbox" name="floornl" value="1" style="" > не&nbsp;последний </label>
+											</td>
+										</tr>
+										<tr>
+											<th>
+												<strong>Этажей</strong> от
+											</th>
+											<td>
+												<input type="text" name="minfloorn" style="width:30px" value=""> до <input type="text" name="maxfloorn" style="width:30px" value="">
+											</td>
+										</tr>
+										</tbody>
+										</table>
+									</div>
+								</td>
+								<td class="ex_params_td">
+									<dl class="ex_form_checkboxes">
+										<dt>Тип договора</dt>
+										<dd><label><input type="checkbox" name="contract[]" value="1" >прямая аренда</label></dd><dd><label><input type="checkbox" name="contract[]" value="2" >субаренда</label></dd><dd><label><input type="checkbox" name="contract[]" value="5">договор совм. деят.</label></dd>
+									</dl>
+									
+		<label><input name="rc_cl" type="checkbox" value="-1" />без "агентам не звонить"</label>
+								</td>	
+								<td class="ex_params_td">
+									<div class="ex_form_box" style="margin-bottom: 0;">
+										<div class="ex_form_box_title">
+											Поиск в комментарии
+										</div>
+										<div>
+											<dd>
+											наличие слова <input type="text" name="context" style="width:100px" value="">
+											</dd>
+											<dd>
+											но исключить <input type="text" name="acontext" style="width:100px;margin-left:3px" value=""> 
+											</dd>
+										</div>
+									</div>
+																	</td>
+							</tr>
+							</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="ex_object_params" rel="flat" style="display: none;">
+					<div class="ex_params_w">
+						<div class="ex_form_box cleared">
+							<div style="">
+								<table class="ex_form_req_tab ex_form_req_tab_experiment">
+								<tbody>
+								<tr>
+									<td>
+										<table class="ex_form_checkboxes">
+										<tbody>
+										<tr>
+											<th>
+												<i class="exi_living_furnished"></i>мебель
+											</th>
+											<td>
+												<span class="sf_radio"><span class="sf_checkbox"><input type="radio" name="rf_mebel" value="1" >да</span><span class="sf_checkbox"><input type="radio" name="rf_mebel" value="-1" >нет</span><span class="sf_checkbox"><input type="radio" name="rf_mebel" value="0" checked="checked">не важно</span></span>
+											</td>
+										</tr>
+										<tr>
+											<th>
+												<i class="exi_kitchen_furnished"></i>кухонная мебель
+											</th>
+											<td>
+												<span class="sf_radio"><span class="sf_checkbox"><input type="radio" name="rf_mebel_k" value="1" >да</span><span class="sf_checkbox"><input type="radio" name="rf_mebel_k" value="-1" >нет</span><span class="sf_checkbox"><input type="radio" name="rf_mebel_k" value="0" checked="checked">не важно</span></span>
+											</td>
+										</tr>
+										<tr>
+											<th>
+												<i class="exi_phone"></i>телефон
+											</th>
+											<td>
+												<span class="sf_radio"><span class="sf_checkbox"><input type="radio" name="phone" value="1" >да</span><span class="sf_checkbox"><input type="radio" name="phone" value="-1" >нет</span><span class="sf_checkbox"><input type="radio" name="phone" value="0" checked="checked">не важно</span></span>
+											</td>
+										</tr>
+										</tbody>
+										</table>
+									</td>
+									<td>
+										<table class="ex_form_checkboxes">
+										<tbody>
+											<tr>
+												<th>
+													<i class="exi_balcony"></i>балкон
+												</th>
+												<td>
+													<span class="sf_radio"><span class="sf_checkbox"><input type="radio" name="minbalkon" value="1" >да</span><span class="sf_checkbox"><input type="radio" name="minbalkon" value="-1" >нет</span><span class="sf_checkbox"><input type="radio" name="minbalkon" value="0" checked="checked">не важно</span></span>
+												</td>
+											</tr>
+											<tr>
+												<th>
+													<i class="exi_animals"></i>можно c животными
+												</th>
+												<td>
+													<span class="sf_radio"><span class="sf_checkbox"><input type="radio" name="pets" value="1" >да</span><span class="sf_checkbox"><input type="radio" name="pets" value="-1" >нет</span><span class="sf_checkbox"><input type="radio" name="pets" value="0" checked="checked">не важно</span></span>
+												</td>
+											</tr>
+											<tr>
+												<th>
+													<i class="exi_children"></i>можно c детьми
+												</th>
+												<td>
+													<span class="sf_radio"><span class="sf_checkbox"><input type="radio" name="kids" value="1" >да</span><span class="sf_checkbox"><input type="radio" name="kids" value="-1" >нет</span><span class="sf_checkbox"><input type="radio" name="kids" value="0" checked="checked">не важно</span></span>
+												</td>
+											</tr>
+										</tbody>
+										</table>
+									</td>	
+									<td>
+										<table class="ex_form_checkboxes">
+										<tbody>
+										<tr>
+											<th>
+												<i class="exi_tv"></i>телевизор
+											</th>
+											<td>
+												<span class="sf_radio"><span class="sf_checkbox"><input type="radio" name="tv" value="1" >да</span><span class="sf_checkbox"><input type="radio" name="tv" value="-1" >нет</span><span class="sf_checkbox"><input type="radio" name="tv" value="0" checked="checked">не важно</span></span>
+											</td>
+										</tr>	
+										<tr>
+											<th>
+												<i class="exi_fridge"></i>холодильник
+											</th>
+											<td>
+												<span class="sf_radio"><span class="sf_checkbox"><input type="radio" name="rfgr" value="1" >да</span><span class="sf_checkbox"><input type="radio" name="rfgr" value="-1" >нет</span><span class="sf_checkbox"><input type="radio" name="rfgr" value="0" checked="checked">не важно</span></span>
+											</td>
+										</tr>
+										<tr>
+											<th>
+												<i class="exi_washing_machine"></i>стиральная машина
+											</th>
+											<td>
+												<span class="sf_radio"><span class="sf_checkbox"><input type="radio" name="wm" value="1" >да</span><span class="sf_checkbox"><input type="radio" name="wm" value="-1" >нет</span><span class="sf_checkbox"><input type="radio" name="wm" value="0" checked="checked">не важно</span></span>
+											</td>
+										</tr>
+										</tbody>
+										</table>
+									</td>
+								</tr>
+								</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					</div>
+				</div>
+				<div class="ex_params" rel="sell" style="display: none;">
+												<div class="ex_object_params" rel="flat" style="display: block; ">
+													<div class="ex_params_w">
+																	<div style="padding-bottom: 20px;">
+																		<select name="sf_wp" class="dk" tabindex="20">
+																			<option value="0" selected="selected">можно без фото</option>
+																			<option value="1" >с фото</option>
+																			<option value="-1" >только без фото</option>
+																		</select>
+																		<select name="sf_totime" class="dk" tabindex="22">
+																			<option value="-1" >за любую дату</option>
+																				<option value="-2" >за сегодня</option>
+																				<option value="300" >за 5 мин.</option>
+																				<option value="600" >за 10 мин.</option>
+																				<option value="900" >за 15 мин.</option>
+																				<option value="1200" >за 20 мин.</option>
+																				<option value="1800" >за 30 мин.</option>
+																				<option value="3600" >за час</option>
+																				<option value="7200" >за 2 часа</option>
+																				<option value="10800" >за 3 часа</option>
+																				<option value="14400" >за 4 часа</option>
+																				<option value="18000" >за 5 часа</option>
+																				<option value="21600" >за 6 часа</option>
+																				<option value="43200" >за 12 часов</option>
+																				<option value="64800" >за 18 часов</option>
+																				<option value="86400" >за сутки</option>
+																				<option value="129600" >за 36 часов</option>
+																				<option value="172800" >за 2 дня</option>
+																				<option value="259200" >за 3 дня</option>
+																				<option value="432000" >за 5 дней</option>
+																				<option value="864000" >за 10 дней</option>
+																				<option value="2592000" >за месяц</option>
+																			</select>
+																		<select name="sf_minbalkon" class="dk" tabindex="21">
+																			<option value="0" selected="selected">можно без балкона</option>
+																			<option value="1" >только с балконом</option>
+																			<option value="-1" >только без балкона</option>
+																		</select>
+																			<select name="sf_object_type" class="dk" tabindex="18">
+																				<option value="0" selected="selected">любой тип жилья</option>
+																				<option value="1" >вторичка</option>
+																				<option value="2" >новостройка</option>
+																			</select>
+																			<select name="sost_type" class="dk" tabindex="19">
+																				<option value="0" selected="selected">любой тип сделки</option>
+																				<option value="1" >свободная</option>
+																				<option value="2" >альтернатива</option>
+																			</select>
+																			<label style="display: inline-block; margin-top: 3px;font-size: 16px;"><input name="ipoteka" value="1" type="checkbox" > возможна ипотека</label>
+																	</div>
+														<table class="ex_params_tab" rel="4">
+														<tbody>
+														<tr>
+														<td class="ex_params_td">
+															<div class="ex_form_box">
+																<div class="ex_form_box_title">
+																	 Метраж
+																</div>
+																<table class="ex_form_box_tab">
+																<tbody class="nowrap">
+																<tr>
+																	<th>
+																		 кухня
+																	</th>
+																	<td>
+																		 от <input name="minkarea" type="text" style="width:30px" value=""> м<sup>2</sup> &nbsp;до <input name="maxkarea" type="text" style="width:30px" value=""> м<sup>2</sup>
+																	</td>
+																</tr>
+																<tr>
+																	<th>
+																		 жилая
+																	</th>
+																	<td>
+																		 от <input name="minlarea" type="text" style="width:30px" value=""> м<sup>2</sup>
+																		&nbsp;до <input name="maxlarea" type="text" style="width:30px" value=""><span style="vertical-align: baseline;"> м<sup>2</sup></span>
+																	</td>
+																</tr>
+																<tr>
+																	<th>
+																		 общая
+																	</th>
+																	<td>
+																		 от <input name="mintarea" type="text" style="width:30px" value=""> м<sup>2</sup>
+																		&nbsp;до <input name="maxtarea" type="text" style="width:30px" value=""><span style="vertical-align: baseline;"> м<sup>2</sup></span>
+																	</td>
+																</tr>
+																</tbody>
+																</table>
+															</div>
+																</td>
+																<td class="ex_params_td">
+																<div class="ex_form_box">
+																			<div class="ex_form_box_title">
+																				Этажность
+																			</div>
+																			<table class="ex_form_box_tab">
+																			<tbody>
+																			<tr>
+																				<th>
+																					этаж&nbsp;
+																				</th>
+																				<td>
+																					 от <input type="text" name="minfloor" style="width:30px" value=""> до <input type="text" name="maxfloor" style="width:30px" value="">
+																				</td>
+																			</tr>
+																			<tr>
+																				<th>
+																				</th>
+																				<td>
+																					<label style="white-space: nowrap;"><input type="checkbox" name="floornl" value="1" style="margin-left:2.8ex;" > не&nbsp;последний </label>
+																				</td>
+																			</tr>
+																			<tr>
+																				<th>
+																					этажей&nbsp;
+																				</th>
+																				<td>
+																					 от <input type="text" name="minfloorn" style="width:30px" value=""> до <input type="text" name="maxfloorn" style="width:30px" value="">
+																				</td>
+																			</tr>
+																			</tbody>
+																			</table>
+																		</div>
+																</td>
+																<td class="ex_params_td">
+																	<div class="ex_form_box" style="margin-bottom: 5px;">
+																		<div class="ex_form_box_title">
+																			 Санузел
+																		</div>
+																		<div>
+																			<label><input type="radio" name="minsu_" value="0" checked="checked"> не важно</label>
+																		</div>
+																		<div>
+																			<label><input type="radio" name="minsu_" value="1" > от&nbsp;</label>
+																			<select name="minsu">
+																				<option value="1" selected="selected">1</option>
+																				<option value="2" >2</option>
+																				<option value="3" >3</option>
+																				<option value="4" >4</option>
+																				<option value="5" >5</option>
+																			</select>
+																			<select name="minsu_type">
+																				<option value="0" selected="selected">любых</option>
+																				<option value="1" >раздельных</option>
+																				<option value="2" >совмещенных</option>
+																			</select>
+																		</div>
+																	</div>
+																	<div class="ex_form_box">
+																		<table>
+																		<tbody>
+																		<tr>
+																		<th>
+																			<strong>Лифтов&nbsp;&nbsp;</strong>
+																		</th>
+																		<td style="vertical-align: baseline;">
+																			минимум&nbsp;
+																			 <select name="minlift">
+																					<option value="0" selected="selected">0</option>
+																					<option value="1" >1</option>
+																					<option value="2" >2</option>
+																					<option value="3" >3</option>
+																					<option value="4" >4</option>
+																				</select>
+																		</td>
+																		</tr>
+																		</tbody>
+																		</table>
+																</td>
+																<td class="ex_params_td">
+																<div class="ex_form_box" style="margin-bottom: 0;">
+																	<div class="ex_form_box_title">
+																		Поиск в комментарии
+																	</div>
+																	<div>
+																		<dd>
+																		наличие слова <input type="text" name="context" style="width:100px" value="">
+																		</dd>
+																		<dd>
+																		но исключить <input type="text" name="acontext" style="width:100px;margin-left:3px" value=""> 
+																		</dd>
+																	</div>
+																</div>
+																
+																																
+																</td></tr>
+														</tbody>
+														</table>	
+																	<dl class="ex_form_checkboxes inlined" style="margin-top: -10px; font-size: 16px;">
+																				<dt>Тип дома&nbsp;<span class="ex_form_checkboxes_any"><label><input type="checkbox" name="house_type" value="" checked="checked"> любой </label></span></dt>
+																				<dd>
+																					<label><input type="checkbox" name="house_type[]" value="1" disabled="disabled" >панельный дом</label>
+																				</dd>
+																				<dd>
+																					<label><input type="checkbox" name="house_type[]" value="7" disabled="disabled" >«сталинский»</label>
+																				</dd>
+																				<dd>
+																					<label><input type="checkbox" name="house_type[]" value="2" disabled="disabled" >кирпичный</label>
+																				</dd>
+																				<dd>
+																					<label><input type="checkbox" name="house_type[]" value="3" disabled="disabled" >монолитный</label>
+																				</dd>
+																				<dd>
+																					<label><input type="checkbox" name="house_type[]" value="4" disabled="disabled" >кирпично-монолитный</label>
+																				</dd>
+																				<dd>
+																					<label><input type="checkbox" name="house_type[]" value="5" disabled="disabled" >блочный</label>
+																				</dd>
+																				<dd>
+																					<label><input type="checkbox" name="house_type[]" value="6" disabled="disabled" >деревянный</label>
+																				</dd>
+																			</dl>
+													</div>
+												</div>
+												<div class="ex_object_params" rel="house" style="display: none; ">
+													<div class="ex_params_w">
+														<table class="ex_params_tab">
+														<tbody>
+														<tr>
+															
+															
+															
+														<td class="ex_params_td"><div class="ex_form_box nowrap">
+																	<div class="ex_form_box_title">
+																		 Минимальная площадь
+																	</div>
+																	<table class="ex_form_box_tab">
+																	<tbody>
+																	<tr>
+																		<th>
+																			 дом
+																		</th>
+																		<td>
+																			 от <input name="minarea" type="text" style="width:30px" value=""> м<sup>2</sup>
+																		</td>
+																		<td>
+																			 &nbsp;до <input name="maxarea" type="text" style="width:30px" value=""> м<sup>2</sup>
+																		</td>
+																	</tr>
+																	<tr>
+																		<th>
+																			 участок
+																		</th>
+																		<td>
+																			 от <input name="minsite" type="text" style="width:30px" value="">
+																		</td>
+																		<td>
+																			 &nbsp;до <input name="maxsite" type="text" style="width:30px" value=""> соток
+																		</td>
+																	</tr>
+																	</tbody>
+																	</table>
+																</div></td>
+																<td class="ex_params_td">
+																<div class="ex_form_box">
+																	<dl class="ex_form_checkboxes">
+																		<dt>Тип участка</dt>
+																		<dd><label><input type="checkbox" name="land_type[]" value="1" >СНТ</label></dd><dd><label><input type="checkbox" name="land_type[]" value="2" >ИЖС</label></dd>
+																		<dd><label><input type="checkbox" name="land_type[]" value="3" >пром. назначения</label></dd>
+																	</dl>
+																	
+																</div>
+																</td>
+																<td class="ex_params_td">
+																	<div class="ex_form_box">
+																		<div>
+																		<select name="sh_wp" class="dk" tabindex="24">
+																			<option value="0" selected="selected">можно без фото</option>
+																			<option value="1" >с фото</option>
+																			<option value="-1" >только без фото</option>
+																		</select>
+																		</div>
+																		<div style="clear: both;">
+																		<select name="sh_totime" class="dk" tabindex="25">
+																			<option value="-1" >за любую дату</option>
+																				<option value="-2" >за сегодня</option>
+																				<option value="300" >за 5 мин.</option>
+																				<option value="600" >за 10 мин.</option>
+																				<option value="900" >за 15 мин.</option>
+																				<option value="1200" >за 20 мин.</option>
+																				<option value="1800" >за 30 мин.</option>
+																				<option value="3600" >за час</option>
+																				<option value="7200" >за 2 часа</option>
+																				<option value="10800" >за 3 часа</option>
+																				<option value="14400" >за 4 часа</option>
+																				<option value="18000" >за 5 часа</option>
+																				<option value="21600" >за 6 часа</option>
+																				<option value="43200" >за 12 часов</option>
+																				<option value="64800" >за 18 часов</option>
+																				<option value="86400" >за сутки</option>
+																				<option value="129600" >за 36 часов</option>
+																				<option value="172800" >за 2 дня</option>
+																				<option value="259200" >за 3 дня</option>
+																				<option value="432000" >за 5 дней</option>
+																				<option value="864000" >за 10 дней</option>
+																				<option value="2592000" >за месяц</option>
+																		</select>
+																		</div>
+																	</div>	
+																</td>	
+																<td class="ex_params_td">
+																<div class="ex_form_box" style="margin-bottom: 0;">
+																	<div class="ex_form_box_title">
+																		Поиск в комментарии
+																	</div>
+																	<div>
+																		<dd>
+																		наличие слова <input type="text" name="context" style="width:100px" value="">
+																		</dd>
+																		<dd>
+																		но исключить <input type="text" name="acontext" style="width:100px;margin-left:3px" value=""> 
+																		</dd>
+																	</div>
+																</div>
+																</td></tr>
+														</tbody>
+														</table>
+													</div>
+												</div>
+												<div class="ex_object_params" rel="commercial" style="display: none; ">
+													<div class="ex_params_w">
+														<div style="padding-bottom: 40px;">
+															<select name="sc_enter" class="dk" tabindex="26">
+																<option value="0" selected="selected">любой вход</option>
+																<option value="-1" >свободный вход</option>
+																<option value="1" >вход по пропускам</option>
+															</select>
+															<select name="sc_b_type[]" id="sc_b_type" class="dk" tabindex="26">
+																<option value="0" selected="selected">любое здание</option>
+																<option value="1" >нежилое здание</option>
+																<option value="2" >жилое здание</option>
+															</select>
+															<select name="sc_mebel" class="dk" tabindex="27">
+																<option value="0" selected="selected">можно без мебели</option>
+																<option value="1" >с мебелью</option>
+																<option value="-1" >без мебели</option>
+															</select>
+															<select name="sc_wp" class="dk" tabindex="28">
+																<option value="0" selected="selected">можно без фото</option>
+																<option value="1" >с фото</option>
+																<option value="-1" >без фото</option>
+															</select>
+															<select name="sc_totime" class="dk" tabindex="30">
+																<option value="-1" >за любую дату</option>
+																	<option value="-2" >за сегодня</option>
+																	<option value="300" >за 5 мин.</option>
+																	<option value="600" >за 10 мин.</option>
+																	<option value="900" >за 15 мин.</option>
+																	<option value="1200" >за 20 мин.</option>
+																	<option value="1800" >за 30 мин.</option>
+																	<option value="3600" >за час</option>
+																	<option value="7200" >за 2 часа</option>
+																	<option value="10800" >за 3 часа</option>
+																	<option value="14400" >за 4 часа</option>
+																	<option value="18000" >за 5 часа</option>
+																	<option value="21600" >за 6 часа</option>
+																	<option value="43200" >за 12 часов</option>
+																	<option value="64800" >за 18 часов</option>
+																	<option value="86400" >за сутки</option>
+																	<option value="129600" >за 36 часов</option>
+																	<option value="172800" >за 2 дня</option>
+																	<option value="259200" >за 3 дня</option>
+																	<option value="432000" >за 5 дней</option>
+																	<option value="864000" >за 10 дней</option>
+																	<option value="2592000" >за месяц</option>
+															</select>
+															
+														</div>
+														<table class="ex_params_tab" rel="3">
+														<tbody>
+														<tr>
+														<td class="ex_params_td">
+															<div class="ex_form_box">
+																	<div class="ex_form_box_title">
+																		 Параметры помещения
+																	</div>
+																	<table class="ex_form_box_tab">
+																	<tbody>
+																	<tr>
+																		<th>
+																			 общая площадь
+																		</th>
+																		<td>
+																			 от <input name="minarea" type="text" style="width:30px" value=""> м<sup>2</sup>
+																			до <input name="maxarea" type="text" style="width:30px" value=""> м<sup>2</sup>
+																		</td>
+																	</tr>
+																	<tr>
+																		<th>
+																			 количество комнат
+																		</th>
+																		<td>
+																			 от <input name="minroom" type="text" style="width:30px;margin-right: 19px;" value="">
+																			до <input name="maxroom" type="text" style="width:30px" value="">
+																		</td>
+																	</tr>
+																	</tbody>
+																	</table>
+																</div>
+															
+																</td>
+																<td class="ex_params_td">
+																	<div class="ex_form_box">
+																	<table class="ex_form_box_tab">
+																	<tbody>
+																	<tr>
+																		<th>
+																			<strong>Этаж</strong> от
+																		</th>
+																		<td>
+																			<input type="text" name="minfloor" style="width:30px" value=""> до <input type="text" name="maxfloor" style="width:30px" value="">
+																		</td>
+																	</tr>
+																	<tr>
+																		<th>
+																		</th>
+																		<td>
+																			<div style="color: #666;font-size: 14px;margin-bottom: 2px;">-1 &ndash; полуподвал<br>-2 &ndash; подвал</div>
+<!--																			<div>
+																				<label><input type="checkbox" name="minfloor"> полуподвал</label>
+																			</div>
+																			<div>
+																				<label><input type="checkbox" name="minfloor"> подвал</label>
+																			</div>-->
+																		</td>
+																	</tr>
+																	<tr>
+																		<th>
+																			<strong>Этажей</strong> от 
+																		</th>
+																		<td>
+																			 <input name="minfloorn" type="text" style="width:30px" value=""> до <input name="maxfloorn" type="text" style="width:30px" value="">
+																		</td>
+																	</tr>
+																	</tbody>
+																	</table>
+																</div>
+																</td>
+																<td class="ex_params_td">
+																<dl class="ex_form_checkboxes">
+																	<dt>Тип договора</dt>
+																	<dd><label><input type="checkbox" name="contract[]" value="4" >продажа объекта</label></dd><dd><label><input type="checkbox" name="contract[]" value="3" >переуступка прав аренды</label></dd>
+																</dl>
+																</td>
+																<td class="ex_params_td">
+																<div class="ex_form_box" style="margin-bottom: 0;">
+																	<div class="ex_form_box_title">
+																		Поиск в комментарии
+																	</div>
+																	<div>
+																		<dd>
+																		наличие слова <input type="text" name="context" style="width:100px" value="">
+																		</dd>
+																		<dd>
+																		но исключить <input type="text" name="acontext" style="width:100px;margin-left:3px" value=""> 
+																		</dd>
+																	</div>
+																</div>
+																</td></tr>
+														</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+<div class="ex_location">
+					<span class="location_hint" style="display: none;font-size: 14px;color: #666;margin-bottom: 15px;">Выбрать район, город или улицу вы сможете на вкладке "Адрес"</span>
+					<div class="ex_location_title" style="font-weight: normal;">
+						<strong>Расположение&nbsp;&nbsp;</strong>
+						<span class="pseudo sf_head_region_button" style="font-size: 18px;border-color: #0053D4 !important;" rel="1">в Москве</span>
+						
+						<div class="ex_location_list ex_location_obl" style="display: none;">
+							<input type="hidden" name="obl_id" value="1"/>
+						</div>
+						<span class="include_mo_checkbox" style="font-size:16px;"><label><input type="checkbox" name="obl_mo" />и Московской области</label></span>
+						</span>
+					</div>
+					<table style="width: 100%;">
+						<tbody>
+							<tr>
+								<td class="ex_location_params" style="width:15%; display: none;">
+										<div class="ex_location_params">
+											<div class="ex_location_params_block">
+												<div>
+													<strong>Район</strong><span class="ex_location_add ex_location_raion_obl_button"></span>
+												</div>
+												<div class="ex_location_list ex_location_raion_obl">
+																								
+												
+												</div>
+											</div>
+										</div>
+									</td>
+									<td class="ex_location_params" style="width:15%">
+										<div class="ex_location_params">
+											<div class="ex_location_params_block">
+												<div>
+													<strong>Населенный пункт</strong><span class="ex_location_add ex_location_nas_punkt_button"></span>
+												</div>
+												<div class="ex_location_list ex_location_nas_punkts">
+																									<dl rel="1">
+														<dt>Москва</dt>
+														<dd></dd>
+														<input type="hidden" rel="0" name="city[]" value="1"/>
+													</dl>
+													
+												</div>
+											</div>
+										</div>
+									</td>
+									<td class="ex_location_params" style="width:15%" style="display: none;">
+										<div>
+											<div class="ex_location_params_block">
+												<div>
+													<strong>Улица</strong><span class="ex_location_add ex_location_street_button"></span>
+												</div>
+												<div class="ex_location_list ex_location_street">
+													
+												
+												</div>
+											</div>
+										</div>
+									</td>
+									<td class="ex_location_params" style="width:15%" style="display: none;">
+										<div>
+											<div class="ex_location_params_block">
+												<div>
+													<strong>Дом</strong><input name="house" type="text" style="width:30px;margin: 0 0 0 10px;" value="" disabled="">
+													<input type="hidden" name="ohn" value="1"/>
+												</div>
+												<div class="ex_location_list ex_location_house">
+												
+												</div>
+											</div>
+										</div>
+									</td>
+									<td class="ex_location_params ex_location_highway" style="width:15%;display: none;">
+										<div class="ex_location_params">
+											<div class="ex_location_params_block">
+												<div>
+													<strong>Шоссе от МКАД</strong><span class="ex_location_add ex_location_highway_button"></span>
+												</div>
+												<div class="ex_location_list ex_location_highways">
+																								</div>
+											</div>
+										</div>
+									</td>
+									
+									<td class="ex_location_mcad" style="width:15%; display: none;">
+										<div class="ex_location_params_block ex_location_mcad" style="display:inline;display: none;;
+										width: 252px;margin-left:15px;white-space:nowrap;">
+											<div><strong>От МКАД</strong></div>
+											<div>
+											&nbsp;от&nbsp;&nbsp;<input type="text" name="minmcad" value="" style="width:30px;font-size:15px;"/>&nbsp;</span>
+											до&nbsp;&nbsp;<input type="text" name="maxmcad" value="" style="width:30px;font-size:15px;"/> км
+											</div>
+										</div>
+									</td>
+									
+									<td class="ex_location_metro_goby" style="width:15%; ">
+										<div class="ex_location_params_block ex_location_metro_goby" style="display:inline;;
+										width: 252px;margin-left:15px;white-space:nowrap;">
+											<div><strong>До метро</strong></div>
+											<span>
+											<input type="checkbox" name="goby_toggler" value="0"  />
+											<select name="only_foot" style="margin-bottom: 10px;"> 
+<!--												<option value="0" selected="selected">не важно</option>-->
+												<option value="2" >пешком (по карте)</option>
+												<option value="1" >пешком (от агента)</option>
+												<option value="-1" >трансп. (от агента)</option>
+												<option value="-2" >трансп. (по карте)</option>
+											</select>
+											</span>
+											<span>
+											&nbsp;от&nbsp;&nbsp;<input type="text" name="foot_min2" value="" style="width:30px;font-size:15px;"/>
+											до&nbsp;&nbsp;<input type="text" name="foot_min" value="" style="width:30px;font-size:15px;"/> мин.
+											</span>
+										</div>
+									</td>
+								</tr>
+							</tr>
+						</tbody>
+					</table>
+						<div class="ex_location_map_triggers" style="display: inline;font-size: 16px;">
+							<span class="pseudo ex_location_select_button ex_location_map_trigger_ymap ex_location_select_button_active">
+								<input type="checkbox" name="location_trigger" value="location_map">Карта</span>	
+							<span class="pseudo ex_location_select_button ex_location_select_button_right ex_location_map_trigger_metro" style=""><input type="checkbox" name="location_trigger" value="location_metro" rel="moscow">Схема метро </span>
+							<!--<span class="ex_location_select_button ex_location_select_button_right ex_location_map_trigger_highway" style="display: none;"><input type="checkbox" name="location_trigger" value="location_highway" rel="moscow">шоссе</span>-->
+							<!--<div class="ex_location_mcad" rel="location_highway" style="margin-left: 10px;display: inline;display: none;">
+								<strong>От МКАД</strong>&nbsp;
+								&nbsp;от&nbsp;&nbsp;<input type="text" name="minmcad" value="" style="width:30px;font-size:15px;"/>&nbsp;</span>
+								до&nbsp;&nbsp;<input type="text" name="maxmcad" value="" style="width:30px;font-size:15px;"/> км
+							</div>-->
+							
+						</div>
+						
+						<div class="ex_location_type" rel="location_metro" style="margin-left: 10px;display: inline;">
+							<span class="pseudo als_metro_toggle_scheme">Показать схему метро</span>
+							<span class="metro_preloader" style="display: none;margin-left: 10px;">Загрузка схемы метро.<img src="http://www.cian.ru/nd/address/iframe/metro_preloader.gif" style="position: absolute;margin: -6px 0 0 6px;"></span>
+						</div>	
+												
+					<div class="ymapbox ex_location_type" rel="location_map" style="display: none;margin-top: 10px;">
+						<div id="map" class="map_container">
+												<div class="map_preloader_container"><div class="map_preloader"></div></div>
+												<canvas id="drawing-area" width="" height="600"></canvas>
+												<div id="YMapsID" style="width: 100%;height:600px;overflow: hidden;"></div>
+												<div id="hint">Начните рисовать участки или выберите один из районов</div>	
+<!--												<div class="map_error">Возможность поиска по карте временно приостановлена.<br> Приносим извинения за причиненные неудобства.</div>-->
+												<div class="map_info">
+													<div class="map_info_title">Методы выделения</div>
+													<div class="map_info_list_draw_actions">
+														<ul> 
+															<li id="draw_poly_action" alt="Расставляйте точки на карте"></li>
+																														<li id="draw_shape_action" alt="Нарисуйте мышкой любую фигуру"></li>
+																														<li id="draw_circle_action" alt="Разместите круг и изменяйте его радиус"></li>
+														</ul>
+													</div>
+													<div class="map_info_title map_info_list_title_districts" style="border-top: 1px solid #B9B8B4;display: none;">Выбор района</div>
+													<div class="map_info_list_districts" style="display: none;">
+														<ul>
+														<li rel="7"><i></i><span>Адмиралтейский</span></li><li rel="12"><i></i><span>Василеостровский</span></li><li rel="0"><i></i><span>Выборгский</span></li><li rel="6"><i></i><span>Калининский</span></li><li rel="3"><i></i><span>Кировский</span></li><li rel="13"><i></i><span>Колпинский</span></li><li rel="10"><i></i><span>Красногвардейский</span></li><li rel="9"><i></i><span>Красносельский</span></li><li rel="14"><i></i><span>Кронштадтский</span></li><li rel="15"><i></i><span>Курортный</span></li><li rel="4"><i></i><span>Московский</span></li><li rel="2"><i></i><span>Невский</span></li><li rel="8"><i></i><span>Петроградский</span></li><li rel="16"><i></i><span>Петродворцовый</span></li><li rel="1"><i></i><span>Приморский</span></li><li rel="17"><i></i><span>Пушкинский</span></li><li rel="5"><i></i><span>Фрунзенский</span></li><li rel="11"><i></i><span>Центральный</span></li>														 </ul>
+													</div>
+													<div class="map_info_clear">
+														<ul>
+															<li><i></i><span>Очистить все</span></li>
+														</ul>
+													</div>
+												</div>
+											</div>
+						
+							<script>
+								var incoming_polygons = [], incoming_distance = [];
+								
+																</script>
+						<div id="drawn_geometry">
+							<div id="drawn_geometry_polygons"></div>
+							<div id="drawn_geometry_shapes"></div>
+							<div id="drawn_geometry_circles"></div>
+							<div id="drawn_geometry_districts"></div>
+						</div> 
+					</div>
+					
+					<div class="ex_location_type" rel="location_metro" style="margin-top: 10px;">
+						<div class="metrobox ex_location_type" rel="location_metro">
+						</div>	
+	
+						<div class="metro_selected_title" style="display:none;position:relative;min-width: 200px;overflow:hidden;font-size:14px;">
+							Выбраны станции
+						</div>
+						<div class="ex_location_list metro_selected" style="display:none">
+												</div>
+						<span class="pseudo als_metro_deselect" style="font-size:14px;display:none;">Удалить выбранные станции</span>
+						<div class="als_metro_circle_triggers" style="display: none;">
+						<span class="als_metro_wrapper"><span class="pseudo als_metro_select_inside">Выделить станции внутри кольца</span></span><span class="als_metro_wrapper"><span class="pseudo als_metro_select_circle">Выделить кольцевые станции</span></span>
+						</div>
+												<div style="clear: both;"></div>
+					</div>
+				</div>											
+				
+				<div class="ex_bottom">
+					<table>
+					<tbody>
+					<tr>
+						<td>
+							<span class="sf_submit_w" ><input type="submit" class="sf_submit" value="Показать предложения"></span></td>
+														<td class="ex_bottom_comment">
+																								Если у вас возникают трудности с новой формой поиска, <span class="pseudo popup_simple_feedback_button">сообщите нам</span>.
+																																			</td>
+					</tr>
+					</tbody>
+					</table>
+				</div>
+			</div>
+		</form>
+	</div></div></div></div><div class="popup_shadow"><div class="popup popup_login"><div class="popup_closer"></div><div class="popup_content"><form><table class="popup_login_form_table"><tr><th></th><td><span class="pseudo popup_login_trigger_enter popup_login_trigger_active">Вход</span><span class="pseudo popup_login_trigger_reg ">Регистрация</span></td></tr><tr><th><span class="popup_login_id_text">ID или </span>Эл. почта:</th><td><input type="text" name="mail" class="popup_login_input_mail" /></td></tr><tr><th>Пароль:</th><td><input type="password" name="pass" class="popup_login_input_pass" /><i class="popup_login_input_pass_trigger"></i></td></tr><tr><th></th><td><span class="submit_w"><input type="submit" value="Войти" class="submit" disabled="disabled" /></span></td></tr><tr><th></th><td class="popup_login_social_td">
+						или используйте аккаунт в социальных сетях:
+						<div class="popup_login_social"><a href="http://www.cian.ru/#"><i class="Twitter"></i>Twitter</a></div><div class="popup_login_social"><a href="http://www.cian.ru/#"><i class="Facebook"></i>Facebook</a></div><div class="popup_login_social"><a href="http://www.cian.ru/#"><i class="VK"></i>ВКонтакте</a></div><div class="popup_login_social"><a href="http://www.cian.ru/#"><i class="Google"></i>Google</a></div></td></tr></table></form></div></div></div><div class="popup popup_period"><div class="popup_tail"></div><div class="popup_closer"></div><div class="popup_content"><div class="popup_period_box"><span class="pseudo popup_period_active" rel="month">Месяц</span><span class="pseudo" rel="day">День</span></div></div></div><div class="popup popup_payfor wide"> 
+							<div class="popup_tail">
+							</div>
+							<div class="popup_closer">
+							</div>
+							<div class="popup_content">
+								<div class="popup_payfor_box">
+									<span class="pseudo popup_payfor_active" rel="month">месяц</span><span class="pseudo" rel="m2">м<sup>2</sup> в год</span>
+								</div>
+							</div>
+						</div>
+						<div class="popup popup_payfor_sell_flatroom">
+							<div class="popup_tail">
+							</div>
+							<div class="popup_closer">
+							</div>
+							<div class="popup_content">
+								<div class="popup_payfor_box">
+									<span class="pseudo popup_payfor_active" rel="all">все</span><span class="pseudo" rel="m2">м<sup>2</sup></span>
+								</div>
+							</div>
+						</div>
+						<div class="popup popup_currency"><div class="popup_tail"></div><div class="popup_closer"></div><div class="popup_content"><div class="popup_currency_box"><span class="pseudo popup_currency_active" rel="2"><span class="rur">р<span>уб.</span></span></span><span class="pseudo" rel="1">$</span><span class="pseudo" rel="3">€</span></div></div></div><div class="popup popup_regions"><div class="popup_tail"></div><div class="popup_closer"></div><div class="popup_content"><div><div class="popup_regions_filter_row"><input type="text" class="popup_regions_filter" placeholder="регион" /><i class="popup_regions_filter_icon"></i></div><ul class="popup_regions_filter_res"></ul><div class="popup_regions_finder"></div><div class="popup_regions_submit_row"><span class="submit_w"><button class="submit">Выбрать</button></span>
+
+				или <span class="popup_cancel pseudo">отменить</span></div><!--<div class="popup_regions_tips_row"></div>--></div></div></div><div class="popup popup_list_with_filter"><div class="popup_tail"></div><div class="popup_closer"></div><div class="popup_content"><form onsubmit="return false"><div class="popup_list_with_filter_title"></div><div><input type="text" class="popup_list_with_filter_filter" /><div class="popup_list_with_filter_new"><span class="pseudo popup_list_with_filter_new_trigger">Создать тег «<ins></ins>»</span></div><dl class="popup_list_with_filter_wrap"></dl></div><!--<div class="popup_list_with_filter_submit_row"><span class="submit_w"><button class="submit">Сохранить</button></span>
+
+				или <span class="popup_cancel pseudo">отменить</span></div>--></form></div></div>
+				<div class="popup popup_list_with_filter_extended">
+					<div class="popup_tail"></div>
+					<div class="popup_closer"></div>
+					<div class="popup_content">
+					<form onsubmit="return false">
+					<div class="popup_list_with_filter_extended_title"></div>
+					<div>
+						<div>
+						<input type="text" class="popup_list_with_filter_extended_filter" />
+						<i class="popup_regions_filter_icon" style="left:-23px;"></i>
+						</div>
+						<div class="popup_list_with_filter_title_chosen">Выбрано</div>
+						<span class="submit_w" style="position:absolute;padding:2px;top:14px;right:36px;"><input type="button" class="submit_ex" style="font-size:16px;" value="Сохранить"/></span>
+						<div class="popup_list_with_filter_extended_new">
+							<span class="pseudo popup_list_with_filter_extended_new_trigger">Создать тег «<ins></ins>»</span>
+						</div>
+						<div class="popup_list_with_filter_extended_finder">
+							<dl class="popup_list_with_filter_extended_wrap"></dl>
+							<dl class="popup_list_with_filter_extended_wrap_chosen"></dl>
+						</div>
+					</div>
+					<!--<div class="popup_list_with_filter_extended_submit_row">
+						<span class="submit_w"><button class="submit">Сохранить</button></span>
+				
+								или <span class="popup_cancel pseudo">отменить</span>
+					</div>-->
+					</form>
+					</div>
+					</div>
+					<div class="popup_shadow" style="display: none; ">
+						<div class="popup popup_alert" style="display: none; ">
+							<div class="popup_closer">
+							</div>
+							<div class="popup_content">
+								<div class="popup_alert_box">
+									<div class="popup_alert_box_title">
+									</div>
+									<div class="popup_alert_submit_row">
+										<span class="submit_w"><button class="submit">Да</button></span>
+										или <span class="popup_cancel pseudo">отменить</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="popup_shadow" style="display: none; ">
+						<div class="popup popup_warning" style="display: none; ">
+							<div class="popup_closer">
+							</div>
+							<div class="popup_content">
+								<div class="popup_warning_box">
+									<div class="popup_warning_box_title">
+									</div>
+									<div class="popup_warning_submit_row">
+										<span class="submit_w"><button class="submit">Ок</button></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="popup popup_simplefeedback">
+						<div class="popup_tail"></div>
+						<div class="popup_closer"></div>
+						<div class="popup_content">
+							<form>
+								<div class="popup_simplefeedback_title">Напишите нам</div>
+								<span style="font-size: 14px;display: block;color: #666;margin-bottom: 15px;">Опишите максимально подробно и без лишних эмоций возникшие у вас трудности. Мы обязательно рассмотрим ваши замечания.</span>
+								<textarea style="width:373px;max-width:373px;height:150px;max-height:265px;margin-bottom:15px;" placeholder="Ваше сообщение"></textarea>
+								<input style="display:block;width:355px;margin-bottom: 15px;" type="email" name="feedback_email" placeholder="Ваш E-mail"/><i style="color: red;margin: -46px -5px 0 0px;float: right;display: block;">*</i>
+								<div class="popup_simplefeedback_submit_row">
+									<span class="submit_w"><button class="send">Отправить</button></span>
+									
+													или <span class="popup_cancel pseudo">отменить</span>
+									<div class="popup_simplefeedback_preloader">
+										<img src="http://www.cian.ru/nd/address/iframe/feedback_preloader.gif"/>
+									</div>
+									<div class="popup_simplefeedback_sentresult"></div>
+								</div>
+							</form>
+						</div>
+					</div>
+
+					<script>
+						$(function(){
+								var
+									$Popup = $('.popup_simplefeedback')
+								;
+								$('.popup_simple_feedback_button').each(function(){
+									var $Button = $(this);
+						
+									$Button.mousedown(function(e){
+										var
+											$Tail = $Popup.find('.popup_tail'),
+											$Inp = $Button.find('input'),
+											$Cont = $Button.find('span')
+										;
+										Popup
+											.show($Popup)
+											.css('margin','0')
+											.offset($Button.offset())
+											.css('margin',
+												(- $Popup.height() - $Tail.height()) + 'px 0 0 ' + (-$Popup.width()/2 + $Button.width()/2) + 'px'
+											)
+										;
+						
+										e.stopPropagation();
+										$(document).mousedown(_check);
+						
+									});
+								});
+								
+								function _check(e){
+											if( !$(e.target).parents('.popup_simplefeedback').length ){
+												_close();
+											}
+										};
+								
+								function _close(){
+									Popup.hide('.popup_simplefeedback');
+									$(document).unbind('mousedown',_check);
+						
+								};
+								
+								function isCookieEnabled()
+								{
+									var cookieEnabled = (navigator.cookieEnabled) ? true : false;
+								
+									if (typeof navigator.cookieEnabled == "undefined" && !cookieEnabled)
+									{ 
+										document.cookie="testcookie";
+										cookieEnabled = (document.cookie.indexOf("testcookie") != -1) ? true : false;
+									}
+									return (cookieEnabled);
+								}
+								
+								$('.popup_simplefeedback_submit_row button').click(function(e){
+									e.preventDefault();
+									
+									var email_str = $('input[name=feedback_email]').val();
+									
+									if ( email_str == '' ){
+										$('.popup_simplefeedback_sentresult')
+											.html('введите E-Mail')
+											.removeClass('success')	
+											.addClass('fail')
+											.fadeIn('slow', function(){
+												$(this).delay(3000).fadeOut('slow');
+											});
+										
+									} else if ( email_str.indexOf('@') == -1 || email_str.indexOf('.') == -1 ){
+										$('.popup_simplefeedback_sentresult')
+											.html('неправильный E-Mail')
+											.removeClass('success')	
+											.addClass('fail')
+											.fadeIn('slow', function(){
+												$(this).delay(3000).fadeOut('slow');
+											});
+									}else {
+									
+									$('.popup_simplefeedback_preloader').show();
+									
+									$.ajax({
+									  url: 'sm.php',
+									  type: 'POST',
+									  data: {
+									  	msg : $('.popup_simplefeedback textarea').val(), 
+									  	email: $('input[name=feedback_email]').val(),
+									  	token: '16825e19bfbf20b3b6e09daf03639eb6',
+									  	cookies: isCookieEnabled(),
+									  	width: screen.width,
+									  	height: screen.height
+									  	},
+									  success: function(data) {
+										$('.popup_simplefeedback_preloader').hide();    
+										
+										if (data == 'success'){
+											$('.popup_simplefeedback_sentresult')
+												.html('отправлено')
+												.removeClass('fail')	
+												.addClass('success')
+												.fadeIn('slow', function(){
+													Popup.hide('.popup_simplefeedback');
+													//$(this).delay(3000).fadeOut('slow');
+												});
+										} else {
+											$('.popup_simplefeedback_sentresult')
+												.html('ошибка')
+												.removeClass('success')	
+												.addClass('fail')
+												.fadeIn('slow', function(){
+													$(this).delay(3000).fadeOut('slow');
+												});
+										}
+										
+									  }
+									});
+									}
+								});
+								
+								$('.goback_link').click(function(e){
+									e.preventDefault();
+									history.go(-1);
+								});
+						});		
+					</script>
+	</div>
+<!--<script type="text/javascript" src="http://www.cian.ru/extended_search_map.js.php"></script>-->
+<script>
+$(function(){
+			
+				var district = [];
+				
+				district[0] = [];district[0]["id"]="0";district[0]["polygon"]="30.3440080071091,59.95185196353698;30.321819165676732,59.97846200925717;30.33115082721268,59.982672032037705;30.328887122581765,59.9942319831839;30.29553491968308,60.05052903185946;30.2742010875539,60.0686109802559;30.222622966342637,60.05119599311235;30.214400116871452,60.06088402758082;30.195935155957887,60.06037003809765;30.193560930124413,60.06316202391907;30.133939961400518,60.04803698384619;30.13672387169169,60.05977996504498;30.070802114410178,60.09611203613355;30.087778099122485,60.10760701237571;30.110238023504454,60.10674502204223;30.11373906159855,60.1143589783745;30.133847080389902,60.112103026513346;30.138982896271685,60.119953019830156;30.173789874999493,60.11313304365582;30.177761078209365,60.11873899766037;30.213752109820614,60.115818960414096;30.216635021189,60.119322026938576;30.259363886113267,60.12544597789399;30.27102405298522,60.11634003497067;30.274722013221993,60.10255897525796;30.291718158153657,60.09387199640139;30.303242963552776,60.090973978167334;30.308468060406014,60.09582702180008;30.332947966767,60.08984803466305;30.369254001805736,60.09009098491852;30.38775208307968,60.05908802758415;30.365037995932212,60.033962032439874;30.369896968801733,60.00742597366393;30.36518091748732,59.99805397242655;30.3472149220029,59.98998998103201;30.36752598300351,59.97750098364971;30.343736924159497,59.97734396532233;30.354052116397046,59.9597709591685;30.3440080071091,59.95185196353698;";district[1] = [];district[1]["id"]="1";district[1]["polygon"]="30.321819165676732,59.97846200925717;30.29280717000298,59.982858001347665;30.203918962828098,59.97893501989213;30.19001093149758,59.98229596354384;30.184614832783705,59.989807011731415;30.18206312501908,59.985455989742206;30.16763200799697,59.986785001346654;30.16595510975097,59.983964017135314;30.158710030918716,59.98764296399564;30.09798493018098,59.99039295836786;30.0923091084235,59.994126968850274;30.051679066336103,59.99889899900209;30.013786854038486,59.99850500267607;29.969405931138496,60.01070701913638;29.963042141895375,60.0096169590947;29.96385215070892,60.0156610001783;29.97740593818498,60.02046100763805;29.963642988433065,60.017908970805934;29.957920006162436,60.03287999718937;29.965423927811116,60.03387801475093;29.955428059048053,60.03754602022433;29.96680814287248,60.04429296149395;29.975425916640766,60.044065969521725;29.980058087042487,60.03546902973275;30.010443857664004,60.01977003533679;30.028928978796927,60.01798496394344;30.02714515938754,60.015864976412516;30.04683809366244,60.01078500083445;30.04289713078161,60.00673903092575;30.07154084244813,60.0025639972845;30.078336996395723,60.00349596227699;30.07975901186839,60.02755896562762;30.147467828594547,60.03485396820334;30.138557011637722,60.041243974898585;30.142346052865523,60.04500401378683;30.133939961400518,60.04803698384619;30.193560930124413,60.06316202391907;30.195935155957887,60.06037003809765;30.214400116871452,60.06088402758082;30.222622966342637,60.05119599311235;30.2742010875539,60.0686109802559;30.29473283095572,60.051704038417505;30.328887122581765,59.9942319831839;30.33115082721268,59.982672032037705;30.321819165676732,59.97846200925717;";district[2] = [];district[2]["id"]="2";district[2]["polygon"]="30.493520873928826,59.85849897399352;30.49603586129391,59.845718980872476;30.534734842369815,59.833815037868064;30.56125597094093,59.835509966837726;30.56074512538252,59.82781103634889;30.56832788788905,59.823655004085936;30.55982999542518,59.82221602748164;30.5633378735937,59.82072100509468;30.55890910540516,59.819396036629506;30.55444685685232,59.82117698323898;30.55567411020582,59.816966024102186;30.54952308327772,59.81295101548071;30.522032104153848,59.82334896874014;30.508185993497076,59.810960958768945;30.512331078598923,59.80735296123386;30.41997387367856,59.87004398936447;30.363342017478615,59.913803990139954;30.402128119502468,59.92083602852318;30.409593880735923,59.9152690202874;30.42709511116333,59.92064099143657;30.44932283301875,59.9368040448593;30.496733908889226,59.93309696796859;30.506113090942243,59.93683198358839;30.495846139229574,59.89166899276808;30.52119905508961,59.86335598353798;30.493520873928826,59.85849897399352;";district[3] = [];district[3]["id"]="3";district[3]["polygon"]="30.268532105870843,59.834966957389064;30.226849052325836,59.82520704212504;30.184200828279007,59.82323800206074;30.2394340692609,59.86391797560063;30.215124084748805,59.864691982073346;30.199966119818008,59.86886097046792;30.181288036585496,59.86671996077601;30.161480981068873,59.8742009639473;30.172390179769685,59.884077031279695;30.167854130413836,59.88633802264047;30.09865705749427,59.899139957021696;30.092164026844895,59.90457002960955;30.177811118753844,59.88762100293584;30.194096975957013,59.88970704437947;30.216028054584715,59.90380100108905;30.207061077016817,59.90857395870476;30.21419815467394,59.91618502445775;30.228848154077667,59.91348098617774;30.26199515474358,59.91577997215986;30.260297016266474,59.909698018152625;30.250364148188915,59.90137995529552;30.25352714260483,59.900134021617745;30.26226011762659,59.89983696554315;30.26915311262789,59.902321973768636;30.27583010527892,59.90102301546873;30.28226085525063,59.90394398131737;30.29675893300133,59.90258699313098;30.29842107108672,59.89139003236894;30.29371509988199,59.882317005987886;30.300445013108828,59.8825560005945;30.293166093908365,59.8771440059004;30.290368863472253,59.85123797482621;30.283515828905752,59.8434429650327;";district[4] = [];district[4]["id"]="4";district[4]["polygon"]="30.26871714788425,59.83496803873102;30.290368863472253,59.85123797482621;30.293166093908365,59.8771440059004;30.300445013108828,59.8825560005945;30.29371509988199,59.882317005987886;30.297365899605612,59.89608202969675;30.319262057853354,59.89631696739309;30.31843188882045,59.908534037798255;30.332626843272916,59.91297898879003;30.38198482032724,59.81895896664652;30.324330913006555,59.805010005958664;30.325981890970525,59.776366029776355;30.337013130999246,59.76863099069845;30.309706113877024,59.74446697431236;30.247750879754456,59.76650798005764;30.27377988297086,59.7776240212577;30.27069212937363,59.778828980111854;30.287515832428998,59.791505978149445;30.281919931541104,59.795583032893944;30.270169043682035,59.794680021191674;30.269194153074448,59.78998403706692;30.222162881336548,59.79697598115681;30.201479936289537,59.79574299034711;30.20018284217612,59.80350699316428;30.21942505154676,59.80130800192214;30.22428798445937,59.812010963220374;30.240223917855086,59.812905027931485;30.247710919319662,59.822711017950596;30.26871714788425,59.83496803873102;";district[5] = [];district[5]["id"]="5";district[5]["polygon"]="30.332626843272916,59.91297898879003;30.34220006743727,59.915976026720976;30.363342017478615,59.913803990139954;30.41997387367856,59.87004398936447;30.475320155890444,59.83405798690643;30.44053117735849,59.82927203192249;30.430824031736975,59.82440597312361;30.40469386741986,59.81864801958609;30.383288034507256,59.8163049592475;30.332626843272916,59.91297898879003;";district[6] = [];district[6]["id"]="6";district[6]["polygon"]="30.39960989210213,59.95554302044118;30.385166174942924,59.95780002940985;30.36856315428876,59.95187997933952;30.34946998653981,59.95185402880528;30.354052116397046,59.9597709591685;30.343736924159497,59.97734396532233;30.360591947555648,59.979033981616055;30.36752598300351,59.97750098364971;30.36248484815192,59.983770967168425;30.3472149220029,59.98998998103201;30.360319064586463,59.994221042338104;30.36518091748732,59.99805397242655;30.369896968801733,60.00742597366393;30.365037995932212,60.033962032439874;30.38775208307968,60.05908802758415;30.388293168967127,60.057108975661585;30.418286895322893,60.04958496761808;30.415385983758647,60.046626992859345;30.437988109687883,60.03985097695556;30.4365470140076,60.01549296081175;30.44248815865201,60.00003101732291;30.41269387446634,59.97211500779336;30.407199134679175,59.9593220025961;30.39960989210213,59.95554302044118;";district[7] = [];district[7]["id"]="7";district[7]["polygon"]="30.31843188882045,59.908534037798255;30.319262057853354,59.89631696739309;30.29522711633394,59.89609300308723;30.29772482351099,59.90085304276973;30.29675893300133,59.90258699313098;30.28295602281461,59.90389802987739;30.27583010527892,59.90102301546873;30.26915311262789,59.902321973768636;30.26226011762659,59.89983696554315;30.25389182657288,59.90007997074111;30.250364148188915,59.90137995529552;30.2548379168671,59.90343599404458;30.260297016266474,59.909698018152625;30.262305838124064,59.91644903390477;30.267209091475387,59.920208040945575;30.273276957498627,59.9294409623815;30.278238891488446,59.93226597875863;30.2923409649303,59.93556896773353;30.308113096543718,59.94112097214882;30.31262286561362,59.938060994792956;30.310143158632417,59.93637301285655;30.327020862275358,59.92503201331957;30.33015109633481,59.92622596703533;30.335845998299906,59.92345103220653;30.342759873528404,59.91701201330486;30.34211006645798,59.91597000397092;30.31843188882045,59.908534037798255;";district[8] = [];district[8]["id"]="8";district[8]["polygon"]="30.321819165676732,59.97846200925717;30.331857154898096,59.97208898341819;30.33764817790906,59.95752297300763;30.3440080071091,59.95185196353698;30.312605945429517,59.9449079811058;30.308355019176037,59.94616300626567;30.292925971295634,59.94680496005974;30.274589171776572,59.95210203965196;30.262993085601874,59.95723397359025;30.240770043797376,59.96020698253438;30.232996839218682,59.9633410284187;30.23659111832732,59.967713007036735;30.23354116514139,59.96874898839374;30.23120293969962,59.96789798365447;30.223636017365447,59.96934796338768;30.22061198446155,59.96879404203022;30.21335502550002,59.97218303002881;30.215794052038586,59.978882981876545;30.22762810080251,59.978930982462835;30.23705408336475,59.981243002784055;30.250428948894,59.982224014836795;30.26520386965697,59.98238397041479;30.27435192919518,59.98122299647345;30.295609080490014,59.98282696168044;30.321819165676732,59.97846200925717;";district[9] = [];district[9]["id"]="9";district[9]["polygon"]="30.26871714788425,59.83496803873102;30.247710919319662,59.822711017950596;30.240223917855086,59.812905027931485;30.22428798445937,59.812010963220374;30.21942505154676,59.80130800192214;30.20018284217612,59.80350699316428;30.201910140970508,59.795954010310545;30.17898797155895,59.79092101312887;30.176412863539714,59.79592297539353;30.150127177530393,59.801181987802075;30.129316071088894,59.78245704268408;30.160029085271084,59.79361097302957;30.142928899207362,59.762318989011646;30.116372130248447,59.76161800304058;30.117147938689865,59.74529201797481;30.10610013848095,59.7365829863441;30.111638078738174,59.73539601992769;30.10492796572677,59.72918601320682;30.112614049357518,59.713375021764044;30.123703970024735,59.706842043190235;30.134527847797198,59.7066509921763;30.135851942204404,59.69622402662496;30.120620176470595,59.69160998104333;30.119405163250274,59.6949239559835;30.11450190989895,59.69417295592735;30.11605712682096,59.69930899191624;30.101187885031692,59.69907202414125;30.08066298170431,59.715840011938205;30.055251025201876,59.712418043511356;30.04970012480363,59.71751500877962;30.041247952837224,59.71561202427315;30.03498496469091,59.71808697714505;30.04590604352099,59.71950396955023;30.060508162403732,59.74043895705698;30.076070051729552,59.74801096639327;30.06598886203814,59.75179198937515;30.072148169056337,59.755911037817;30.06221098093177,59.75698798210203;30.060724884761846,59.76205203448699;30.04254792698199,59.76370402958571;30.084803026751317,59.775759042703925;30.08371509491375,59.77980102125807;30.09807205112893,59.78383095659224;30.104007075706754,59.80256099105803;30.123372046413145,59.80442798440624;30.127823854852384,59.80908702775208;30.104562921754802,59.817297002394255;30.075296043307723,59.8153400261791;30.06978690336387,59.83812603769099;30.091573980424716,59.83570298265935;30.09053608913163,59.8527899842091;30.09989907100837,59.853407003045035;30.096187070618836,59.863449979669824;30.107624035062166,59.863597996026805;30.10659190383175,59.85890499761496;30.108632046030134,59.86332600195711;30.116125887569126,59.86260400488819;30.11717097894056,59.858607031331076;30.118375912051203,59.86258302631203;30.14976897363285,59.86245697450191;30.15568815803832,59.8718620041907;30.17144408947547,59.87162599284759;30.1823388880196,59.86658798298369;30.199966119818008,59.86886097046792;30.215124084748805,59.864691982073346;30.2394340692609,59.86391797560063;30.184200828279007,59.82323800206074;30.226849052325836,59.82520704212504;30.26871714788425,59.83496803873102;";district[10] = [];district[10]["id"]="10";district[10]["polygon"]="30.506113090942243,59.93683198358839;30.496733908889226,59.93309696796859;30.448854827926482,59.93670100374758;30.42709511116333,59.92064099143657;30.409593880735923,59.9152690202874;30.395553007959986,59.92617600265304;30.402966928629386,59.94868503696757;30.39960989210213,59.95554302044118;30.407199134679175,59.9593220025961;30.41269387446634,59.97211500779336;30.44248815865201,60.00003101732291;30.4365470140076,60.01549296081175;30.437966149448936,60.03823796303127;30.442803882087343,60.040511975486304;30.457858165890002,60.03818995918492;30.468396920560092,60.03351202474763;30.4623510147758,60.028365968064364;30.46859996276936,60.02730704207779;30.464427877373733,60.02553196565546;30.467936835554006,60.02259996384587;30.475194874527276,60.0251550418937;30.482846037778064,60.0203129753679;30.48942402935188,60.02297799205871;30.488329977447716,60.011105978731436;30.49079708429182,60.00806198578865;30.5041348694176,60.006749967618106;30.499284896646017,60.000530975971046;30.50788791025369,59.98719196456144;30.514721144604753,59.98402501781936;30.534775162808533,59.99247799369866;30.533975954112503,59.98864997647426;30.537863996417517,59.98802803082813;30.528125890459126,59.98201902295948;30.55102609963174,59.981264982797406;30.547318059285292,59.97869402935747;30.554146973589347,59.979209025606735;30.55715912636398,59.97235802062352;30.566526068283817,59.97088699388218;30.552673837560448,59.96875697599513;30.5440168233652,59.97708699200205;30.513066926605543,59.97078800772517;30.506113090942243,59.93683198358839;";district[11] = [];district[11]["id"]="11";district[11]["polygon"]="30.402128119502468,59.92083602852318;30.392635896219474,59.91800796808139;30.368470993285975,59.91399601103976;30.359096131279973,59.91398603245302;30.34211006645798,59.91597000397092;30.342759873528404,59.91701201330486;30.335845998299906,59.92345103220653;30.33015109633481,59.92622596703533;30.327020862275358,59.92503201331957;30.310143158632417,59.93637301285655;30.31262286561362,59.938060994792956;30.308113096543718,59.94112097214882;30.312605945429517,59.9449079811058;30.339776161063227,59.951510025160125;30.366349130198408,59.95156695527201;30.37683784432402,59.95390100538445;30.385166174942924,59.95780002940985;30.393615106874073,59.957253994445345;30.401034067598307,59.954895041201226;30.403099050066967,59.95134399340588;30.400399020688486,59.93908703726717;30.394173112945627,59.92909699491898;30.396909142715824,59.92446997923859;30.402128119502468,59.92083602852318;";district[12] = [];district[12]["id"]="12";district[12]["polygon"]="30.308113096543718,59.94112097214882;30.277743886102385,59.93207298573584;30.27169906032984,59.92804296575589;30.26677708677483,59.91984303510097;30.264182178540153,59.91835897207207;30.258968961816176,59.918364005648954;30.230761934901132,59.926665039277346;30.23494698043778,59.92756203693871;30.230139848132335,59.929920965330346;30.231850946750452,59.93317198867156;30.229563841864923,59.932701017557584;30.227498139388427,59.92859703165171;30.220713865570094,59.92880900477969;30.21442315712214,59.93123100904742;30.210190951072352,59.93633096941743;30.208456092195696,59.932647019868334;30.200532045975734,59.932815032355464;30.197942897803728,59.93012996481096;30.19421289721833,59.9308740317726;30.193169965870403,59.93177100510005;30.195975836400528,59.9315119698248;30.197446092398085,59.93445998223484;30.194802943638514,59.93947500633108;30.18852015527674,59.941043005305495;30.183085176139812,59.94072403995608;30.177893919654785,59.94436200243991;30.17910101278893,59.94524397040164;30.190459136374404,59.943541984631516;30.19480402365026,59.95080297013657;30.183441940021687,59.95250000247777;30.18449891152239,59.954330013040256;30.20466417093656,59.95074998978823;30.203539158695527,59.95384704232747;30.207304079660886,59.959005009186356;30.23139014173653,59.96188503974497;30.232996839218682,59.9633410284187;30.24107712713868,59.96014100036881;30.26551995309621,59.95657902457521;30.274589171776572,59.95210203965196;30.290841908619367,59.9472680068438;30.31090096687798,59.94582199691827;30.312307862186127,59.94392702729121;30.308113096543718,59.94112097214882;";district[13] = [];district[13]["id"]="13";district[13]["polygon"]="30.576481976612065,59.72988596455438;30.55599811373124,59.73728395723448;30.55664792080165,59.74955696268006;30.523086915631037,59.748006991088246;30.52390016447984,59.75366400238691;30.508386875682838,59.75814103169405;30.512902044811497,59.776431024761195;30.52163897987634,59.78093098676893;30.513857855211473,59.78483398710411;30.517311012784596,59.78706303602137;30.50513496029939,59.78649098788226;30.481304141000997,59.79229800600852;30.45747008166734,59.80290600352733;30.446324000389048,59.82674801124936;30.434061906967653,59.825378034096424;30.44053117735849,59.82927203192249;30.475320155890444,59.83405798690643;30.512331078598923,59.80735296123386;30.508185993497076,59.810960958768945;30.522032104153848,59.82334896874014;30.54952308327772,59.81295101548071;30.55444685685232,59.82117698323898;30.55890910540516,59.819396036629506;30.5633378735937,59.82072100509468;30.55982999542518,59.82221602748164;30.573113059955556,59.8225830116527;30.62985687737374,59.793777977417875;30.69885810816239,59.78118000907227;30.72185587839655,59.78198798741066;30.737823132133055,59.778725988481106;30.725527918351286,59.770722988026726;30.7401588375474,59.765065985632546;30.73717296505872,59.759531032902316;30.742425062205736,59.75682097356641;30.759182164536437,59.754843001295676;30.748825931852327,59.75034303343104;30.75683313897716,59.74383103250442;30.703443838058806,59.74687599753586;30.696114158306017,59.74487601997927;30.679078052939545,59.73159695511213;30.684174988398286,59.72477497810596;30.649271168616767,59.72172898727355;30.631192851910207,59.7359159838464;30.616575972866855,59.7351229746137;30.617292020658027,59.73084099521108;30.576481976612065,59.72988596455438;";district[14] = [];district[14]["id"]="14";district[14]["polygon"]="29.449302872000672,60.17111199973977;29.5253288592243,60.1829550324838;29.545133034709586,60.194335009913694;29.591616020481705,60.19718495628811;29.772202985412516,60.180087973521054;29.919609109309192,60.14789401878295;29.94617811840129,60.108898034045495;29.918911061713878,60.088735018748;29.956099826357416,60.07416200413497;29.93598316747206,60.06910801958276;29.968710043566684,60.05101900350445;29.9556789817783,60.03662800479527;29.963642988433065,60.017908970805934;29.97740593818498,60.02046100763805;29.963042141895375,60.0096169590947;30.16595510975097,59.983964017135314;30.184614832783705,59.989807011731415;30.19308896498905,59.98098498324664;30.21427195547695,59.98082699462707;30.232996839218682,59.9633410284187;30.20466417093656,59.95074998978823;30.18449891152239,59.954330013040256;30.190459136374404,59.943541984631516;30.177901119733125,59.944020974504404;30.19421289721833,59.9308740317726;30.231850946750452,59.93317198867156;30.26199515474358,59.91577997215986;30.21381403049436,59.91610897640183;30.216028054584715,59.90380100108905;30.18224384698548,59.88771403057025;30.092164026844895,59.90457002960955;30.172390179769685,59.884077031279695;30.17174397273844,59.87170403339762;30.11717097894056,59.858607031331076;30.02329815752908,59.86088596859001;29.951828019876743,59.88756702159686;29.89443403538423,59.889659993614444;29.780739038291603,59.91541096214286;29.781811849964654,59.92910499211326;29.76845282460776,59.92729398258328;29.77926410224312,59.93052001576786;29.682888893603664,59.92885896518337;29.670487838670258,59.937595034151826;29.647108104280022,59.92969102843388;29.449302872000672,60.17111199973977;";district[15] = [];district[15]["id"]="15";district[15]["polygon"]="30.133939961400518,60.04803698384619;30.147467828594547,60.03485396820334;30.07975901186839,60.02755896562762;30.078336996395723,60.00349596227699;30.04289713078161,60.00673903092575;30.010443857664004,60.01977003533679;29.965369927223538,60.044380982022865;29.959439942700563,60.06181604374088;29.936042928122305,60.06901201239194;29.953427157276643,60.076511986779806;29.918936981995913,60.08869003948613;29.945990916364384,60.10333097837491;29.928896130359416,60.142349022575274;29.868065908477888,60.16195199724712;29.82258409359932,60.16548403885527;29.770091922442454,60.18037698244927;29.591616020481705,60.19718495628811;29.545133034709586,60.194335009913694;29.5253288592243,60.1829550324838;29.449302872000672,60.17111199973977;29.438696076590247,60.17642203807613;29.469275169315267,60.18470797624955;29.425113848804727,60.190676999486236;29.521234894678688,60.23363602439271;29.53101296107188,60.22196202327239;29.580944064362278,60.22070101181926;29.601755170803777,60.234148015995466;29.635963823021314,60.233834999651904;29.645754849555523,60.24286203759135;29.67617698057267,60.23712098753302;29.696480121487113,60.24542003525014;29.70947914292687,60.244152987284046;29.69286100210819,60.237385992249585;29.719642053507478,60.22594200803176;29.71324514390398,60.24126298700791;29.761955833915295,60.24458703039488;29.760466857714047,60.23665800302051;29.80253295542688,60.22114498531191;29.812952908804313,60.20695898743542;29.850131953342096,60.19657995950461;29.891975928638058,60.19525299160299;29.89267613625688,60.18910998332626;29.96268609802133,60.177456011130545;29.99878405079597,60.16116495556104;30.00761998693803,60.16490102708966;30.018281142939948,60.143655014510806;30.194225137351516,60.12546804041704;30.173789874999493,60.11313304365582;30.138982896271685,60.119953019830156;30.133847080389902,60.112103026513346;30.11373906159855,60.1143589783745;30.110328024483735,60.10676897397151;30.08871914936187,60.10788397056158;30.070802114410178,60.09611203613355;30.13672387169169,60.05977996504498;30.133939961400518,60.04803698384619;";district[16] = [];district[16]["id"]="16";district[16]["polygon"]="30.096187070618836,59.863449979669824;30.09989907100837,59.853407003045035;30.09053608913163,59.8527899842091;30.091573980424716,59.83570298265935;30.06978690336387,59.83812603769099;30.075296043307723,59.8153400261791;30.03880496625558,59.821709039974785;30.04442606741766,59.8373409587627;30.020148843262024,59.83318801206521;30.003671823978856,59.83712299312174;29.992207139233898,59.833429974417484;29.97903999596484,59.83511302834499;29.94426613759741,59.828866005983265;29.936833856728246,59.83081596667682;29.94509882665773,59.84442500867206;29.892672896221626,59.853799039555234;29.886093824636056,59.842640984706726;29.877364089649554,59.844056013755846;29.879682154871954,59.852931023244444;29.862593848937497,59.85532003970327;29.86043310542688,59.86339298779411;29.82317882007042,59.86904902126473;29.80027717088213,59.85907995813491;29.77256586936098,59.871073042832585;29.753759984737894,59.868130001755084;29.751257957513833,59.87144803810322;29.72732309708339,59.870297024980886;29.718738083671564,59.87337596527936;29.716072974673043,59.88811402842701;29.72945612029239,59.89343895568116;29.724425065550484,59.90079503601397;29.707702163591915,59.90861900453466;29.659081834563796,59.91514298907309;29.65998292436837,59.92698899285281;29.647108104280022,59.92969102843388;29.670487838670258,59.937595034151826;29.682888893603664,59.92885896518337;29.68335509867635,59.93308798344184;29.743495913056577,59.92748403810806;29.77926410224312,59.93052001576786;29.76845282460776,59.92729398258328;29.777756045834252,59.924241981557685;29.781811849964654,59.92910499211326;29.77557406209252,59.92190197126557;29.780739038291603,59.91541096214286;29.788308120649283,59.91774495983318;29.838634868244604,59.90074899026881;29.870502054985117,59.90007799217157;29.89443403538423,59.889659993614444;29.91201194664598,59.89191898462793;29.912405070923494,59.88772095814961;29.935767165121785,59.88497302459137;29.9512869339893,59.884711013389015;29.951828019876743,59.88756702159686;29.953036913030466,59.88374896821695;30.02329815752908,59.86088596859001;30.044944833062253,59.864874024474034;30.0458768832037,59.86060098619118;30.049035917576525,59.86349697763582;30.063639116471023,59.860589010573875;30.096187070618836,59.863449979669824;";district[17] = [];district[17]["id"]="17";district[17]["polygon"]="30.576481976612065,59.72988596455438;30.564403845192324,59.70497300707395;30.530864080252822,59.70728601546824;30.5203541258961,59.690751026853455;30.4881089350426,59.688341022411265;30.47728793730148,59.6807480270482;30.49059116205122,59.67762703175038;30.48984811396626,59.669876018389914;30.502127847579597,59.66886001335208;30.503984027776326,59.65356195775589;30.504062148626346,59.646059018319534;30.4811950598141,59.63778898304441;30.466376938581075,59.63904804196072;30.435449002060356,59.66354601825719;30.42352495231715,59.662709983132245;30.40748713781288,59.64690598215128;30.396550938818272,59.652274994492736;30.385872862632255,59.64741101467958;30.366984177108222,59.65014501761818;30.351888132851172,59.65804002977094;30.326387975389043,59.656719990420626;30.3069589239854,59.661945033428694;30.254003067783273,59.633712987317175;30.242697864773614,59.638450969317496;30.26162399070502,59.648508956082686;30.244106920105263,59.65403200773808;30.238721981512818,59.66142898819616;30.24969814094222,59.67119897925955;30.22923803831992,59.67347503033633;30.229402920113966,59.6690159615824;30.218477161232958,59.67283700914351;30.236516957520386,59.685986963966364;30.235081981906703,59.69301497646531;30.27977394819109,59.71879502873985;30.271619859468075,59.72058001161825;30.283589989712677,59.72918700759474;30.279502865241486,59.739373044990245;30.291443835168806,59.73619697609273;30.301387863367804,59.74741602057793;30.309706113877024,59.74446697431236;30.337013130999246,59.76863099069845;30.325981890970525,59.776366029776355;30.324330913006555,59.805010005958664;30.348126091917152,59.81285597447547;30.446324000389048,59.82674801124936;30.45747008166734,59.80290600352733;30.481304141000997,59.79229800600852;30.517311012784596,59.78706303602137;30.52163897987634,59.78093098676893;30.512902044811497,59.776431024761195;30.508386875682838,59.75814103169405;30.52390016447984,59.75366400238691;30.523086915631037,59.748006991088246;30.55664792080165,59.74955696268006;30.55599811373124,59.73728395723448;30.576481976612065,59.72988596455438;";				var activePolyStyle = {
+				    polygonStyle : {
+				        fill : true,
+				        outline : true,
+				        strokeWidth : 1,
+				        strokeColor : '1e5a01ff',
+				        fillColor: '00ff0080'
+				    }
+				};
+				
+				var normalPolyStyle = {
+				    polygonStyle : {
+				        fill : true,
+				        outline : true,
+				        strokeWidth : 1,
+				        strokeColor : '1e5a01ff',
+				        fillColor: '2f8c0280'
+				    }
+				};
+			
+				$('.map_info_list_districts ul li').click(function(){
+					var id = $(this).attr('rel');				
+						ToggleDistrictOnMap(id);
+				});
+	//			
+	//			$('.map_info_list_districts ul li').mouseover(function(){
+	//				var 
+	//					id = $(this).attr('rel'),
+	//					count = gCollection.length()
+	//				;				
+	//						for (var i=0; i<count;i++){
+	//							var poly = gCollection.get(i);
+	//								if (poly.id == id) {
+	//					                poly.setStyle(activePolyStyle);
+	//								}
+	//						}
+	//			});
+	//			
+	//			$('.map_info_list_districts ul li').mouseleave(function(){
+	//				var 
+	//					id = $(this).attr('rel'),
+	//					count = gCollection.length()
+	//				;				
+	//						for (var i=0; i<count;i++){
+	//							var poly = gCollection.get(i);
+	//								if (poly.id == id) {
+	//					                poly.setStyle(normalPolyStyle);
+	//								}
+	//						}
+	//			});
+	//			
+	//			
+				function ToggleDistrictOnMap(id){
+					var 
+						count = gCollection.getLength(),
+						existed = false
+					;
+					/*
+					map.panTo([37.609218, 55.753559], {
+					    flying: true,
+					    duration: 1000
+					});
+					*/
+					
+					if (count>0){
+						gCollection.each(function(obj){
+							if (obj.properties.get('id') == id){
+								gCollection.remove(obj);
+								_removeFromListFilter(obj.properties.get('hintContent'));
+								$('.map_info_list_districts ul li[rel='+id+']').removeClass('selected').removeClass('over').find('i').removeClass('selected');
+								$('.map_info_list_districts ul li[rel='+id+']').find('span').css('border-bottom','1px dotted #777');
+								existed = true;
+							}
+						});
+						if (!existed) addDistrictOnMap(district[id]['polygon'], id);		
+					}else addDistrictOnMap(district[id]['polygon'], id);	
+					UpdateClearButton();
+					
+					function _removeFromListFilter(name){
+						$('.ex_location_list.ex_location_regions').find('dl[rel='+name+']').remove();
+					}
+					
+				}
+	//			
+	
+				function addDistrictOnMap(polygon_str, id){
+					var geometry = new Array;
+					var levels = ''; // Строка кодов уровней. У всех 'A'
+					
+					polygon_str = polygon_str.split(';');
+					for(var i=0;i<polygon_str.length-1;i++){
+						coord = polygon_str[i].split(',');
+						geometry.push(new Array(coord[0],coord[1]));
+					} 
+					geometry = [geometry];
+					
+					var
+						properties = { 
+							id: id, 
+							draw_type: 'district', 
+							hintContent: $('.map_info_list_districts ul li[rel='+id+']').find('span').html()
+						},
+					 	options = {
+					        fill: true,
+					        draggable: false,
+					        strokeColor: '#ff0000',
+					        fillColor:   '#6699ff',
+					        strokeWidth: 2,
+					        opacity: 0.5
+					    },
+					 	polygon = new ymaps.Polygon(geometry,properties, options)
+					 ;
+	
+					polygon.events.add('mouseenter', function (e) {
+						var id = e.get('target').properties.get('id');				
+						$('.map_info_list_districts ul li[rel='+id+']').addClass('over');
+						//this.setStyle(activePolyStyle);
+						Hint('Два клика - удалить');
+					});
+					
+					polygon.events.add('mouseleave', function (e) {
+						var id = e.get('target').properties.get('id');				
+						$('.map_info_list_districts ul li[rel='+id+']').removeClass('over');
+						//this.setStyle(normalPolyStyle);
+					});
+	
+					gCollection.add(polygon);
+					
+					UpdateClearButton();
+					
+					_addToListFilter($('.map_info_list_districts ul li[rel='+id+']').find('span').html());
+					
+					function _addToListFilter(name) {
+						var templ = '<dl rel="'+ name +'">' +
+									'<dt>'+
+										name +
+									'</dt><dd></dd>'+
+								'</dl>';
+						if ($('.ex_location_list.ex_location_regions').find('dl[rel='+name+']').length < 1){
+							$('.ex_location_list.ex_location_regions').append($(templ));
+						}
+						
+						if ($('.ex_location_list.ex_location_regions').not(':empty'))
+							$('.ex_location_list.ex_location_regions').show();
+						else $('.ex_location_list.ex_location_regions').hide();
+						
+						$('.ex_location_list.ex_location_regions').find('dd').click(function(e){
+							e.stopPropagation();
+							ToggleDistrictOnMapFromListFilter($(this).parent().attr('rel')); //[new temp]
+							$(this).parent().remove();
+						});	
+					}
+				}
+
+				$('.map_info_clear ul').on('click', 'li', function(){
+					gCollection.removeAll();
+					if (typeof pointRadiusResizer != 'undefined') map.geoObjects.remove(pointRadiusResizer);
+					CursorHint.hide();
+				});
+		});
+		
+			function UpdateClearButton(){
+				var count = gCollection.getLength();
+				if (count>0)
+					$('.map_info_clear ul li').find('span').html('Очистить все ('+count+')');
+				else{
+					$('.map_info_clear ul li').find('span').html('Очистить все');	
+					Hint('Начните рисовать участки или выберите один из районов');
+				}
+			}
+			
+			$('.map_info_title').on('click', function(){
+				DrawCircle();
+			});
+			
+
+
+			</script>
+<script>
+	$(window).load(function() {
+		$('input[name=location_trigger][value=location_metro]').parent('span').mousedown().click();
+	});
+</script>
+<!-- Yandex.Metrika counter -->
+<script src="http://mc.yandex.ru/metrika/watch.js" type="text/javascript"></script>
+<div style="display:none;"><script type="text/javascript">
+try { var yaCounter67132 = new Ya.Metrika({id:67132,
+          clickmap:true,
+          accurateTrackBounce:true, webvisor:true,type:1});}
+catch(e) { }
+</script></div>
+<noscript><div><img src="http://www.cian.ru///mc.yandex.ru/watch/67132?cnt-class=1" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+	</body>
+</html>

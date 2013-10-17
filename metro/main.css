@@ -1,0 +1,22 @@
+.metro_selected dl{
+    float: none;
+}
+
+.metro_selected dd {
+    width: 7px;
+    height: 7px;
+    margin: 0px 0px -2px 5px;
+    padding: 0px;
+    display: inline-block;
+    background: url("popup_closer.gif") no-repeat scroll 0px 0px transparent;
+    cursor: pointer;
+    vertical-align: 2px;
+}
+
+.metro_selected dt {
+    display: inline-block;
+}
+.metro_selected dl dt{
+    font-style: italic;
+    font-size:13px;
+}

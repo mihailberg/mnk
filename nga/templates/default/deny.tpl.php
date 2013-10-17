@@ -1,0 +1,1 @@
+<span class="alert alert-error">Вы не супер-пользователь. Доступ запрещен.</span>

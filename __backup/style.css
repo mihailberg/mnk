@@ -1,0 +1,31 @@
+h1 {
+color:#7b7c7f;
+font-family:Tahoma;
+font-weight:normal;
+font-size:23px;
+}
+
+
+.menu, .menu:hover {
+color:#7b7c7f;
+font-family:Tahoma;
+font-weight:normal;
+font-size:18px;
+text-decoration:none;
+}
+
+
+.mys, .mys:hover {
+color:#dddcdd;
+font-family:Tahoma;
+font-weight:normal;
+font-size:13px;
+text-decoration:none;
+}
+
+.comingsoon {
+color:#fff;
+font-family:Tahoma;
+font-size:23px;
+
+}

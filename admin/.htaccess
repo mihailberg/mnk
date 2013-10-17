@@ -1,0 +1,11 @@
+#AuthType Basic
+#AuthName "Administrative Panel."
+#AuthUserFile /home/www/s536/public_html/admin/.htpasswd
+#require valid-user
+
+RewriteEngine off
+
+#<files *.php>
+#Order Deny,Allow
+#Allow From All
+#</files>

@@ -1,0 +1,163 @@
+*{
+    font-family: Arial;
+}
+
+* {
+margin: 0;
+padding: 0;
+}
+header, nav, section, article, aside, footer, button {
+display: block;
+}
+html {
+width: 100%;
+height: 100%;
+}
+body {
+font: 12px/18px 'Arial', sans-serif;
+width: 100%;
+height: 100%;
+color: #808285;
+background: #000;
+}
+a {
+color: #808285;
+outline: none;
+text-decoration: underline;
+}
+a:hover {
+text-decoration: none;
+}
+p {
+margin: 0 0 18px
+}
+img {
+border: none;
+}
+.cb {
+clear: both;
+}
+.left {
+float: left;
+}
+.right {
+float: right;
+}
+#wrapper {
+width: 1060px;
+margin: 0 auto;
+}
+#header {
+height: 175px;
+padding-top: 75px;
+}
+#logo {
+width: 250px;
+height: 100px;
+margin: 0 auto 75px;
+overflow: hidden;
+}
+#logo a {
+display: block;
+width: 100%;
+height: 100%;
+}
+#content {
+border-top: 1px solid #ff9900;
+}
+#contentTop {
+text-align: center;
+font-size: 24px;
+position: relative;
+color: #fff;
+padding: 20px 0;
+}
+#contentTop a {
+position: absolute;
+top: 20px;
+text-decoration: none;
+padding-left: 20px;
+cursor: pointer;
+background: url('/img/index/arrowOrange.png') no-repeat 0 4px;
+}
+#contentTop #about {
+left: 5px;
+}
+#contentTop #phone {
+right: 5px;
+}
+#contentTop #phone span {
+font-size: 18px;
+}
+#contentTable {
+width: 1080px;
+}
+#contentTable .box {
+float: left;
+width: 255px;
+height: 210px;
+margin: 0 15px 15px 0;
+overflow: hidden;
+}
+#contentTable .box .img {
+height: 162px;
+overflow: hidden;
+}
+#contentTable .box .img a {
+display: block;
+width: 100%;
+height: 100%;
+}
+#contentTable .box .nav {
+width: 255px;
+height: 48px;
+background: url('/img/index/menuSprite.jpg') no-repeat 0 0;
+color: #ccc;
+text-align: center;
+display: table-cell;
+vertical-align: middle;
+}
+#contentTable .box .nav a {
+color: #ccc;
+text-decoration: none;
+margin-right: 10px;
+}
+#contentTable .box .nav a.last {
+margin-right: 0;
+}
+#contentTable .box .nav a span {
+display: inline-block;
+width: 10px;
+height: 14px;
+margin-right: 5px;
+
+background: url('/img/index/arrowOrangeSmall.png') no-repeat bottom left;
+}
+#contentTable .box .nav a:hover {
+color: #fff!important;
+}
+#contentTable .box .nav:hover a span {
+background: url('/img/index/arrowWhiteSmall.png') no-repeat  bottom left;
+}
+#contentTable .box .nav:hover {
+background-position: -255px 0;
+color: #000;
+}
+#contentTable .box .nav:hover a {
+color: #000;
+}
+#footer td {
+padding: 20px 28px 40px 0;
+}
+#footer td.last {
+padding-right: 0;
+}
+#footer td a {
+padding-left: 20px;
+font-size: 17px;
+text-decoration: none;
+background: url('/img/index/arrowOrange.png') no-repeat 0 4px;
+}
+#footer td a:hover {
+color: #ccc;
+}

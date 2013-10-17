@@ -1,0 +1,19 @@
+/* 
+    Document   : mFrame.css
+    Created on : Feb 9, 2010, 6:55:42 PM
+    Author     : NG
+    Description:
+        Purpose of the stylesheet follows.
+*/
+.m_frame    {background:#ffffff url(../images/content_left.png) left repeat-y;}
+.m_left     {background: url(../images/content_right.png) right repeat-y;}
+
+/* Top */
+.m_top      {height:20px;background: url(../images/content_top.png) top repeat-x;}
+.m_t_l      {height:20px;background: url(../images/content_top_left.png) top left no-repeat;}
+.m_t_r      {height:20px;background: url(../images/content_top_right.png) top right no-repeat;}
+
+/* Bottom */
+.m_bottom   {height:19px;background: url(../images/content_bottom.png) bottom repeat-x; clear:both;}
+.m_b_l      {height:19px;background: url(../images/content_bottom_left.png) bottom left no-repeat;}
+.m_b_r      {height:19px;background: url(../images/content_bottom_right.png) bottom right no-repeat;}

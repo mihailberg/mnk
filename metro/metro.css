@@ -1,0 +1,309 @@
+/*
+	(c) 2012 Copyright Art. Lebedev | http://www.artlebedev.ru/
+	Author - Oleg Korovin (madcow@design.ru)
+*/
+
+.metrobox{
+	position: relative;
+}
+
+.als_metro {
+	padding: 0 0 50px;
+	position: relative;
+	font:12px Arial;
+	float: left;
+}
+	.als_metro img {
+		position: relative;
+		z-index: 21;
+		opacity: 0;
+		filter:alpha(opacity=0);
+	}
+	.als_metro_station {
+		position: absolute;
+		top:0;
+		left:0;
+		cursor: pointer;
+		z-index: 22;  /* Станции лежат выше веток и пр. */
+		background: #fff;
+	}
+		.als_metro_station_label {
+			position: absolute;
+			top:0;
+			left:0;
+			background: url("metro.css") no-repeat 0 0; /* цсс в качестве бг, чтобы фиксить баг ИЕ */
+			z-index: 22;
+		}
+		
+	.als_metro_station_disable {
+		background-image: url('moscow/metro_t_grey.png')!important;
+		background-color: black!important;
+	}
+	
+	
+
+
+	.als_metro_station_active {}
+		.als_metro_station_active .als_metro_station_label:first-child{
+			/*background-color: white;
+			border: 2px solid gray;
+			border-radius: 4px;
+			margin: -2px 0 0 -2px;*/
+		}
+
+/****/
+	.als_metro_branch {
+		position: absolute;
+		top:0;
+		left:0;
+		cursor: pointer;
+		z-index: 22;
+		opacity: 0;
+		filter:alpha(opacity=0);
+	}
+		.als_metro_branch_label {
+			position: absolute;
+			top:0;
+			left:0;
+			background: url("metro.css") no-repeat 0 0;
+			z-index: 22;
+		}
+
+	.als_metro_branch:hover,
+	.als_metro_branch_hover,
+	.als_metro_branch_active {
+		opacity: 1;
+		filter:alpha(opacity=100);
+	}
+
+	.als_metro_branch_img {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top:0;
+		left:0;
+		z-index: 20;
+		background: url("") no-repeat 0 0;
+		opacity: 0;
+		filter:alpha(opacity=0);
+	}
+		.als_metro_branch_img_h {
+			width: 100%;
+			height: 100%;
+			background: url("") no-repeat 0 0;
+			opacity: 0;
+			filter:alpha(opacity=0);
+		}
+
+		.als_metro_branch_img_hover {
+			opacity: 1;
+			filter:alpha(opacity=100);
+			background-position: -10000px 0;
+		}
+			.als_metro_branch_img_hover .als_metro_branch_img_h {
+				opacity: 1;
+				filter:alpha(opacity=100);
+			}
+
+	.als_metro_branch_img_active {
+		opacity: 1;
+		filter:alpha(opacity=100);
+	}
+
+/****/
+	.als_metro_fade {
+		width: 100%;
+		min-height: 100%;
+		position: absolute;
+		top:0;
+		bottom: 0;
+		filter:alpha(opacity=70);
+		/*display: none;/**/
+		z-index: 2;
+	}
+
+/****/
+	.als_metro_actions {
+		padding: 5px 0;
+		display: inline-block;
+		//display: inline;
+		zoom:1;
+		position: absolute;
+		left: 0;
+		/*top:966px;*/
+		top:1127px;
+		z-index: 23;
+		/*background: #f2f2f2;*/
+	}
+		.als_metro_actions .pseudo {
+			margin: 0 10px 0 0;
+		}
+		
+		.als_metro_wrapper{
+			display: inline-block;
+			padding: 3px 6px 3px 6px;
+			border-radius: 3px;
+			margin: 6px 0 0 -7px;
+			border: 1px solid transparent;
+		}
+			.als_metro_wrapper.active{
+				background-color: #CCC;
+			}
+			
+		.als_metro_deselect{
+			color: #C00 !important;
+			border-color: #F88 !important;
+			font-weight: normal !important;
+			display: inline;
+			margin: 0 0 10px 0px;
+		}	
+
+/****/
+	.als_metro_search {
+		display: inline-block;
+		zoom: 1;
+		position: absolute;
+		left: 5px;
+		top: 5px;
+		z-index: 23;
+		font-size: 11px;
+	}
+		.als_metro_search input {
+			width: 250px;
+			height: 20px;
+			margin: 3px 0 0;
+			font: 16px Arial;
+		}
+		
+	.als_metro_controls_box{
+		float: left;
+		width: 900px;
+		padding-top: 5px;
+		z-index: 25;
+	}	
+
+
+
+
+/***********************************************************/
+.ui-autocomplete {
+	max-height: 150px;
+	overflow-y: auto;
+	/* prevent horizontal scrollbar */
+	overflow-x: hidden;
+	/* add padding to account for vertical scrollbar */
+	padding-right: 0px;
+
+	font:12px Arial;
+	border-radius: 0 !important;
+}
+.ui-autocomplete li:before {display: none;}
+
+.ui-autocomplete a {
+	border-radius: 0 !important;
+	color: #000 !important;
+	border-color: #fff !important;
+	/*border-left: none !important;/**/
+	/*border-right: none !important;/**/
+}
+.ui-autocomplete #ui-active-menuitem {
+	background: #DAE8F3 !important;
+}
+
+
+
+
+/***********************************************************/
+
+/***********************************************************/
+/*****************/
+/* Москва */
+.als_metro_moscow {
+	margin-right: 8px;
+	width: 900px;
+	height: 1108px;
+	background: url('moscow/metro.gif') no-repeat 0 0;
+}
+	.als_metro_moscow .als_metro_station_active .als_metro_station_label {
+		background-image: url('moscow/metro_t.png');
+	}
+	.als_metro_moscow .als_metro_station_active .als_metro_station_label.als_metro_station_point{
+		background: url('station_selected.png') no-repeat;
+		background-position: 0 0 !important;
+	}
+	.als_metro_moscow .als_metro_station:hover .als_metro_station_label:first-child,
+	.als_metro_moscow .als_metro_station_hover .als_metro_station_label:first-child {
+		background-image: url('moscow/metro_t.png');
+/*		border: 2px solid lightgray;
+		border-radius: 4px;
+		margin: -2px 0 0 -2px;*/
+	}
+
+
+/****/
+/* Чтобы картинки с выделенными названиями заранее подгрузились, прописываем их ветке и ее лейблу */
+.als_metro_moscow .als_metro_branch {
+	background-image: url('moscow/metro_t.png');
+}
+/*	.als_metro_moscow .als_metro_branch_label {
+		background-image: url('moscow/metro_tr.png?555');
+	}*/
+
+	.als_metro_moscow .als_metro_branch_active .als_metro_branch_label {
+		background-image: url('moscow/metro_t.png');
+	}
+/*	.als_metro_moscow .als_metro_branch:hover .als_metro_branch_label,
+	.als_metro_moscow .als_metro_branch_hover .als_metro_branch_label {
+		background-image: url('moscow/metro_tr.png?555');
+	}*/
+
+
+
+/***********************************************************/
+/*****************/
+/* Питер */
+.als_metro_spb {
+	width: 800px;
+	height: 911px;
+	margin-bottom: 30px;
+	position: relative;
+	top:30px;
+
+	background: url('spb/metro.png') no-repeat 0 0;
+}
+	.als_metro_spb .als_metro_station_active .als_metro_station_label {
+		background-image: url('spb/metro_t.png');
+	}
+	.als_metro_spb .als_metro_station_active .als_metro_station_label.als_metro_station_point{
+		background: url('station_selected.png') no-repeat;
+		background-position: 0 0 !important;
+	}
+	.als_metro_spb .als_metro_station:hover .als_metro_station_label:first-child,
+	.als_metro_spb .als_metro_station_hover .als_metro_station_label:first-child {
+		background-image: url('spb/metro_t.png');
+	}
+
+	.als_metro_spb .als_metro_search {
+		top:-30px;
+	}
+	.als_metro_spb .als_metro_actions {
+		top: 927px;
+	}
+
+
+/****/
+/* Чтобы картинки с выделенными названиями заранее подгрузились, прописываем их ветке и ее лейблу */
+.als_metro_spb .als_metro_branch {
+	background-image: url('spb/metro_t.png');
+}
+/*	.als_metro_spb .als_metro_branch_label {
+		background-image: url('spb/metro_tr.png');
+	}*/
+
+	.als_metro_spb .als_metro_branch_active .als_metro_branch_label {
+		background-image: url('spb/metro_t.png');
+	}
+/*	.als_metro_spb .als_metro_branch:hover .als_metro_branch_label,
+	.als_metro_spb .als_metro_branch_hover .als_metro_branch_label {
+		background-image: url('spb/metro_tr.png');
+	}*/

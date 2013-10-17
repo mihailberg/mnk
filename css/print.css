@@ -1,0 +1,31 @@
+@media print {
+  .logo.small {position: abosolute;top: 20px;left:480px;}
+  .phone,
+  .header-nav,
+  .flat-contact-box,
+  #footer,
+  .flat_3,
+  .tabs,
+  .flat-button-print,
+  .top_img,
+  #rh-snippet
+    {display: none;}
+  .b-content-form {
+    padding: 20px 0;
+    margin: 0 60px;
+  }
+  .flat {
+    margin: 0 auto;
+    width: 840px;
+  }
+  .contact_print_box {
+      display: block;
+      margin:30px auto 0px auto;
+
+      width:180px;
+
+  }
+}
+@page {
+  margin: 10px 0;
+}

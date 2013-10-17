@@ -1,0 +1,169 @@
+'Plugin name: MathPad.dll (Array of Numerical Methods for Notepad++)
+'Version: 0.0.5.4 - Built: 412. (Unicode version)
+'By: Carlo Somigliana, email: somic@libero.it, site: www.semelinanno.com
+'Original Web Page: www.semelinanno.com\downloads\MathPad\MathPad_Page.html
+'---------------------------------------------------------------------------
+
+'Incorporates library aNuMet.dll - rel. 0.0.5.5
+'------------------------------------------------------------------------------------
+'BatchRun : Time 12/03/2013 - 19:42:25
+'Input file: C:\xampp\htdocs\mnk-estate\app\views\patterns\flat.plate.php
+'Executed Commands: 52, Errors found: 52
+'************************************************************************************
+Ln 3: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 4: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 5: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 7: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 8: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 9: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 12: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 13: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 16: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 17: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 18: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 19: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 20: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 22: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 27: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 28: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 29: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 30: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 34: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 35: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 37: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 41: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 42: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 46: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 47: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 48: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 49: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 51: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 52: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 53: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 54: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 60: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 61: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 65: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 67: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 68: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 72: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 76: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 77: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 79: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 80: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 81: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 82: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 84: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 85: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 86: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 87: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 90: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 91: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 93: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 96: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+
+Ln 97: Expression = :
+ Result => ===> ERROR n. = 25: Undefined Command/Keyword    (Module: eval)
+'--- End Of BatchRun : Time 12/03/2013 - 19:42:25 - (Execution Time: 0 ms)----------
+'--- End Of BatchRun : Time 12/03/2013 - 19:42:29 - (Execution Time: 0 ms)----------

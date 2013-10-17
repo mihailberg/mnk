@@ -1,0 +1,16 @@
+DirectoryIndex index.php index.html
+<IfModule mod_rewrite.c>
+  RewriteEngine on
+  RewriteCond %{HTTP_HOST} ^www.(.*)$
+  RewriteRule ^(.*)$ http://%1/$1 [R=301,L]  
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-l
+  RewriteRule ^(.*)$ index.php [L,QSA]
+
+</IfModule>
+
+php_value upload_max_filesize "40M"
+php_value post_max_size "40M"
+php_flag magic_quotes_gpc off
+php_value display_errors on

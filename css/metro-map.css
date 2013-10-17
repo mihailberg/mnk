@@ -1,0 +1,1689 @@
+/*Sokol'nicheskaya red*/
+
+/*Yugo-zapadnaya*/
+#pp23 { 
+  background-position: -19px -611px;
+  left: 19px;
+  top: 611px;
+  width: 85px;
+  height: 15px;
+}
+/*Prospekt Vernadskogo*/
+#pp24  { 
+  background-position: -32px -594px;
+  left: 32px;
+  top: 594px;
+  width: 83px;
+  height: 19px;
+}
+/*Universitet*/
+#pp25 { 
+  background-position: -45px -584px;
+  left: 45px;
+  top: 584px;
+  width: 83px;
+}
+/*Vorobyevy gory*/
+#pp157 { 
+  background-position: -23px -574px;
+  left: 23px;
+  top: 574px;
+  width: 83px;
+}
+/*Sportivnaya*/
+#pp26 { 
+  background-position: -39px -565px;
+  left: 39px;
+  top: 565px;
+  width: 83px;
+}
+/*Frunzenskaya*/
+#pp27 { 
+  background-position: -34px -554px;
+  left: 34px;
+  top: 554px;
+  width: 83px;
+}
+/*Park kultury*/
+#pp28 { 
+  background-position: -143px -396px;
+  left: 143px;
+  top: 396px;
+  width: 83px;
+}
+/*Kropotkinskaya*/
+#pp29 { 
+  background-position: -214px -386px;
+  left: 214px;
+  top: 386px;
+  width: 83px;
+}
+/*Biblioteka Lenina*/
+#pp30 { 
+  background-position: -239px -357px;
+  left: 239px;
+  top: 357px;
+  width: 83px;
+  height: 11px;
+}
+/*Okhotniy ryad*/
+#pp31 { 
+  background-position: -235px -304px;
+  left: 235px;
+  top: 304px;
+  width: 83px;
+  height: 11px;
+}
+/*Lubyanka*/
+#pp32 { 
+  background-position: -289px -271px;
+  left: 289px;
+  top: 271px;
+  width: 54px;
+  height: 10px;
+}
+#pp32 span {
+  background-position:-331px -268px;
+  height: 13px;
+  right: -1px;
+  top: -3px;
+  width: 13px;  
+}
+/*Chistie prudy*/
+#pp33 {
+  background-position: -357px -238px;
+  left: 357px;
+  top: 238px;
+  width: 70px;
+  height: 7px;
+}
+#pp33 span {
+  background-position: -357px -239px;  
+  height: 11px;  
+  top: 1px;
+  width: 13px;  
+}
+/*Krasniye vorota*/
+#pp34 { 
+  background-position: -378px -223px;
+  left: 378px;
+  top: 223px;
+  width: 83px;
+}
+/*Komsomolskaya*/
+#pp35 { 
+  background-position: -390px -206px;
+  left: 390px;
+  top: 206px;
+  width: 90px;  
+}
+/*Krasnoselskaya*/
+#pp36 { 
+  background-position: -495px -50px;
+  left: 495px;
+  top: 50px;
+  width: 90px;  
+}
+/*Sokolniki*/
+#pp37 { 
+  background-position: -496px -39px;
+  left: 496px;
+  top: 39px;
+  width: 90px;  
+}
+/*Preobrazhenskaya ploshad*/
+#pp38 { 
+  background-position: -496px -20px;
+  left: 496px;
+  top: 20px;
+  width: 90px;
+  height: 15px;  
+}
+/*Cherkizovskaya*/
+#pp39 { 
+  background-position: -495px -10px;  
+  left: 495px;
+  top: 10px;
+  width: 83px;
+}
+/*Ul.Podbelskogo*/
+#pp40 { 
+  background-position: -495px -0px;  
+  left: 495px;
+  top: 0px;
+  width: 83px;
+}                      
+                       
+                        /*Zamoskvoreckaya GREEN*/
+ 
+/*Rechnoi vokzal*/
+#pp1 {
+  background-position: -130px -9px;
+  left: 130px;
+  top: 9px;  
+  width: 76px;  
+}
+/*Vodniy stadion*/
+#pp2 {
+  background-position: -136px -19px;
+  left: 136px;
+  top: 19px;   
+  width: 76px;  
+}
+/*Voikovskaya*/
+#pp3 {
+  background-position: -136px -29px;
+  left: 136px;
+  top: 29px;  
+  width: 76px;    
+}
+/*Sokol*/
+#pp4 {
+  background-position: -170px -39px;
+  left: 170px;
+  top: 39px;  
+  width: 76px;  
+}
+/*Aeroport*/
+#pp5 {
+  background-position: -156px -49px;
+  left: 156px;
+  top: 49px;  
+  width: 76px;  
+}
+/*Dinamo*/
+#pp6 {
+  background-position: -156px -59px;
+  left: 156px;
+  top: 59px;  
+  width: 76px;  
+}
+/*Belorusskaya*/
+#pp7 {
+  background-position: -170px -186px;
+  left: 170px;
+  top: 186px;  
+  width: 76px;  
+}
+/*Mayakovskaya*/
+#pp8 {
+  background-position: -235px -214px;
+  left: 235px;
+  top: 214px;  
+  width: 76px;  
+}
+/*Tverskaya*/
+#pp9 {
+  background-position: -232px -240px;
+  left: 232px;
+  top: 240px;  
+  width: 76px;  
+  height: 11px;
+}
+/*Teatralnaya*/
+#pp10 {
+  background-position:-250px -317px;
+  height:9px;
+  left:250px;
+  top:317px;
+  width:64px;
+}
+#pp10 span {
+  background-position:-305px -313px;
+  height:12px;
+  right:-1px;
+  top:-4px;
+  width:10px; 
+}
+/*Novokuznetskaya*/
+#pp11 {
+  background-position:-337px -339px;  
+  left: 337px;
+  top: 339px;
+  height: 28px;
+  width: 76px;
+}
+/*Paveleckaya*/
+#pp12 {
+  background-position:-330px -398px;  
+  left: 330px;
+  top: 398px;  
+  width:76px;
+}
+/*Avtozavodskaya*/
+#pp13 {
+  background-position:-395px -441px;  
+  left: 395px;
+  top: 441px;  
+  width: 83px;
+}
+/*Kolomenskaya*/
+#pp14 {
+  background-position:-395px -451px;  
+  left: 395px;
+  top: 451px;
+  width: 83px;
+}
+/*Kashirskaya*/
+#pp15 { 
+  background-position:-393px -461px;  
+  left: 393px;
+  top: 461px;
+  width: 83px;
+}
+/*kantemirovskaya*/
+#pp18 { 
+  background-position:-323px -573px;  
+  left: 323px;
+  top: 573px;
+  width: 83px;
+  height: 12px;
+}
+/*Tsaritsino*/
+#pp19 { 
+  background-position:-352px -584px;
+  left: 352px;
+  top: 584px;
+  width: 56px;
+}
+/*Orehovo*/
+#pp20 { 
+  background-position:-352px -595px;  
+  left:352px;
+  top:595px;
+  width:56px;
+  height:9px;
+}
+/*Domodedovskaya*/
+#pp21 { 
+  background-position:-323px -605px;  
+  left:323px;
+  top:605px;
+  width:83px;
+  height:9px;
+}
+/*Krasnogvardeiskaya*/
+#pp22 { 
+  background-position:-306px -619px;  
+  left: 306px;
+  top: 619px;
+  width: 100px;  
+}
+
+        
+
+                /*Arbatsko - pokrovskaya*/
+
+/*Shchelkovskaya*/
+#pp41 { 
+  background-position: -515px -109px;  
+  left: 515px;
+  top: 109px;
+  width: 83px;
+}
+/*Pervomaiskaya*/
+#pp42 { 
+  background-position: -515px -119px;
+  left: 515px;
+  top: 119px;
+  width: 83px;
+}
+/*Izmailovskaya*/
+#pp43 { 
+  background-position: -515px -129px;
+  left: 515px;
+  top: 129px;
+  width: 83px;
+}
+/*Izmaylovsky park*/
+#pp44 { 
+  background-position: -515px -139px;
+  left: 515px;
+  top: 139px;
+  width: 83px;
+  height: 15px;
+}
+/*Semyonovskaya*/
+#pp45 { 
+  background-position: -515px -159px;
+  left: 515px;
+  top: 159px;
+  width: 83px;
+}
+/*Elektrozavodskaya*/
+#pp46 { 
+  background-position: -515px -169px;
+  left: 515px;
+  top: 169px;
+  width: 92px;
+}
+/*Baumanskaya*/
+#pp47 { 
+  background-position: -515px -179px;
+  left: 515px;
+  top: 179px;
+  width: 83px;
+}
+/*Kurskaya*/
+#pp48 { 
+  background-position: -425px -265px;
+  left: 425px;
+  top: 265px;
+  width: 83px;
+  height: 13px;
+}
+/*Ploshcad revolutsii*/
+#pp49 { 
+  background-position: -311px -322px;
+  left: 311px;
+  top: 322px;
+  width: 106px;
+  height: 16px;
+}
+/*Arbatskaya (ap)*/
+#pp159 { 
+  background-position: -182px -369px;
+  left: 182px;
+  top: 369px;
+  width: 63px;
+  height: 16px;
+}
+/*Smolenskaya (ap)*/
+#pp160 { 
+  background-position: -124px -342px;
+  left: 124px;
+  top: 342px;
+  width: 65px;
+  height: 16px;
+}
+/*Kievskaya*/
+#pp52 { 
+  background-position: -161px -318px;
+  left: 161px;
+  top: 318px;
+  width: 37px;
+  height: 20px;
+}
+#pp52 span {
+  background-position:-190px -318px;
+  height:8px;
+  right:-5px;
+  top:0;
+  width:13px;  
+}
+/*Park pobedy / Victory park*/
+#pp171 { 
+  background-position: -54px -326px;
+  left: 54px;
+  top: 326px;
+  width: 92px;
+  height:15px;
+}
+/*Slavyanskiy bulvar*/
+#pp169 { 
+  background-position: -15px -283px;
+  left: 15px;
+  top: 283px;
+  width: 63px;
+  height:15px;
+}
+/*Molodyozhnaya*/
+#pp61 { 
+  background-position: -23px -187px;
+  left: 23px;
+  top: 187px;
+  width: 75px; 
+}
+/*Krylatskoye*/
+#pp62 { 
+  background-position: -23px -177px;
+  left: 23px;
+  top: 177px;
+  width: 75px; 
+}
+/*Strogino*/
+#pp168 { 
+  background-position: -23px -167px;
+  left: 23px;
+  top: 167px;
+  width: 75px; 
+}
+
+/*Myakininskaya*/
+#pp170 { 
+  background-position: -23px -157px;
+  left: 23px;
+  top: 157px;
+  width: 75px; 
+}
+/*Volokolamskaya*/
+#pp167 { 
+  background-position: -23px -147px;
+  left: 23px;
+  top: 147px;
+  width: 80px; 
+}
+
+/*Mitino*/
+#pp166 { 
+  background-position: -23px -137px;
+  left: 23px;
+  top: 137px;
+  width: 50px; 
+}
+                            /*Filevskaya light-blue*/
+
+
+/*Alexsandrovsky sad*/
+#pp53 {
+  background-position: -139px -356px;
+  left: 139px;
+  top: 356px;
+  width: 99px;
+  height:14px;
+}
+/*Arbatskaya (f)*/
+#pp158 {
+  background-position: -213px -343px;
+  left: 213px;
+  top: 343px;
+  width: 88px;
+  height: 8px;
+}
+/*Smolenskaya (f)*/
+#pp161 {
+  background-position: -198px -328px;
+  left: 198px;
+  top: 328px;
+  width: 88px;  
+}
+/*Vystavochnaya*/
+#pp162 {
+  background-position: -134px -298px;
+  left: 134px;
+  top: 298px;
+  width: 88px;  
+}
+
+/*Mezhdunarodnaya*/
+#pp163 {
+  background-position: -134px -288px;
+  left: 134px;
+  top: 288px;
+  width: 88px;
+  height: 9px;
+}
+
+/*Studencheskaya*/
+#pp54 {
+  background-position: -88px -277px;
+  left: 88px;
+  top: 277px;
+  width: 88px;
+}
+
+/*Kutuzovskaya*/
+#pp55 {
+  background-position: -78px -267px;
+  left: 78px;
+  top: 267px;
+  width: 88px;
+}
+/*Fili*/
+#pp56 {
+  background-position: -68px -257px;
+  left: 68px;
+  top: 257px;
+  width: 75px;
+}
+/*Bagrationovskaya*/
+#pp57 {
+  background-position: -58px -247px;
+  left: 58px;
+  top: 247px;
+  width: 88px;
+}
+/*Filyovsky park*/
+#pp58 { 
+  background-position: -48px -237px;
+  left: 48px;
+  top: 237px;
+  width: 75px;
+}
+/*Pionerskaya*/
+#pp59 { 
+  background-position: -38px -227px;
+  left: 38px;
+  top: 227px;
+  width: 75px;
+}
+/*Kuntsevskaya*/
+#pp60 { 
+  background-position: -21px -210px;
+  left: 21px;
+  top: 210px;
+  width: 75px; 
+}
+                              /*Kol'tsevaya*/
+
+/*Dobryninskaya*/
+#pp132 { 
+  background-position: -294px -435px;
+  left: 294px;
+  top: 435px;
+  width: 80px;
+  height: 13px;
+}
+/*Krasnopresnenskaya*/
+#pp133 { 
+  background-position: -102px -221px;
+  left: 102px;
+  top: 221px;
+  width: 105px;
+  height: 13px;
+}
+#pp133 span {
+  background-position: -193px -216px;
+  height: 12px;
+  right: 4px;
+  top: -5px;
+  width: 10px; 
+}
+/*Novoslobodskaya*/
+#pp134 { 
+  background-position: -193px -173px;
+  left: 193px;
+  top: 173px;
+  width: 100px;
+  height: 13px;
+}
+
+
+                              /*Kaluzhsko-rizhskaya*/
+
+/*Medvedkovo*/
+#pp110 {
+  background-position: -396px -10px;
+  left: 396px;
+  top: 10px;
+  width: 70px;  
+}
+/*Babushkinskaya*/
+#pp109 {
+  background-position: -396px -20px;
+  left: 396px;
+  top: 20px;
+  width: 80px;  
+}
+/*Sviblovo*/
+#pp108 {
+  background-position: -396px -30px;
+  left: 396px;
+  top: 30px;
+  width: 55px;  
+}
+/*Botanichesky sad*/
+#pp107 {
+  background-position: -396px -40px;
+  left: 396px;
+  top: 40px;
+  width: 85px;  
+}
+
+/*VDNKH*/
+#pp106 {
+  background-position: -396px -50px;
+  left: 396px;
+  top: 50px;
+  width: 50px;  
+}
+
+/*Alexeevskaya*/
+#pp105 {
+  background-position: -396px -60px;
+  left: 396px;
+  top: 60px;
+  width: 70px;  
+}
+
+/*Rizhskaya*/
+#pp104 {
+  background-position: -396px -71px;
+  left: 396px;
+  top: 71px;
+  width: 55px;  
+}
+
+
+/*Prospekt mira*/
+#pp136 {
+  background-position: -357px -182px;
+  left: 357px;
+  top: 182px;
+  width: 77px;  
+}
+
+
+/*Sukharevskaya*/
+#pp102 {
+  background-position: -292px -208px;
+  left: 292px;
+  top: 208px;
+  width: 77px;
+  height: 9px;
+}
+
+/*Turgenevskaya*/
+#pp103 {
+  background-position: -357px -258px;
+  left: 357px;
+  top: 258px;
+  width: 77px;
+  height: 9px;
+}
+#pp103 span {
+  background-position:-354px -253px;
+  height:11px;
+  left:-3px;
+  top:-5px;
+  width:14px;  
+}
+/*Oktyaborskaya*/
+#pp100 {
+  background-position: -185px -426px;
+  left: 185px;
+  top: 426px;
+  width: 80px; 
+}
+/*Shabolovskaya*/
+#pp99 {
+  background-position: -129px -495px;
+  left: 129px;
+  top: 495px;
+  width: 80px;   
+}
+/*Leninsky prospekt*/
+#pp98 {
+  background-position: -156px -505px;
+  left: 156px;
+  top: 505px;
+  width: 55px;
+  height:15px;  
+}
+/*Akademicheskaya*/
+#pp97 {
+  background-position: -123px -525px;
+  left: 123px;
+  top: 525px;
+  width: 90px;  
+}
+/*Profsoyuznaya*/
+#pp96 {
+  background-position: -130px -535px;
+  left: 130px;
+  top: 535px;
+  width: 85px;  
+}
+/*Novye cheremushki*/
+#pp95 {
+  background-position: -143px -545px;
+  left: 143px;
+  top: 545px;
+  width: 75px;
+  height:15px;  
+}
+/*Kaluzhskaya*/
+#pp94 {
+  background-position: -140px -565px;
+  left: 140px;
+  top: 565px;
+  width: 75px;  
+}
+/*Belyaevo*/
+#pp93 {
+  background-position: -156px -575px;
+  left: 156px;
+  top: 575px;
+  width: 55px;  
+}
+/*Konkovo*/
+#pp92 {
+  background-position: -158px -585px;
+  left: 158px;
+  top: 585px;
+  width: 52px;  
+}
+/*Teply stan*/
+#pp91 {
+  background-position: -145px -595px;
+  left: 145px;
+  top: 595px;
+  width: 65px;  
+}
+/*Yasenevo*/
+#pp90 {
+  background-position: -155px -605px;
+  left: 155px;
+  top: 605px;
+  width: 55px;
+}
+/*Novoyasenevskaya*/
+#pp89 {
+  background-position: -114px -614px;
+  left: 114px;
+  top: 614px;
+  width: 95px;
+  height: 13px;
+}
+
+
+                    /*Tagansko-Krasnopresnenskaya violet*/
+
+/*planernaya*/
+#pp63 {
+  background-position: -133px -89px;
+  left: 133px;
+  top: 89px;
+  width: 65px;
+}
+/*skhodnenskaya*/
+#pp64 {
+  background-position: -117px -99px;
+  left: 117px;
+  top: 99px;
+  width: 80px;
+}
+
+/*Tushinskaya*/
+#pp65 {
+  background-position: -130px -109px;
+  left: 130px;
+  top: 109px;
+  width: 70px;
+}
+/*Shchukinskaya*/
+#pp66 {
+  background-position: -119px -119px;
+  left: 119px;
+  top: 119px;
+  width: 75px;
+}
+/*Oktyabrskoe pole*/
+#pp67 {
+  background-position: -103px -129px;
+  left: 103px;
+  top: 129px;
+  width: 90px;
+}
+/*Polezhaevskaya*/
+#pp68 {
+  background-position: -108px -139px;
+  left: 108px;
+  top: 139px;
+  width: 85px;
+}
+/*Begovaya*/
+#pp69 {
+  background-position: -141px -149px;
+  left: 141px;
+  top: 149px;
+  width: 55px;
+}
+/*Ul.1905 goda*/
+#pp70 {
+  background-position: -130px -159px;
+  left: 130px;
+  top: 159px;
+  width: 65px;
+}
+/*Barrikadnaya*/
+#pp71 {
+  background-position: -125px -208px;
+  left: 125px;
+  top: 208px;
+  width: 71px;
+  height: 11px;
+}
+/*Pushkinskaya*/
+#pp72 {
+  background-position: -169px -251px;
+  left: 169px;
+  top: 251px;
+  width: 70px;
+  height: 13px;
+}
+/*Kuznetsky most*/
+#pp73 {
+  background-position: -254px -260px;
+  left: 254px;
+  top: 260px;
+  width: 80px;
+  height: 11px;
+}
+/*Kitai gorod*/
+#pp74 {
+  background-position: -358px -296px;
+  left: 358px;
+  top: 296px;
+  width: 60px;  
+}
+/*Taganskaya*/
+#pp75 {
+  background-position: -418px -358px;
+  left: 418px;
+  top: 358px;
+  width: 65px;
+  height: 12px;
+}
+/*Proletarskaya*/
+#pp76 {
+  background-position: -460px -399px;
+  left: 460px;
+  top: 399px;
+  width: 77px;
+  height: 13px;
+}
+/*Volgogradsky prospekt*/
+#pp77 {
+  background-position: -495px -555px;
+  left: 495px;
+  top: 555px;
+  width: 77px;
+  height: 15px;
+}
+/*Tekstilshchiki*/
+#pp78 {
+  background-position: -495px -575px;
+  left: 495px;
+  top: 575px;
+  width: 80px;
+}
+
+/*Kuzminki*/
+#pp79 {
+  background-position: -495px -585px;
+  left: 495px;
+  top: 585px;
+  width: 55px;
+}
+
+/*Ryazansky prospekt*/
+#pp80 {
+  background-position: -495px -595px;
+  left: 495px;
+  top: 595px;
+  width: 58px;
+  height: 17px;
+}
+
+/*Vykhino*/
+#pp81 {
+  background-position: -495px -615px;
+  left: 495px;
+  top: 615px;
+  width: 55px;
+}
+/*Pronskaya*/
+#pp165 {
+  background-position: -495px -625px;
+  left: 495px;
+  top: 625px;
+  width: 70px;
+}
+
+                            /*Kalininskaya YELLOW*/
+
+/*Novokosino*/
+#pp173 {
+  background-position: -515px -209px;
+  left: 515px;
+  top: 209px;
+  width: 70px;
+}
+/*Novogireevo*/
+#pp82 {
+  background-position: -515px -219px;
+  left: 515px;
+  top: 219px;
+  width: 70px;
+}
+/*Perovo*/
+#pp83 {
+  background-position: -515px -229px;
+  left: 515px;
+  top: 229px;
+  width: 45px;
+}
+/*Shosse entuziastov*/
+#pp84 {
+  background-position: -515px -239px;
+  left: 515px;
+  top: 239px;
+  width: 70px;
+  height: 17px;
+}
+/*Aviamotornaya*/
+#pp85 {
+  background-position: -515px -259px;
+  left: 515px;
+  top: 259px;
+  width: 75px;
+}
+/*Ploshcad Ilyicha*/
+#pp86 {
+  background-position: -460px -310px;
+  left: 460px;
+  top: 310px;
+  width: 90px;
+  height: 12px;
+}
+/*Marksistskaya*/
+#pp87 {
+  background-position: -422px -345px;
+  left: 422px;
+  top: 345px;
+  width: 78px;
+  height: 12px;
+}
+/*Tretyakovskaya*/
+#pp88 {
+  background-position: -256px -350px;
+  left: 256px;
+  top: 350px;
+  width: 83px;
+  height: 8px;
+}
+#pp88 span {
+  background-position:-326px -347px;
+  height:13px;
+  right:1px;
+  top:-3px;
+  width:12px; 
+}
+
+
+                      /*Serpuhovsko-timiryazevskaya GREY*/
+/*Altufyevo*/
+#pp135 {
+  background-position: -322px -10px;
+  left: 322px;
+  top: 10px;
+  width: 60px;
+}
+/*Bibirevo*/
+#pp131 {
+  background-position: -322px -20px;
+  left: 322px;
+  top: 20px;
+  width: 60px;
+}
+/*Otradnoe*/
+#pp111 {
+  background-position: -322px -30px;
+  left: 322px;
+  top: 30px;
+  width: 60px;
+}
+/*Vladykino*/
+#pp112 {
+  background-position: -322px -40px;
+  left: 322px;
+  top: 40px;
+  width: 60px;
+}
+/*Petrovsko-Razumovskaya*/
+#pp113 {
+  background-position: -233px -80px;
+  left: 233px;
+  top: 80px;
+  width: 75px;
+  height: 17px;
+}
+
+/*Timiryazevskaya*/
+#pp114 {
+  background-position: -199px -118px;
+  left: 199px;
+  top: 118px;
+  width: 85px;  
+}
+/*Dmitrovskaya*/
+#pp115 {
+  background-position: -212px -128px;
+  left: 212px;
+  top: 128px;
+  width: 70px;
+}
+/*Savyolovskaya*/
+#pp116 {
+  background-position: -203px -138px;
+  left: 203px;
+  top: 138px;
+  width: 85px;
+}
+/*Mendeleyevskaya*/
+#pp117 {
+  background-position: -196px -160px;
+  left: 196px;
+  top: 160px;
+  width: 90px;
+  height: 12px;
+}
+/*Tsvetnoi Bulvar*/
+#pp118 {
+  background-position: -253px -190px;
+  left: 253px;
+  top: 190px;
+  width: 49px;
+  height: 18px;
+}
+/*Chekhovskaya*/
+#pp119 {
+  background-position: -241px -251px;
+  left: 241px;
+  top: 251px;
+  width: 74px;
+  height: 13px;
+}
+/*Borovitskaya*/
+#pp120 {
+  background-position: -247px -367px;
+  left: 247px;
+  top: 367px;
+  width: 75px;
+  height: 13px;
+}
+/*Polyanka*/
+#pp121 {
+  background-position: -296px -419px;
+  left: 296px;
+  top: 419px;
+  width: 55px;
+}
+/*Serpukhovskaya*/
+#pp122 {
+  background-position: -294px -447px;
+  left: 294px;
+  top: 447px;
+  width: 85px;
+  height: 15px;
+}
+/*Tulskaya*/
+#pp123 {
+  background-position: -257px -497px;
+  left: 257px;
+  top: 497px;
+  width: 55px;
+}
+/*Nagatinskaya*/
+#pp124 {
+  background-position: -239px -507px;
+  left: 239px;
+  top: 507px;
+  width: 75px;
+}
+/*Nagornaya*/
+#pp125 {
+  background-position: -250px -517px;
+  left: 250px;
+  top: 517px;
+  width: 75px;
+}
+/*Nakhimovsky prospekt*/
+#pp126 {
+  background-position: -241px -527px;
+  left: 241px;
+  top: 527px;
+  width: 75px;
+  height: 14px;
+}
+/*Sevastopolskaya*/
+#pp127 {
+  background-position: -220px -541px;
+  left: 220px;
+  top: 541px;
+  width: 86px;
+  height: 14px;
+}
+/*Chertanovskaya*/
+#pp128 {
+  background-position: -226px -575px;
+  left: 226px;
+  top: 575px;
+  width: 85px;
+}
+/*Yuzhnaya*/
+#pp129 {
+  background-position: -255px -585px;
+  left: 255px;
+  top: 585px;
+  width: 65px;
+}
+/*Prazhskaya*/
+#pp130 {
+  background-position: -245px -595px;
+  left: 245px;
+  top: 595px;
+  width: 65px;
+}
+/*Ul. Akademika Yangelya*/
+#pp155 {
+  background-position: -241px -605px;
+  left: 241px;
+  top: 605px;
+  width: 75px;
+  height: 17px;
+}
+/*Annino*/
+#pp156 {
+  background-position: -273px -625px;
+  left: 273px;
+  top: 625px;
+  width: 32px;
+}
+/*Bulvar Dm.Donskogo*/
+#pp172 {
+  background-position: -239px -645px;
+  left: 239px;
+  top: 645px;
+  width: 70px;
+  height: 13px;
+}
+#pp172 span {
+  background-position:-239px -645px;
+  height: 18px;
+  left: 0px;
+  top: 0px;
+  width: 54px; 
+}
+
+                                 /* Lublinskaya light green */
+
+/*Maryina roshcha*/
+#pp177 {
+  background-position: -322px -139px;
+  left: 322px;
+  top: 139px;
+  width: 90px;  
+}
+/*Dostoyevskaya*/
+#pp176 {
+  background-position: -320px -159px;
+  left: 320px;
+  top: 159px;
+  width: 85px;
+  height: 13px;
+}
+/*Ploshcad Suvorova*/
+#pp197 {
+  background-position: -320px -171px;
+  left: 320px;
+  top: 171px;
+  width: 105px;
+  height: 13px;
+}
+/*Trubnaya*/
+#pp175 {
+  background-position: -301px -191px;
+  left: 301px;
+  top: 191px;
+  width: 55px;
+  height: 13px;
+}
+/*Sretensky bulvar*/
+#pp174 {  
+background-position: -369px -245px;
+  left: 369px;
+  top: 245px;
+  width: 87px;
+  height: 13px;
+}
+/*Chkalovskaya*/
+#pp137 {
+  background-position: -427px -277px;
+  left: 427px;
+  top: 277px;
+  width: 75px;
+  height: 13px;
+}
+/*Rimskaya*/
+#pp138 {
+  background-position: -460px -323px;
+  left: 460px;
+  top: 323px;
+  width: 65px;
+  height: 13px;
+}
+/*Krestianskaya zastava*/
+#pp139 {
+  background-position: -460px -387px;
+  left: 460px;
+  top: 387px;
+  width: 114px;
+  height: 13px;
+}
+/*Dubrovka*/
+#pp140 {
+  background-position: -413px -525px;
+  left: 413px;
+  top: 525px;
+  width: 65px;
+}
+/*Kozhukhovskaya*/
+#pp144 {
+  background-position: -413px -535px;
+  left: 413px;
+  top: 535px;
+  width: 85px;
+}
+/*Pechatniki*/
+#pp141 {
+  background-position: -413px -545px;
+  left: 413px;
+  top: 545px;
+  width: 60px;
+}
+/*Volzhskaya*/
+#pp142 {
+  background-position: -413px -555px;
+  left: 413px;
+  top: 555px;
+  width: 65px;
+}
+/*Lyublino*/
+#pp143 {
+  background-position: -413px -565px;
+  left: 413px;
+  top: 565px;
+  width: 50px;
+}
+/*Bratislavskaya*/
+#pp145 {
+  background-position: -413px -575px;
+  left: 413px;
+  top: 575px;
+  width: 80px;
+}
+/*Maryino*/
+#pp146 {
+  background-position: -413px -585px;
+  left: 413px;
+  top: 585px;
+  width: 50px;
+}
+
+                                  /*Kakhovskaya*/
+/*Kakhovskaya*/
+#pp17 {
+  background-position: -306px -542px;
+  left: 306px;
+  top: 542px;
+  width: 70px;
+  height: 13px;
+}
+/*Varshavskaya*/
+#pp164 {
+  background-position: -371px -487px;
+  left: 371px;
+  top: 487px;
+  width: 80px;
+}
+
+
+
+
+
+
+                                    /*Butovskaya*/
+/*Ul.Starokochalovskaya*/
+#pp178 {
+  background-position: -294px -657px;
+  left: 294px;
+  top: 657px;
+  width: 115px;
+  height: 13px;
+}
+/*Skobelevskaya*/
+#pp179 {
+  background-position: -295px -675px;
+  left: 295px;
+  top: 675px;
+  width: 85px;
+}
+/*Bulvar admirala Ushakova*/
+#pp180 {
+  background-position: -295px -685px;
+  left: 295px;
+  top: 685px;
+  width: 130px;
+}
+/*Ul.Gorchakova*/
+#pp181 {
+  background-position: -295px -695px;
+  left: 295px;
+  top: 695px;
+  width: 95px;
+}
+/*Buninskaya alleya*/
+#pp182 {
+  background-position: -295px -705px;
+  left: 295px;
+  top: 705px;
+  width: 95px;
+}
+
+                                /*All stations on line*/
+
+.pp-z {
+  z-index: -1;
+}
+
+/*Sokol'nicheskaya*/
+#pp1001 {
+  background-position: -37px -762px;
+  left: 37px;
+  top: 762px;
+  width: 85px;
+  height: 9px;  
+}
+#pp2001 {  
+  background-position: -607px 0;  
+  left: 93px;
+  top: 29px;
+  width: 415px;
+  height: 584px;
+  z-index: 1;  
+}
+#pp2001 span {
+  background-position:-1032px -111px;
+  height:11px;
+  left:0;
+  top:575px;
+  width:9px;
+}
+/*Zamoskvoreckaya*/
+#pp1002 {
+  background-position: -37px -775px;
+  left: 37px;
+  top: 775px;
+  width: 110px;
+  height: 9px;
+}
+#pp2002 {
+  background-position: -1108px 0;
+  height: 552px;
+  left: 197px;
+  top: 69px;
+  width: 208px;
+  z-index: 1;
+}
+
+/*Arbatsko - pokrovskaya*/
+#pp1003 {
+  background-position: -37px -785px;
+  left: 37px;
+  top: 785px;
+  width: 110px;
+  height: 9px;
+}
+#pp2003 {
+  background-position: -607px -536px;
+  left: 23px;
+  top: 148px;
+  width: 501px;
+  height: 230px;
+  z-index: 1;
+}
+
+/*Filevskaya*/
+#pp1004 {
+  background-position: -37px -795px;
+  left: 37px;
+  top: 795px;
+  width: 110px;
+  height: 9px;
+}
+#pp2004 {
+  background-position: -1108px -551px;
+  height: 143px;
+  left: 29px;
+  top: 217px;
+  width: 202px;
+  z-index: 1;
+}
+/*Kol'tsevaya*/
+#pp1005 {
+  background-position: -149px -762px;
+  left: 149px;
+  top: 762px;
+  width: 140px;
+  height: 9px;
+}
+#pp2005 {
+  background-position: -1316px 0;
+  height:277px;
+  left:164px;
+  top:170px;
+  width:277px;
+  z-index: 1;
+}
+
+/*Kaluzhsko-rizhskaya*/
+#pp1006 {
+  background-position: -149px -775px;
+  left: 149px;
+  top: 775px;
+  width: 140px;
+  height: 9px;
+}
+#pp2006 {
+  background-position:-1684px 0;
+  height: 490px;
+  left: 197px;
+  top: 80px;
+  width: 208px;
+  z-index: 1;
+}
+
+/*Tagansko-Krasnopresnenskaya*/
+#pp1007 {
+  background-position: -149px -785px;
+  left: 149px;
+  top: 785px;
+  width: 140px;
+  height: 9px;
+}
+#pp2007 {
+  background-position:-1316px -357px;  
+  left: 182px;
+  top: 168px;
+  width: 323px;
+  height: 448px;
+  z-index: 1;
+}
+#pp2007 span {
+  background-position:-1161px -247px;
+  height:11px;
+  right: 0;
+  top: 2px;
+  width:10px;
+}
+
+/*Kalininskaya*/
+#pp1008 {
+  background-position: -149px -795px;
+  left: 149px;
+  top: 795px;
+  width: 140px;
+  height: 9px;
+}
+#pp2008 {
+  background-position:-1002px -694px;  
+  left: 350px;
+  top: 248px;
+  width: 174px;
+  height: 110px;
+  z-index: 1;
+}
+
+/*Serpuhovsko-timiryazevskaya*/
+#pp1009 {
+  background-position: -293px -762px;
+  left: 293px;
+  top: 762px;
+  width: 142px;
+  height: 9px;
+}
+#pp2009 {
+  background-position: -1594px 0;  
+  left: 241px;
+  top: 49px;
+  width: 90px;
+  height: 596px;
+  z-index: 1;
+}
+
+/*Lublinskaya*/
+#pp1010 {
+  background-position: -293px -775px;
+  left: 293px;
+  top: 775px;
+  width: 140px;
+  height: 9px;
+}
+#pp2010 {
+  background-position:-1745px -493px;  
+  left: 310px;
+  top: 216px;
+  width: 161px;
+  height: 311px;
+  z-index: 1;
+}
+#pp2010 span {
+  background-position: -1032px -127px;
+  height: 8px;
+  left: -7px;
+  top: -12px;
+  width: 12px;
+}
+
+/*Kakhovskaya*/
+#pp1011 {
+  background-position: -293px -785px;
+  left: 293px;
+  top: 785px;
+  width: 140px;
+  height: 9px;
+}
+#pp2011 {
+  background-position:-1031px 0;  
+  left: 318px;
+  top: 468px;
+  width: 77px;
+  height: 86px;
+  z-index: 1;
+}
+
+/*Butovskaya*/
+#pp1012 {
+  background-position: -293px -795px;
+  left: 293px;
+  top: 795px;
+  width: 140px;
+  height: 9px;
+}
+#pp2012 {
+  background-position:-1032px -98px;  
+  left: 296px;
+  top: 670px;
+  width: 9px;
+  height: 5px;
+  z-index: 1;
+}
+
+
+#metroimage {
+  position:relative;
+  z-index:10;
+}
+.op     { opacity: 0.4; filter:progid:DXImageTransform.Microsoft.Alpha(opacity=40)}
+.op-no  { opacity: 1; filter: none;}
+
+#metromap {
+  width: 607px;
+  height: 804px;
+  position: relative;
+}
+
+.pp {
+  position: absolute;
+  z-index:100;
+  background: url(../img/metro-map-select-rus2.gif) no-repeat 0 0;
+  height: 10px!important;
+  cursor: pointer;
+}
+.pp-no {
+  display: none;
+}
+.pp-b {
+  height: 14px;
+}
+#metrowindow{
+    position: relative;
+}
+
+#metromap-pop {
+  /*position: relative;
+  top: 86px;
+  left: 86px;
+  */
+}
+.pp-z {
+z-index:0;
+}
+
+/*
+top:2px;
+*/
+}
+
+#metromap-by-map {
+  position: relative;
+}
+
+
+
+
+#metro-list ul {
+  margin: 0;
+  list-style:  none;
+  overflow: hidden;
+  zoom: 1;
+}
+
+#metro-list li {
+  float: left;
+  margin:0 15px 7px 0;
+  list-style-type:none;
+}
+#metro-list li a {
+  display: inline-block;
+  text-decoration:none;
+  padding-right:0;
+  padding-left: 3px;
+  background:url(../img/ico-x.gif) no-repeat right 1px;
+  width:8px;
+  height:9px;
+  color:#43494e;
+
+}
+#metro-list a {
+  padding-left:15px;
+  background:url(../img/ico-add.gif) no-repeat left 2px;
+  width:12px;
+  height:13px;
+  color:#43494e;
+}
+#metro-list a:hover {
+  color:#1768aa;
+}
