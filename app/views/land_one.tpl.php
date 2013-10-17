@@ -1,4 +1,10 @@
-<?php if (!empty($landTypes[$land['type']])): ?><strong><?php echo $landTypes[$land['type']]; ?></strong>
+<?php if (!empty($land['type'])){
+    foreach($landTypes[$land['type']] as $t){
+        echo '<strong>'.$landTypes[$t].'</strong>';
+    }
+} ?>
+
+
     <br><?php endif; ?>
 <?php if (!empty($city[$land['cityID']])): ?>
     <span>Населенный пункт:&nbsp;</span><?php echo $city[$land['cityID']]['title']; ?><br><?php endif; ?>
