@@ -68,9 +68,11 @@ class land extends ngaController
                 $sql = ' AND `type` = '.(int)$_GET['type'];
             }
         }
-        $land_table->OverrideQuerySelect = "SELECT  `land`.`landID` AS `tid`, `land`.`type`, `land`.`cityID`,
+        $land_table->OverrideQuerySelect = "SELECT
+         `land`.`landID` AS `tid`, `land`.`type`, `land`.`cityID`,
 `land`.`highwayID`, `land`.`cottage_setID`, `land`.`regionID`, `land`.`settlement`, `land`.`train_way`, `land`.`square_house`, `land`.`square_land`, `land`.`price`, `land`.`mkad_remoteness`, `land`.`floors`, `land`.`year`, `land`.`otdelka`, `land`.`mebel`, `land`.`foundation`, `land`.`roof`, `land`.`ceilings`, `land`.`layout`, `land`.`form`, `land`.`fence`, `land`.`gate`, `land`.`landscape_design`, `land`.`parking`, `land`.`communication_electricity`, `land`.`communication_water`, `land`.`heating`, `land`.`internet`, `land`.`phone`, `land`.`ecology`, `land`.`probka`, `land`.`metro_access`, `land`.`infrastructure`, `land`.`latitude`, `land`.`longitude`, `land`.`elite`,
 `land`.`currency`,
+`land`.`title`,
 `land`.`best`,photo.THUMB, photo.MID,
 `highway`.`title` as `highway`
 FROM `land`
