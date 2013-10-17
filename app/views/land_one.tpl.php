@@ -34,7 +34,7 @@ if (!empty($land['price'])) {
 }
 
 
-if (2 != $land['type']) {
+if (in_array(2, $land['type'])) {
 //    echo '<span class="caption_span">Характеристики дома:</span>';
     if (!empty($land['floors'])) echo '    <span>Этажность/уровни:&nbsp;</span>' . $land['floors'] . '<br>';
     if (!empty($land['year'])) echo '    <span>Год постройки:&nbsp;</span>' . $land['year'] . '<br>';
