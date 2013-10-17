@@ -70,28 +70,38 @@ $commercial_block[7]->addValues(
     'аренда'
 );
 //тип сделки
-$commercial_block[8] = $commercial->add('Цена(при аренде цена/месяц)', 'price', 'string');
-$commercial_block[9] = $commercial->add('Цена за м<sup>2</sup> (при аренде за м<sup>2</sup>/год)', 'price_m', 'string');
-$commercial_block[10] = $commercial->add('Этаж', 'floor', 'num');
-$commercial_block[11] = $commercial->add('Этажность', 'floors', 'num');
-$commercial_block[12] = $commercial->add('Состояние отделки', 'otdelka', 'string');
-$commercial_block[13] = $commercial->add('Безопасность', 'security', 'string');
-$commercial_block[14] = $commercial->add('Мебель', 'furniture', 'string');
-$commercial_block[15] = $commercial->add('Провайдер', 'provider', 'string');
-$commercial_block[16] = $commercial->add('Телекоммуникации', 'tele', 'string');
-$commercial_block[17] = $commercial->add('Кондиционирование', 'conditioning', 'string');
-//$commercial_block[] = $commercial->add('Телекоммуникации', '', 'string');
-$commercial_block[18] = $commercial->add('Планировка', 'planing', 'image');
-$commercial_block[19] = $commercial->add('Парковка', 'parking', 'string');
-$commercial_block[20] = $commercial->add('Класс', 'class', 'string');
-$commercial_block[21] = $commercial->add('Общая площадь м<sup>2</sup>', 'square_full', 'string');
-$commercial_block[22] = $commercial->add('Перекрытия', 'overlap', 'string');
-$commercial_block[23] = $commercial->add('Описание места нахождения Объекта', 'desc_place', 'editor');
-$commercial_block[24] = $commercial->add('Описание ЖК/БЦ', 'desc_bc', 'editor');
-$commercial_block[26] = $commercial->add('Округ', 'district', 'select');
-$commercial_block[26]->addValues('Выберите значение', 'ЦАО', 'САО', 'ЗАО', 'ВАО', 'ЮАО', 'СВАО', 'СЗАО', 'ЮЗАО', 'ЮВАО');
 
-$commercial_block[27] = $commercial->add('Электричество', 'kwt', 'string');
+
+$commercial_block[8] = $commercial->add('Валюта', 'currency', 'select');
+$commercial_block[8]->setValueList(array(
+        1 => 'Рубли',
+        2 => '$',
+        3 => 'Евро'
+    ));
+
+
+$commercial_block[9] = $commercial->add('Цена(при аренде цена/месяц)', 'price', 'string');
+$commercial_block[10] = $commercial->add('Цена за м<sup>2</sup> (при аренде за м<sup>2</sup>/год)', 'price_m', 'string');
+$commercial_block[11] = $commercial->add('Этаж', 'floor', 'num');
+$commercial_block[12] = $commercial->add('Этажность', 'floors', 'num');
+$commercial_block[13] = $commercial->add('Состояние отделки', 'otdelka', 'string');
+$commercial_block[14] = $commercial->add('Безопасность', 'security', 'string');
+$commercial_block[15] = $commercial->add('Мебель', 'furniture', 'string');
+$commercial_block[16] = $commercial->add('Провайдер', 'provider', 'string');
+$commercial_block[17] = $commercial->add('Телекоммуникации', 'tele', 'string');
+$commercial_block[18] = $commercial->add('Кондиционирование', 'conditioning', 'string');
+//$commercial_block[] = $commercial->add('Телекоммуникации', '', 'string');
+$commercial_block[19] = $commercial->add('Планировка', 'planing', 'image');
+$commercial_block[20] = $commercial->add('Парковка', 'parking', 'string');
+$commercial_block[21] = $commercial->add('Класс', 'class', 'string');
+$commercial_block[22] = $commercial->add('Общая площадь м<sup>2</sup>', 'square_full', 'string');
+$commercial_block[23] = $commercial->add('Перекрытия', 'overlap', 'string');
+$commercial_block[24] = $commercial->add('Описание места нахождения Объекта', 'desc_place', 'editor');
+$commercial_block[26] = $commercial->add('Описание ЖК/БЦ', 'desc_bc', 'editor');
+$commercial_block[27] = $commercial->add('Округ', 'district', 'select');
+$commercial_block[27]->addValues('Выберите значение', 'ЦАО', 'САО', 'ЗАО', 'ВАО', 'ЮАО', 'СВАО', 'СЗАО', 'ЮЗАО', 'ЮВАО');
+
+$commercial_block[28] = $commercial->add('Электричество', 'kwt', 'string');
 
 if(isset($_GET['id'])){
     $commercial_block_subtable = $commercial->addBlock('Свободные помещения');
@@ -106,6 +116,10 @@ if(isset($_GET['id'])){
 if(!empty($_GET['gid'])){
     $commercial->addWhere('parent',(int)$_GET['gid']);
 }
+
+
+
+
 
 $commercial_block_best = $commercial->addBlock('Лучшее предложение');
 $commercial_block_best[0] = $commercial->add('Лучшее предложение', 'best', 'checkbox');
