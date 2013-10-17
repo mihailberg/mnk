@@ -41,7 +41,7 @@ if (2 != $land['type']) {
 }
 ?>
 <!--    <span class="caption_span">Описание участка:</span>-->
-<?php if (!empty($land['form'])): ?>  <span>Форма:&nbsp;</span><?php echo $land['form']; ?><br><?php endif; ?>
+<?php if (!empty($land['form'])): ?>  <span>Форма участка:&nbsp;</span><?php echo $land['form']; ?><br><?php endif; ?>
 <?php if (!empty($land['fence'])): ?>  <span>Ограждение&nbsp;</span><br><?php endif; ?>
 <?php if (!empty($land['gate'])): ?>  <span>Ворота&nbsp;</span><br><?php endif; ?>
 <?php if (!empty($land['landscape_design'])): ?>  <span>Ландашфтный дизайн</span><br><?php endif; ?>

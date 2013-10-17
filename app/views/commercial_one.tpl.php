@@ -51,7 +51,8 @@ if (!empty($commercialData['planing']) && file_exists($_SERVER['DOCUMENT_ROOT'] 
 <a class="fancybox" rel="otherRel" href="' . $commercialData['planing'] . '"><img src="/img/photo.png"></a><br />';
 }
 if (!empty($commercialData['parking'])){ echo "<span>Парковка:&nbsp;</span>".$commercialData['parking']."<br />";} ?>
-<?php if ($commercialData['type'] == 1 || $commercialData['type'] == 2) { ?>
+
+<?php if (in_array(1,$commercialData['type']) || in_array(2,$commercialData['type'])) { ?>
     <?php if (!empty($commercialData['square_full'])&&$commercialData['square_full']!='0.0'):                 ?><span>Общая площадь:&nbsp;</span><?php echo $commercialData['square_full']; ?>м<sup>2</sup><br /><?php endif; ?>
     <span>Класс объекта:&nbsp;</span><?php echo $commercialData['class']; ?><br />
 
