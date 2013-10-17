@@ -1,4 +1,5 @@
 <?php
+require_once 'select.field.php';
 class field_select_multi extends field_select implements fieldI{
 
 
@@ -11,7 +12,7 @@ class field_select_multi extends field_select implements fieldI{
 		if($this->source == 'table'){
 			$html.='<table width="100%"><tr><td>';
 		}
-		$html.='<select multiple="multiple" class="field select form" name="'.$this->sqlField.'" size="1" style="width:100%;margin:9px 5px 10px 0;" id = "'.$this->sqlField.'"';
+		$html.='<select multiple="multiple" class="field select form" name="'.$this->sqlField.'[]" size="1" style="width:100%;margin:9px 5px 10px 0;" id = "'.$this->sqlField.'"';
 		if($this->disabled){
 			$html.=' disabled="disabled"';
 		}
@@ -54,12 +55,12 @@ class field_select_multi extends field_select implements fieldI{
 		$html='';
 		foreach ($this->values as $k=>$v){
             if(is_array($aValue)){
-                $selected = 0;
+                $selected = false;
                 if(array_key_exists($k, $aValue)){
                     $selected = $k;
                 }
             }
-			if($selected == $k){
+			if($selected === $k){
 				$html.= '<option value="'.$k.'" selected="selected">'.$v.'</option>';
 			} else {
 				$html.= '<option value="'.$k.'">'.$v.'</option>';
@@ -93,5 +94,10 @@ class field_select_multi extends field_select implements fieldI{
 
 		return $html;
 	}
+
+    public function Save($type){
+
+        $this->value = implode(",",$this->value);
+    }
 }
 ?>

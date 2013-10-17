@@ -119,8 +119,6 @@ if(!empty($_GET['gid'])){
 
 
 
-
-
 $commercial_block_best = $commercial->addBlock('Лучшее предложение');
 $commercial_block_best[0] = $commercial->add('Лучшее предложение', 'best', 'checkbox');
 

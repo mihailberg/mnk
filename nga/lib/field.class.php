@@ -40,7 +40,11 @@ class fieldGeneral{
 	
 	public function getValueFromArray($inputArray){
 		if(isset($inputArray[$this->sqlField])){
-			$this->value = stripslashes(nga_config::i()->db()->real_escape_string($inputArray[$this->sqlField]));
+            if(is_array($inputArray[$this->sqlField])){
+                $this->value = $inputArray[$this->sqlField];
+            } else {
+                $this->value = stripslashes(nga_config::i()->db()->real_escape_string($inputArray[$this->sqlField]));
+            }
 		}
 	}
 	

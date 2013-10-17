@@ -14,7 +14,7 @@ $landID = $land_table->addID('ID', 'landID', 'num');
 
 //ПРИМЕЧАНИЕ
 $land_table_block = $land_table->addBlock('Основное');
-$land_table_block[0] = $land_table->add('Тип объекта', 'type', 'select');
+$land_table_block[0] = $land_table->add('Тип объекта', 'type', 'select_multi');
 $land_table_block[0]->addValues('Выберите значение', 'Дом', 'Земельный участок', 'Дача', 'Таунхаус');
 
 
