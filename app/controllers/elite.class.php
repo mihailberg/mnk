@@ -420,7 +420,7 @@ class elite extends ngaController
 
                  'land' as `eliteType`,
                   `land`.`landID` AS `tid`,
-
+                    `land`.`title` as `title`,
                   `land`.`type`,
                   `land`.`cityID`,
                   `land`.`highwayID`,
@@ -569,7 +569,7 @@ class elite extends ngaController
                   `land`.`landID` AS `tid`,
 
                   `land`.currency,
-
+                  `land`.`title` as `title`,
                   `land`.`type`,
                   `land`.`cityID`,
                   `land`.`highwayID`,

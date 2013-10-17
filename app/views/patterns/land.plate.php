@@ -1,13 +1,16 @@
 <?php
-$title = '';
-if (isset($landTypes[$gk['type']])) {
-    $title .= $landTypes[$gk['type']];
-}
-;
 
-if (!empty($gk['settlement'])) {
-    if ($title != '') $title .= " в ";
-    $title .= $gk['settlement'];
+$title = '';
+$title = $gk['title'];
+
+if(empty($title)){
+    if (isset($landTypes[$gk['type']])) {
+        $title .= $landTypes[$gk['type']];
+    }
+    if (!empty($gk['settlement'])) {
+        if ($title != '') $title .= " в ";
+        $title .= $gk['settlement'];
+    }
 }
 
 if (isset($gk['eliteType'])) {
@@ -40,7 +43,7 @@ echo "
             <div class='resultItemInfo'>
                 <div class='objId'>id&nbsp;" . $gk['tid'] . "</div>
                     <ul>
-                        " . (($gk['type'] != 0) ? "<li><strong style=\"font-weight:bold;\">" . $landTypes[$gk['type']] . "</strong></li>" : '');
+                        " . (($gk['type'] != 0) ? "<li><strong style=\"font-weight:bold;\">" . $title . "</strong></li>" : '');
 
                     echo "<li><strong>Цена:</strong>&nbsp;" . number_format($gk['price'], 0, '.', ' ') . " " . $currencyList[$gk['currency']] . "</li>";
                     echo isset($highway[$gk['highwayID']]['title']) ? "<li><strong>Шоссе:</strong>&nbsp;" . $highway[$gk['highwayID']]['title'] . "</li>" : "";

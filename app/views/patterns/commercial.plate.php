@@ -1,6 +1,6 @@
 <?php
 
-$title = $gk['address'];
+$title = $gk['title'];
 
 echo "  <td class='results_item commercial'><a href='/kommercheskaja-nedvizhimost/commercial/" . $gk['tid'] . "'>
         <div class='img_s'>";
