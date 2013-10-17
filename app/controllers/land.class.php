@@ -87,6 +87,7 @@ ORDER BY (`settings`.`value` * land.price) ASC
 
 
         $this->tplData['searchResult'] = $land_table->getData();
+        $this->tplData['searchResult']['type'] = explode(',',$this->tplData['searchResult']['type']);
         $this->tplData['rowCount'] = $land_table->foundRows;
 
         $this->layoutData['title'] = 'Загородная недвижимость > все предложения';
@@ -116,6 +117,7 @@ ORDER BY (`settings`.`value` * land.price) ASC
         }
 
         $data[$id] = $res->fetch_assoc();
+        $data[$id]['type'] = explode(',',$data[$id]['type']);
 
         $this->layoutData['similarObjects'] = $this->getSimilarObjects(__CLASS__, $id, $data[$id]['price'], 5, 'AND (`elite`=0 OR `elite_check`=1)', 'price', 'square_house');
         $this->layoutData['photos'] = $this->getPhoto(5, $id);
@@ -159,6 +161,7 @@ ORDER BY (`settings`.`value` * land.price) ASC
 
         $result = array();
         while ($row = $res->fetch_assoc()) {
+            $row['type'] = explode(',',$row['type']);
             $result[] = $row;
         }
         $this->assignMetro();
