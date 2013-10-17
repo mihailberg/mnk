@@ -185,10 +185,9 @@ class commercial extends ngaController
 
 
         $this->layoutData['photos'] = $this->getPhoto(4, $id);
-		
 		$rent = ($data[$id]['rent'] == 1) ? ' AND rent = 1' : ' AND rent = 0';
         $this->tplData['coords'] = array('title' => $id, 'latitude' => $data[$id]['latitude'], 'longitude' => $data[$id]['longitude']);
-        $this->layoutData['similarObjects'] = $this->getSimilarObjects(__CLASS__, $id, $data[$id]['price'], 4, ' AND `parent`=0 AND `type` = '.$data[$id]['type'].$rent);
+        $this->layoutData['similarObjects'] = $this->getSimilarObjects(__CLASS__, $id, $data[$id]['price'], 4, $data[$id]['currency'], ' AND `parent`=0 AND `type` = '.$data[$id]['type'].$rent);
 
         $this->tplData['id'] = $id;
         $m = $subway_stations->getData('id', $data[$id]['stationID']);
@@ -453,4 +452,64 @@ class commercial extends ngaController
 
         return $res;
     }
+
+    protected function getSimilarObjects($table, $id, $price, $photoType, $currency = 1, $addWhere = '', $priceColumn = 'price', $squareColumn = 'square', $idField = false)
+    {
+        if (empty($price)) $price = 0;
+        if (!$idField) $idField = $table . "ID";
+        
+		$curquery = "SELECT settingsID, value FROM settings WHERE 1";
+		$curres = nga_config::db()->query($curquery);
+		$exchange = array();
+        while ($row = $curres->fetch_assoc()) {
+			$exchange[$row['settingsID']] = $row['value'];
+		}
+
+        $sql = "
+                SELECT * FROM (
+                	SELECT
+                	 t .`" . $idField . "` as `tid`,
+                	 t." . $squareColumn . " as `square`,
+                	 t." . $priceColumn . " as `price`,
+                	 photo.THUMB, photo.MID,
+                	 t.currency as `currency`
+
+                	FROM `" . $table . "` t
+                	LEFT JOIN `photo` ON (t .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
+                	WHERE " . $priceColumn . "<= " . $price  . " * (SELECT value FROM settings WHERE settingsID = $currency)" . " AND t.`" . $idField . "` != " . (int)$id . "
+                	" . $addWhere . "
+                	ORDER BY `price` DESC,  `photo`. `photoID` ASC
+                	LIMIT 1) a UNION
+                SELECT * FROM (
+                	SELECT t .`" . $idField . "` as `tid`,
+                	t." . $squareColumn . " as `square`,
+                	t." . $priceColumn . " as `price`,
+                	 photo.THUMB, photo.MID,
+                	 t.currency as `currency`
+                	FROM `" . $table . "` t
+                	LEFT JOIN `photo` ON (t .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
+                	WHERE " . $priceColumn . ">= " . $price . " * (SELECT value FROM settings WHERE settingsID = $currency)" . " AND t.`" . $idField . "` != " . (int)$id . "
+                    " . $addWhere . "
+                	ORDER BY `price` ASC, `photo`. `photoID` ASC
+                	LIMIT 2
+                ) b
+                GROUP BY `tid`
+                ";
+
+        $res = nga_config::db()->query($sql);
+//        echo $sql;
+        if (!$res){
+            echo nga_config::db()->error; // return false;
+            echo $sql;
+            debug_print_backtrace();
+        }
+
+        $data = array();
+        while ($row = $res->fetch_assoc()) {
+            $data[$row['tid']] = $row;
+			$data[$row['tid']]['currency'] = $data[$row['tid']]['currency'] * $exchange[$data[$row['tid']]['currency']]; 
+        }
+        return $data;
+    }
+   
 }
