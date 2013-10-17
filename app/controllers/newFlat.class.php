@@ -173,8 +173,9 @@ class newFlat extends ngaController
         $this->layoutData['id'] = $id;
         $this->layoutData['title'] = "Новостройки > " . $data[$id]['title'];
         $this->layoutData['h1'] = $data[$id]['title'];
-
-        $this->layoutData['similarObjects'] = $this->getSimilarObjects('newflat_gk', $id, $data[$id]['price'], 2);
+		
+		$addWhere = ($data[$id]['cityID'] == 1) ? ' AND cityID = 1' : ' AND cityID != 1';
+        $this->layoutData['similarObjects'] = $this->getSimilarObjects('newflat_gk', $id, $data[$id]['price'], 2, $addWhere);
         if(!count($this->layoutData['similarObjects'])) unset($this->layoutData['similarObjects']);
         if (count($url)) {
             //print_r($url);

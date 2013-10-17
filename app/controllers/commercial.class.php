@@ -185,9 +185,10 @@ class commercial extends ngaController
 
 
         $this->layoutData['photos'] = $this->getPhoto(4, $id);
-
+		
+		$rent = ($data[$id]['rent'] == 1) ? ' AND rent = 1' : ' AND rent = 0';
         $this->tplData['coords'] = array('title' => $id, 'latitude' => $data[$id]['latitude'], 'longitude' => $data[$id]['longitude']);
-        $this->layoutData['similarObjects'] = $this->getSimilarObjects(__CLASS__, $id, $data[$id]['price'], 4, ' AND `parent`=0 AND `type` = '.$data[$id]['type']);
+        $this->layoutData['similarObjects'] = $this->getSimilarObjects(__CLASS__, $id, $data[$id]['price'], 4, ' AND `parent`=0 AND `type` = '.$data[$id]['type'].$rent);
 
         $this->tplData['id'] = $id;
         $m = $subway_stations->getData('id', $data[$id]['stationID']);
