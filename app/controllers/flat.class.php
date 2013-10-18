@@ -320,8 +320,9 @@ class flat extends ngaController
 
         $this->assignCity();
         $this->assignMetro();
-
-        $this->layoutData['similarObjects'] = $this->getSimilarObjects(__CLASS__, $id, $data['price'], 3, 'AND (`elite`=0 OR `elite_check`=1)', 'price');
+		
+		$city = ($data['cityID'] == 1) ? ' AND cityID = 1' : 'AND cityID != 1';
+        $this->layoutData['similarObjects'] = $this->getSimilarObjects(__CLASS__, $id, $data['price'], 3, 'AND (`elite`=0 OR `elite_check`=1) AND `room` ='.$data['room'].$city, 'price');
 
 
 
@@ -368,7 +369,8 @@ class flat extends ngaController
                     JOIN `settings` ON (`settingsID` = t.currency)
 
                 	WHERE
-                            ( (`settings`.`value` * `t`." . $priceColumn . ")  <= " . ($this->currencyValue * $price) .")
+                            ( (`settings`.`value` * `t`." . $priceColumn . ")  <= `settings`.`value` * " . $price .")
+                            AND ( (`settings`.`value` * `t`." . $priceColumn . ")  >= `settings`.`value` * " . $price ." * 0.5)
                 	    AND t.`" . $idField . "` != " . (int)$id . "
                 	" . $addWhere . "
                 	ORDER BY (`settings`.`value` * `t`." . $priceColumn . ") DESC,  `photo`. `photoID` ASC
@@ -387,7 +389,8 @@ class flat extends ngaController
                 	LEFT JOIN `photo` ON (t .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
                 	JOIN `settings` ON (`settingsID` = t.currency)
                 	WHERE
-                        ( (`settings`.`value` * `t`." . $priceColumn . ")  >= " . ($this->currencyValue * $price) .")
+                        ( (`settings`.`value` * `t`." . $priceColumn . ")  >= `settings`.`value` * " . $price .")
+                        AND ( (`settings`.`value` * `t`." . $priceColumn . ")  <= `settings`.`value` * " . $price ." * 1.5)
                 	    AND t.`" . $idField . "` != " . (int)$id . "
                     " . $addWhere . "
                 	ORDER BY (`settings`.`value` * `t`." . $priceColumn . ") ASC, `photo`. `photoID` ASC

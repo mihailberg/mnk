@@ -18,16 +18,15 @@ $rim = array(0=>'0', 1=> 'I',2=> 'II',3=>'III',4=>'IV');?>
             <?php echo $rim[$newFlat['kvartal']];?> квартал,
         <?php endif;?><?php echo $newFlat['complete_year'];?><br><?php endif;?>
 
-<?php
-
+<?php 
 if(isset($currencyList[$newFlat['currency']])){
      if(!empty($newFlat['price_m'])):?><span>Стоимость за 1м<sup>2</sup> от:&nbsp;</span><?php
-        echo number_format($newFlat['price_m'], 0, '.', ' ') . "&nbsp;" . $currencyList[$gk['currency']];
+        echo number_format($newFlat['price_m'], 0, '.', ' ') . "&nbsp;" . $currencyList[$newFlat['currency']];
     ?><br />
     <?php endif;?>
 
     <?php if(!empty($newFlat['price'])):?>    <span>Стоимость от:&nbsp;</span><?php
-        echo number_format($newFlat['price'] , 0, '.', ' ') . "&nbsp;" . $currencyList[$gk['currency']];
+        echo number_format($newFlat['price'] , 0, '.', ' ') . "&nbsp;" . $currencyList[$newFlat['currency']];
     ?><br />
     <?php endif;?>
 <?php } ?>

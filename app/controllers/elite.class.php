@@ -104,7 +104,7 @@ class elite extends ngaController
 
 
         $data = $land_table->getData();
-
+		$data[$id]['type'] = explode(',',$data[$id]['type']);
         //
         //$data[$id]
         //Wrong id
@@ -120,7 +120,8 @@ class elite extends ngaController
         $this->layoutData['h1'] = $data[$id]['title'];
         $this->tplData['land'] = $data[$id];
         $this->tplData['coords'] = array('title' => $data[$id]['tid'], 'latitude' => $data[$id]['latitude'], 'longitude' => $data[$id]['longitude']);
-        $this->layoutData['similarObjects'] = $this->getSimilarObjects('land', $id, $data[$id]['price'], 5, 'AND (`elite`=1 OR `elite_check`=1)', 'price', 'square_house');
+        $this->tplData['landTypes'] = $land_table_block[0]->getValues();
+        $this->layoutData['similarObjects'] = $this->getSimilarObjects('land', $id, $data[$id]['price'], 5, $data[$id]['currency'], 'AND (`elite`=1 OR `elite_check`=1)', 'price', 'square_house');
         if(!count($this->layoutData['similarObjects'])) unset($this->layoutData['similarObjects']);
         $this->layoutData['oneObjectUrl'] = 'land';
         $this->tplData['id'] = $this->layoutData['id'] = $id;
@@ -171,12 +172,11 @@ class elite extends ngaController
                            WHERE (`elite`=1 OR `elite_check` = 1) and `newflat_gk`.newflat_gkID = ".$id."
                            GROUP BY  `newflat_gk`.`newflat_gkID`";
         $data = $newflat_gk->getData();
-
         if (!is_array($data))   //404
             return false;
 
         $this->layoutData['description'] = $data[$id]['description'];
-        $this->layoutData['similarObjects'] = $this->getSimilarObjectsNewflat('newflat_gk', $id, $data[$id]['price'], 2, 'AND 1');
+        $this->layoutData['similarObjects'] = $this->getSimilarObjectsNewflat('newflat_gk', $id, $data[$id]['price'], 2, $data[$id]['currency'], 'AND 1');
         if(!count($this->layoutData['similarObjects'])) unset($this->layoutData['similarObjects']);
         $this->layoutData['oneObjectUrl'] = 'gk';
         $this->layoutData['apartments'] = $data[$id]['apartments'];
@@ -315,7 +315,6 @@ class elite extends ngaController
         if(!$res) return false;
 
         $data = $res->fetch_assoc();
-
         $this->tplData['flatData'] = $data;
         $this->tplData['id'] = $this->layoutData['id'] = $id;
 
@@ -331,7 +330,7 @@ class elite extends ngaController
         $this->tplData['house_types'][0] = '';
 
         $this->layoutData['photos'] = $this->getPhoto(3, $id);
-        $this->layoutData['similarObjects'] = $this->getSimilarObjects('flat', $id, $data['price'], 3, 'AND `elite`=1', 'price');
+        $this->layoutData['similarObjects'] = $this->getSimilarObjects('flat', $id, $data['price'], 3, $data['currency'], 'AND `elite`=1', 'price');
 
 
         $this->layoutData['description'] = $data['description'];
@@ -818,11 +817,18 @@ class elite extends ngaController
 
 
 
-    protected function getSimilarObjectsNewflat($table, $id, $price, $photoType, $addWhere = '', $priceColumn = 'price', $squareColumn = 'square', $idField = false)
+    protected function getSimilarObjectsNewflat($table, $id, $price, $photoType, $currency, $addWhere = '', $priceColumn = 'price', $squareColumn = 'square', $idField = false)
     {
         if (empty($price)) $price = 0;
         if (!$idField) $idField = $table . "ID";
-
+		
+		$curquery = "SELECT settingsID, value FROM settings WHERE 1";
+		$curres = nga_config::db()->query($curquery);
+		$exchange = array();
+        while ($row = $curres->fetch_assoc()) {
+			$exchange[$row['settingsID']] = $row['value'];
+		}
+		
         $sql = "
                 SELECT * FROM (
                 	SELECT
@@ -834,7 +840,10 @@ class elite extends ngaController
                 	FROM `" . $table . "` t
                 	LEFT JOIN `newflat`  on (newflat.newflat_gkID = t .`" . $idField . "`)
                 	LEFT JOIN `photo` ON (t .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
-                	WHERE " . $priceColumn . "<= " . $price . " AND t.`" . $idField . "` != " . (int)$id . "
+                	WHERE 
+                	  " . $priceColumn . "<= " . $price  . " * ". $exchange[$currency] . " 
+                	  AND " . $priceColumn . ">= " . $price  . " * ". $exchange[$currency] . " * 0.5 
+                	  AND t.`" . $idField . "` != " . (int)$id . "
                 	" . $addWhere . "
 
                 	GROUP BY `tid`
@@ -849,7 +858,10 @@ class elite extends ngaController
                 	FROM `" . $table . "` t
                 	LEFT JOIN `newflat`  on (newflat.newflat_gkID = t .`" . $idField . "`)
                 	LEFT JOIN `photo` ON (t .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
-                	WHERE " . $priceColumn . ">= " . $price . " AND t.`" . $idField . "` != " . (int)$id . "
+                	WHERE 
+                	  " . $priceColumn . ">= " . $price  . " * ". $exchange[$currency] . " 
+                	  AND " . $priceColumn . "<= " . $price  . " * ". $exchange[$currency] . " * 1.5 
+                	  AND t.`" . $idField . "` != " . (int)$id . "
                     " . $addWhere . "
 
                     GROUP BY `tid`
@@ -862,6 +874,68 @@ class elite extends ngaController
         $res = nga_config::db()->query($sql);
 //        echo $sql;
         if (!$res) echo nga_config::db()->error; // return false;
+        $data = array();
+        while ($row = $res->fetch_assoc()) {
+            $data[$row['tid']] = $row;
+        }
+        return $data;
+    }
+    
+	protected function getSimilarObjects($table, $id, $price, $photoType, $currency, $addWhere = '', $priceColumn = 'price', $squareColumn = 'square', $idField = false)
+    {
+        if (empty($price)) $price = 0;
+        if (!$idField) $idField = $table . "ID";
+		
+		$curquery = "SELECT settingsID, value FROM settings WHERE 1";
+		$curres = nga_config::db()->query($curquery);
+		$exchange = array();
+        while ($row = $curres->fetch_assoc()) {
+			$exchange[$row['settingsID']] = $row['value'];
+		}
+		
+        $sql = "
+                SELECT * FROM (
+                	SELECT
+                	 t .`" . $idField . "` as `tid`,
+                	 t." . $squareColumn . " as `square`,
+                	 t." . $priceColumn . " as `price`,
+                	 photo.THUMB, photo.MID
+
+                	FROM `" . $table . "` t
+                	LEFT JOIN `photo` ON (t .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
+                	WHERE 
+                	  " . $priceColumn . "<= " . $price  . " * ". $exchange[$currency] . " 
+                	  AND " . $priceColumn . ">= " . $price  . " * ". $exchange[$currency] . " * 0.5
+                	  AND t.`" . $idField . "` != " . (int)$id . "
+                	" . $addWhere . "
+                	ORDER BY `price` DESC,  `photo`. `photoID` ASC
+                	LIMIT 1) a UNION
+                SELECT * FROM (
+                	SELECT t .`" . $idField . "` as `tid`,
+                	t." . $squareColumn . " as `square`,
+                	t." . $priceColumn . " as `price`,
+                	 photo.THUMB, photo.MID
+                	FROM `" . $table . "` t
+                	LEFT JOIN `photo` ON (t .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
+                	WHERE 
+                	  " . $priceColumn . ">= " . $price  . " * ". $exchange[$currency] . " 
+                	  AND " . $priceColumn . "<= " . $price  . " * ". $exchange[$currency] . " * 1.5
+                	  AND t.`" . $idField . "` != " . (int)$id . "
+                    " . $addWhere . "
+                	ORDER BY `price` ASC, `photo`. `photoID` ASC
+                	LIMIT 2
+                ) b
+                GROUP BY `tid`
+                ";
+
+        $res = nga_config::db()->query($sql);
+//        echo $sql;
+        if (!$res){
+            echo nga_config::db()->error; // return false;
+            echo $sql;
+            debug_print_backtrace();
+        }
+
         $data = array();
         while ($row = $res->fetch_assoc()) {
             $data[$row['tid']] = $row;

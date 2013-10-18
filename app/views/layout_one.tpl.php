@@ -75,7 +75,6 @@
                         curI -= l;
                         ++curI;
                     }
-
                     return '<span id="fancybox-title-over">Фото ' + curI + ' / ' + l + (title.length ? ' &nbsp; ' + title : '') + '</span>';
                 }
             });
@@ -162,10 +161,11 @@ $first = array_shift($photos);
 
                 <script>jQuery(document).ready(function() {
                            jQuery('#product_carousel').jcarousel({
-                               auto: 2,
-                               wrap: 'circular',
+                               auto: 0,
+                               wrap: 'last',
                                initCallback: mycarousel_initCallback,
                                scroll: 1
+                               size: <?php count($photos); ?>
                            });
                        });
                 </script>
@@ -204,11 +204,11 @@ $first = array_shift($photos);
 
                 <script>jQuery(document).ready(function() {
                                jQuery('#product_carousel').jcarousel({
-                                   auto: 2,
+                                   auto: 0,
                                    wrap: 'circular',
                                    initCallback: mycarousel_initCallback,
-                                   scroll: 3
-
+                                   scroll: 3,
+                                   size: <?php echo count($photos)-1; ?>
                                });
                            });
                 </script>

@@ -137,6 +137,7 @@ class newFlat extends ngaController
                           `newflat_gk`.`complete_year`,
                           `newflat_gk`.`kvartal`,
                           `newflat`.`currency`,
+                          `newflat`.`room`,
                             MIN( `newflat`.`price`) as `price`, MIN( `newflat`.`price_m`) as `price_m`, MIN( `newflat`.`square`) as `square`,
                            `newflat_gk`.`banks`, `newflat_gk`.`description`, `newflat_gk`.`cityID`, `newflat_gk`.`latitude`, `newflat_gk`.`longitude`, `newflat_gk`.`address`,
                             `newflat_gk`.`district`, `newflat_gk`.`stationID`, `newflat_gk`.`howget`, `newflat_gk`.`best`,
@@ -174,8 +175,11 @@ class newFlat extends ngaController
         $this->layoutData['title'] = "Новостройки > " . $data[$id]['title'];
         $this->layoutData['h1'] = $data[$id]['title'];
 		
-		$addWhere = ($data[$id]['cityID'] == 1) ? ' AND cityID = 1' : ' AND cityID != 1';
-        $this->layoutData['similarObjects'] = $this->getSimilarObjects('newflat_gk', $id, $data[$id]['price'], 2, $addWhere);
+		$city = ($data[$id]['cityID'] == 1) ? ' AND cityID = 1' : ' AND cityID != 1';
+		/* все поля должны быть заполнены, иначе валится MySQL-запрос */
+		if ($data[$id]['room'] == null) $data[$id]['room'] = "'Не установлено'";
+		/* */
+        $this->layoutData['similarObjects'] = $this->getSimilarObjects('newflat_gk', $id, $data[$id]['price'], 2, $city.' AND newflat.room = '.$data[$id]['room']);
         if(!count($this->layoutData['similarObjects'])) unset($this->layoutData['similarObjects']);
         if (count($url)) {
             //print_r($url);
@@ -610,8 +614,11 @@ select
                 	FROM `newflat_gk`
                 	JOIN `newflat`  on (newflat.newflat_gkID = newflat_gk .`" . $idField . "`)
                 	LEFT JOIN `photo` ON (newflat_gk .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
-                	WHERE " . $priceColumn . "<= " . $price . " AND newflat_gk.`" . $idField . "` != " . (int)$id . "
-                	" . $addWhere . "
+                	WHERE 
+                	  `" . $priceColumn . "`<= " . $price . " 
+                	  AND `" . $priceColumn . "`>= " . $price . " * 0.5
+                	  AND newflat_gk.`" . $idField . "` != " . (int)$id . "
+                	  " . $addWhere . "
                 	GROUP BY `tid`
                 	ORDER BY `price` DESC,  `photo`. `photoID` ASC
                 	LIMIT 1) a UNION
@@ -625,11 +632,13 @@ select
                 	FROM `newflat_gk`
                 	JOIN `newflat`  on (newflat.newflat_gkID = newflat_gk .`" . $idField . "`)
                 	LEFT JOIN `photo` ON (newflat_gk .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
-                	WHERE (`elite`!=1 OR `elite_check` = 1) AND " . $priceColumn . ">= " . $price . " AND `newflat_gk`.`" . $idField . "` != " . (int)$id . "
-                    " . $addWhere . "
-
+                	WHERE 
+                	  (`elite`!=1 OR `elite_check` = 1) 
+                	  AND " . $priceColumn . ">= " . $price . "
+                	  AND " . $priceColumn . "<= " . $price . " * 1.5
+                	  AND `newflat_gk`.`" . $idField . "` != " . (int)$id . "
+                      " . $addWhere . "
                     GROUP BY `tid`
-
                 	ORDER BY `price` ASC, `photo`. `photoID` ASC
                 	LIMIT 2
                 ) b

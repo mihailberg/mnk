@@ -228,7 +228,7 @@ class invest extends ngaController
         $this->tplData['ird_files'] = $this->getFiles(2, $id);
         $this->tplData['akt_files'] = $this->getFiles(3, $id);
 
-        $this->layoutData['similarObjects'] = $this->getSimilarObjects('invest', $id, $data[$id]['price'], 6, '', 'price');
+        $this->layoutData['similarObjects'] = $this->getSimilarObjects('invest', $id, $data[$id]['price'], 6, ' AND type = '.$data[$id]['type'], 'price');
 
         $this->tplData['invest'] = $data[$id];
         if(isset($regionData[$data[$id]['regionID']]['title']))    $this->tplData['invest']['regionID'] = $regionData[$data[$id]['regionID']]['title'];
@@ -249,5 +249,60 @@ class invest extends ngaController
             <div>".nl2br($data[$id]['desc_sol'])."</div>";
 
 
+    }
+
+    protected function getSimilarObjects($table, $id, $price, $photoType, $addWhere = '', $priceColumn = 'price', $squareColumn = 'square', $idField = false)
+    {
+        if (empty($price)) $price = 0;
+        if (!$idField) $idField = $table . "ID";
+
+        $sql = "
+                SELECT * FROM (
+                	SELECT
+                	 t .`" . $idField . "` as `tid`,
+                	 t." . $squareColumn . " as `square`,
+                	 t." . $priceColumn . " as `price`,
+                	 photo.THUMB, photo.MID
+
+                	FROM `" . $table . "` t
+                	LEFT JOIN `photo` ON (t .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
+                	WHERE 
+                	  " . $priceColumn . "<= " . $price . " 
+                	  AND " . $priceColumn . ">= " . $price . " * 0.5
+                	  AND t.`" . $idField . "` != " . (int)$id . "
+                	  " . $addWhere . "
+                	ORDER BY `price` DESC,  `photo`. `photoID` ASC
+                	LIMIT 1) a UNION
+                SELECT * FROM (
+                	SELECT t .`" . $idField . "` as `tid`,
+                	t." . $squareColumn . " as `square`,
+                	t." . $priceColumn . " as `price`,
+                	 photo.THUMB, photo.MID
+                	FROM `" . $table . "` t
+                	LEFT JOIN `photo` ON (t .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
+                	WHERE 
+                	  " . $priceColumn . ">= " . $price . " 
+                	  AND " . $priceColumn . "<= " . $price . " * 1.5 
+                	  AND t.`" . $idField . "` != " . (int)$id . "
+                      " . $addWhere . "
+                	ORDER BY `price` ASC, `photo`. `photoID` ASC
+                	LIMIT 2
+                ) b
+                GROUP BY `tid`
+                ";
+
+        $res = nga_config::db()->query($sql);
+//        echo $sql;
+        if (!$res){
+            echo nga_config::db()->error; // return false;
+            echo $sql;
+            debug_print_backtrace();
+        }
+
+        $data = array();
+        while ($row = $res->fetch_assoc()) {
+            $data[$row['tid']] = $row;
+        }
+        return $data;
     }
 }

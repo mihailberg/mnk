@@ -11,7 +11,7 @@ $land_table_elite_check = $land_table->addBlock('Отображать в заг�
 $land_table_elite_check[0] = $land_table->add('Отображать в загородной', 'elite_check', 'checkbox');
 
 
-include(nga_config::i()->pathServer['nga'] . '/tables/cottage_set.php');
+include(nga_config::i()->pathServer['nga'] . '/tables/cottage_set_elite.php');
 $cottage_set->addWhere('elite', 1);
 
 $land_table_block[3] = $land_table->add('Коттеджный поселок', 'cottage_setID', 'select');

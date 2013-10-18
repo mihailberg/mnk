@@ -85,9 +85,12 @@ ORDER BY (`settings`.`value` * land.price) ASC
 ";
         $land_table->OverrideQuerySelect .= " LIMIT " . ($this->page - 1) * $this->perPage . ", " . $this->perPage;
 
-
         $this->tplData['searchResult'] = $land_table->getData();
-        $this->tplData['searchResult']['type'] = explode(',',$this->tplData['searchResult']['type']);
+        // $this->tplData['searchResult']['type'] = explode(',',$this->tplData['searchResult']['type']);
+        // т.к. searchResult - массив объектов недвижимости, вместо единичного explode сделал foreach. Но нужен ли вообще explode типа в этом экшне?  
+        foreach ($this->tplData['searchResult'] as $key => $item) {
+        	$this->tplData['searchResult'][$key]['item'] = explode(',',$item['type']);
+        }
         $this->tplData['rowCount'] = $land_table->foundRows;
 
         $this->layoutData['title'] = 'Загородная недвижимость > все предложения';
@@ -117,11 +120,11 @@ ORDER BY (`settings`.`value` * land.price) ASC
         }
 
         $data[$id] = $res->fetch_assoc();
+        $this->layoutData['similarObjects'] = $this->getSimilarObjects(__CLASS__, $id, $data[$id]['price'], 5, 'AND (`elite`=0 OR `elite_check`=1) AND type = '.$data[$id]['type'], 'price', 'square_house');
         $data[$id]['type'] = explode(',',$data[$id]['type']);
-
-        $this->layoutData['similarObjects'] = $this->getSimilarObjects(__CLASS__, $id, $data[$id]['price'], 5, 'AND (`elite`=0 OR `elite_check`=1)', 'price', 'square_house');
+        
+        
         $this->layoutData['photos'] = $this->getPhoto(5, $id);
-
         $this->layout = 'layout_one';
         $this->tpl = 'land_one';
         $this->tplData['landTypes'] = $land_table_block[0]->getValues();
@@ -374,5 +377,57 @@ ORDER BY (`settings`.`value` * land.price) ASC
 
         $this->rowCount = $this->getFoundRows();
         return $res;
+    }
+
+    protected function getSimilarObjects($table, $id, $price, $photoType, $addWhere = '', $priceColumn = 'price', $squareColumn = 'square', $idField = false)
+    {
+        if (empty($price)) $price = 0;
+        if (!$idField) $idField = $table . "ID";
+
+        $sql = "
+                SELECT * FROM (
+                	SELECT
+                	 t .`" . $idField . "` as `tid`,
+                	 t." . $squareColumn . " as `square`,
+                	 t." . $priceColumn . " as `price`,
+                	 photo.THUMB, photo.MID
+
+                	FROM `" . $table . "` t
+                	LEFT JOIN `photo` ON (t .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
+                	WHERE 
+                	  " . $priceColumn . "<= " . $price . " 
+                	  AND " . $priceColumn . ">= " . $price . " * 0.5 
+                	  AND t.`" . $idField . "` != " . (int)$id . "
+                	" . $addWhere . "
+                	ORDER BY `price` DESC,  `photo`. `photoID` ASC
+                	LIMIT 1) a UNION
+                SELECT * FROM (
+                	SELECT t .`" . $idField . "` as `tid`,
+                	t." . $squareColumn . " as `square`,
+                	t." . $priceColumn . " as `price`,
+                	 photo.THUMB, photo.MID
+                	FROM `" . $table . "` t
+                	LEFT JOIN `photo` ON (t .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
+                	WHERE " . $priceColumn . ">= " . $price . " AND t.`" . $idField . "` != " . (int)$id . "
+                    " . $addWhere . "
+                	ORDER BY `price` ASC, `photo`. `photoID` ASC
+                	LIMIT 2
+                ) b
+                GROUP BY `tid`
+                ";
+
+        $res = nga_config::db()->query($sql);
+//        echo $sql;
+        if (!$res){
+            echo nga_config::db()->error; // return false;
+            echo $sql;
+            debug_print_backtrace();
+        }
+
+        $data = array();
+        while ($row = $res->fetch_assoc()) {
+            $data[$row['tid']] = $row;
+        }
+        return $data;
     }
 }

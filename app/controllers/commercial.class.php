@@ -186,9 +186,9 @@ class commercial extends ngaController
 
 
         $this->layoutData['photos'] = $this->getPhoto(4, $id);
-		$rent = ($data[$id]['rent'] == 1) ? ' AND rent = 1' : ' AND rent = 0';
         $this->tplData['coords'] = array('title' => $id, 'latitude' => $data[$id]['latitude'], 'longitude' => $data[$id]['longitude']);
-        $this->layoutData['similarObjects'] = $this->getSimilarObjects(__CLASS__, $id, $data[$id]['price'], 4, $data[$id]['currency'], ' AND `parent`=0 AND `type` = '.$data[$id]['type'].$rent);
+		$city = ($data[$id]['cityID'] == 1) ? ' AND cityID = 1' : ' AND cityID != 1';
+        $this->layoutData['similarObjects'] = $this->getSimilarObjects(__CLASS__, $id, $data[$id]['price'], 4, $data[$id]['currency'], ' AND `parent`=0 AND `type` = '.$data[$id]['type'].' AND rent = '.$data[$id]['rent'].$city);
 
         $this->tplData['id'] = $id;
         $m = $subway_stations->getData('id', $data[$id]['stationID']);
@@ -259,7 +259,6 @@ class commercial extends ngaController
         require_once('nga/tables/commercial.php');
         $this->layoutData['h1'] = 'Коммерческая недвижимость результаты поиска';
         $this->layoutData['title'] = 'Коммерческая недвижимость > найдено (' . $this->rowCount . ')';
-
     }
 
     // ПОИСК
@@ -465,7 +464,7 @@ class commercial extends ngaController
         while ($row = $curres->fetch_assoc()) {
 			$exchange[$row['settingsID']] = $row['value'];
 		}
-
+		
         $sql = "
                 SELECT * FROM (
                 	SELECT
@@ -477,7 +476,10 @@ class commercial extends ngaController
 
                 	FROM `" . $table . "` t
                 	LEFT JOIN `photo` ON (t .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
-                	WHERE " . $priceColumn . "<= " . $price  . " * ". $exchange[$currency] . " AND t.`" . $idField . "` != " . (int)$id . "
+                	WHERE 
+                	  " . $priceColumn . "<= " . $price  . " * ". $exchange[$currency] . " 
+                	  AND " . $priceColumn . ">= " . $price  . " * ". $exchange[$currency] . " * 0.5
+                	  AND t.`" . $idField . "` != " . (int)$id . "
                 	" . $addWhere . "
                 	ORDER BY `price` DESC,  `photo`. `photoID` ASC
                 	LIMIT 1) a UNION
@@ -489,7 +491,10 @@ class commercial extends ngaController
                 	 t.currency as `currency`
                 	FROM `" . $table . "` t
                 	LEFT JOIN `photo` ON (t .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
-                	WHERE " . $priceColumn . ">= " . $price  . " * ". $exchange[$currency] . " AND t.`" . $idField . "` != " . (int)$id . "
+                	WHERE 
+                	  " . $priceColumn . ">= " . $price  . " * ". $exchange[$currency] . " 
+                	  AND " . $priceColumn . "<= " . $price  . " * ". $exchange[$currency] . " * 1.5
+                	  AND t.`" . $idField . "` != " . (int)$id . "
                     " . $addWhere . "
                 	ORDER BY `price` ASC, `photo`. `photoID` ASC
                 	LIMIT 2

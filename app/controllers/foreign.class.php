@@ -96,7 +96,7 @@ class foreign extends ngaController
         if (!is_array($data))
             return false;
 
-        $this->layoutData['similarObjects'] = $this->getSimilarObjects(__CLASS__, $id, $data[$id]['price'], 7);
+        $this->layoutData['similarObjects'] = $this->getSimilarObjects(__CLASS__, $id, $data[$id]['price'], 7, ' AND countryID ='.$data[$id]['countryID']);
         $this->layoutData['photos'] = $this->getPhoto(7, $id);
 
 
@@ -110,7 +110,7 @@ class foreign extends ngaController
         $this->tplData['id'] = $id;
         if(isset($this->tplData['country'][$this->tplData['foreign']['countryID']]['title'])
             &&isset($this->tplData['city'][$this->tplData['foreign']['cityID']]['title'])){
-            $this->tplData['coords'] = array('title' => $this->tplData['country'][$this->tplData['foreign']['countryID']] . " / " . $this->tplData['city'][$this->tplData['foreign']['cityID']], 'latitude' => $this->tplData['foreign']['latitude'], 'longitude' => $this->tplData['foreign']['longitude']);
+            $this->tplData['coords'] = array('title' => $this->tplData['country'][$this->tplData['foreign']['countryID']]['title'] . " / " . $this->tplData['city'][$this->tplData['foreign']['cityID']]['title'], 'latitude' => $this->tplData['foreign']['latitude'], 'longitude' => $this->tplData['foreign']['longitude']);
             $this->layoutData['h1'] = $this->tplData['country'][$this->tplData['foreign']['countryID']]['title'] . " / " . $this->tplData['city'][$this->tplData['foreign']['cityID']]['title']. " ". $this->tplData['foreign']['title'];
         } else {
             $this->tplData['coords'] = array();
@@ -303,6 +303,7 @@ class foreign extends ngaController
                 	WHERE
 
                 	    ( (`settings`.`value` * `t`.price)  <= " .   $this->currencyValue * $price ." )
+                	    AND ( (`settings`.`value` * `t`.price)  >= " .   $this->currencyValue * $price ." * 0.5 ) 
 
                 	AND t.`" . $idField . "` != " . (int)$id . " " . $addWhere . "
                 	ORDER BY `rub_price` DESC,  `photo`. `photoID` ASC
@@ -324,6 +325,7 @@ class foreign extends ngaController
                 	WHERE
 
                     ( (`settings`.`value` * `t`.price)  >= " .   $this->currencyValue * $price ." )
+                    AND ( (`settings`.`value` * `t`.price)  <= " .   $this->currencyValue * $price ." * 1.5)
 
                 	AND t.`" . $idField . "` != " . (int)$id . " " . $addWhere . "
                 	ORDER BY `price` ASC, `photo`. `photoID` ASC

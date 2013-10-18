@@ -3,9 +3,10 @@
 $title = '';
 $title = $gk['title'];
 
+/* $gk['type'] - это массив. Если title пустой, то берётся ПЕРВОЕ значение типа из массива type. */
 if(empty($title)){
-    if (isset($landTypes[$gk['type']])) {
-        $title .= $landTypes[$gk['type']];
+    if (isset($landTypes[$gk['type'][0]])) {
+        $title .= $landTypes[$gk['type'][0]];
     }
     if (!empty($gk['settlement'])) {
         if ($title != '') $title .= " в ";
