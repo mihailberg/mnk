@@ -170,7 +170,7 @@ class nga_config{
 class mysqliLayer extends mysqli{
 
 	function query($sql){
-		echo $sql."<br />\n\n\n<br />";
+		//echo $sql."<br />\n\n\n<br />";
         // if(mb_strpos($sql,'UPDATE')!==false){
             // print_r($_POST);
             // die();

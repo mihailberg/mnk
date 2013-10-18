@@ -161,7 +161,7 @@ class commercial extends ngaController
         include('nga/tables/commercial.php');
         $commercial->addWhere('commercialID', $id);
         $data = $commercial->getData();
-
+		
 
         //Wrong id
         if (!is_array($data))
@@ -228,7 +228,7 @@ class commercial extends ngaController
 
 
 
-
+		$this->layoutData['currency'] = (int)$data[$id]['currency'];
         $this->layoutData['description'] = $data[$id]['desc_bc'];
         $this->layoutData['title'] = 'Коммерческая недвижимость > Все предложения';
         $this->layoutData['h1'] = $data[$id]['address'];
@@ -477,7 +477,7 @@ class commercial extends ngaController
 
                 	FROM `" . $table . "` t
                 	LEFT JOIN `photo` ON (t .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
-                	WHERE " . $priceColumn . "<= " . $price  . " * (SELECT value FROM settings WHERE settingsID = $currency)" . " AND t.`" . $idField . "` != " . (int)$id . "
+                	WHERE " . $priceColumn . "<= " . $price  . " * ". $exchange[$currency] . " AND t.`" . $idField . "` != " . (int)$id . "
                 	" . $addWhere . "
                 	ORDER BY `price` DESC,  `photo`. `photoID` ASC
                 	LIMIT 1) a UNION
@@ -489,7 +489,7 @@ class commercial extends ngaController
                 	 t.currency as `currency`
                 	FROM `" . $table . "` t
                 	LEFT JOIN `photo` ON (t .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
-                	WHERE " . $priceColumn . ">= " . $price . " * (SELECT value FROM settings WHERE settingsID = $currency)" . " AND t.`" . $idField . "` != " . (int)$id . "
+                	WHERE " . $priceColumn . ">= " . $price  . " * ". $exchange[$currency] . " AND t.`" . $idField . "` != " . (int)$id . "
                     " . $addWhere . "
                 	ORDER BY `price` ASC, `photo`. `photoID` ASC
                 	LIMIT 2
