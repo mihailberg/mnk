@@ -508,7 +508,7 @@ class commercial extends ngaController
         $data = array();
         while ($row = $res->fetch_assoc()) {
             $data[$row['tid']] = $row;
-			$data[$row['tid']]['currency'] = $data[$row['tid']]['currency'] * $exchange[$data[$row['tid']]['currency']]; 
+			// $data[$row['tid']]['price'] = $data[$row['tid']]['price'] * $exchange[$data[$row['tid']]['currency']]; 
         }
         return $data;
     }
