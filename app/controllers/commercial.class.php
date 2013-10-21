@@ -60,12 +60,19 @@ class commercial extends ngaController
 
         $this->assignMetro();
 
+        $rub_price_sql = "(`commercial`.`price` * `settings`.`value`)";
+        $rub_price_m_sql = "(`commercial`.`price_m` * `settings`.`value`)";
+
         $commercial->OverrideQuerySelect = "
         SELECT `commercial`.`commercialID` AS `tid`,
          `commercial`.*,
-        photo.THUMB, photo.MID
+         ".$rub_price_sql." as `rub_price`,
+         ".$rub_price_m_sql." as `rub_price_m`,
+        `photo`.THUMB,
+        photo.MID
 
         FROM `commercial`
+        JOIN `settings` ON (`settingsID` = commercial.currency)
         LEFT JOIN `photo` ON (`commercial`.`commercialID` = photo.R_ID AND photo.R_TYPE = 4)
         WHERE `parent`=0 AND `cityID` ";
 
@@ -83,7 +90,7 @@ class commercial extends ngaController
         }
 
         $commercial->OverrideQuerySelect .= " GROUP BY `commercial`.`commercialID`
-        ORDER BY `commercial`.`price` ASC
+        ORDER BY ".$rub_price_sql." ASC
         ";
 
         $commercial->OverrideQuerySelect .= " LIMIT " . ($this->page - 1) * $this->perPage . ", " . $this->perPage;

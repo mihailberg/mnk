@@ -24,9 +24,9 @@ if (!empty($gk['price_m'])) {
     echo "<li>";
 
     if($gk['rent']){
-        echo "<strong>Арендная ставка за 1м<sup>2</sup> в год:</strong>&nbsp;" . $gk['price_m'] . "&nbsp;<span class='price_units_rub'>" . $currencyList[$currency] . "</span>";
+        echo "<strong>Арендная ставка за 1м<sup>2</sup> в год:</strong>&nbsp;" . number_format($gk['rub_price_m'] / $currencyValue, 0, '.', ' ') . "&nbsp;<span class='price_units_rub'>" . $currencyList[$currency] . "</span>";
     } else {
-        echo "<strong>Стоимость за 1м<sup>2</sup>:</strong>&nbsp;" . $gk['price_m'] . "&nbsp;<span class='price_units_rub'>" . $currencyList[$currency] . "</span>";
+        echo "<strong>Стоимость за 1м<sup>2</sup>:</strong>&nbsp;" . number_format($gk['rub_price_m'] / $currencyValue, 0, '.', ' ') . "&nbsp;<span class='price_units_rub'>" . $currencyList[$currency] . "</span>";
     }
 
     echo "</li>";
@@ -37,9 +37,9 @@ if (!empty($gk['price'])) {
     echo "<li>";
 
     if($gk['rent']){
-        echo "<strong>Ежемесячная арендная ставка: </strong>" . number_format($gk['price'] / $currencyValue, 0, '.', ' ') . "&nbsp;<span class='price_units_rub'>" . $currencyList[$currency] . "</span>";
+        echo "<strong>Ежемесячная арендная ставка: </strong>" . number_format($gk['rub_price'] / $currencyValue, 0, '.', ' ') . "&nbsp;<span class='price_units_rub'>" . $currencyList[$currency] . "</span>";
     } else {
-        echo "<strong>Стоимость:</strong>" . number_format($gk['price'] / $currencyValue, 0, '.', ' ') . "&nbsp;<span class='price_units_rub'>" . $currencyList[$currency] . "</span>";
+        echo "<strong>Стоимость:</strong>" . number_format($gk['rub_price'] / $currencyValue, 0, '.', ' ') . "&nbsp;<span class='price_units_rub'>" . $currencyList[$currency] . "</span>";
     }
 
     echo "</li>";

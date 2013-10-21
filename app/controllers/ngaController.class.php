@@ -143,6 +143,8 @@ abstract class ngaController
         foreach($this->currSettings as $row){
 			$this->exchange[$row['tid']] = $row['value'];
 		}
+
+        //For save search currency
         if ($_SESSION['currency'] > 1) {
             $this->currencyValue = $settings[$_SESSION['currency']]['value'];
         }

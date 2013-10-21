@@ -16,12 +16,12 @@ if(!empty($assignArray[0])){
 <span>Тип сделки:&nbsp;</span><?php echo ($commercialData['rent']==0)?'продажа':'аренда'; ?><br />
 <?php
 if ($commercialData['rent']) {
-    if(!empty($commercialData['price_m'])) echo "<span>Арендная ставка за 1м<sup>2</sup> в год:&nbsp;</span>" . number_format($commercialData['price_m'] / $currencyValue, 0, '.', ' ') . "&nbsp;" . $currencyList[$commercialData['currency']] . "<br />";
-    if(!empty($commercialData['price'])) echo "<span>Ежемесячная арендная ставка:&nbsp;</span>" . number_format($commercialData['price'] / $currencyValue, 0, '.', ' ') . "&nbsp;" . $currencyList[$commercialData['currency']] . "<br />";
+    if(!empty($commercialData['price_m'])) echo "<span>Арендная ставка за 1м<sup>2</sup> в год:&nbsp;</span>" . number_format($commercialData['price_m'], 0, '.', ' ') . "&nbsp;" . $currencyList[$commercialData['currency']] . "<br />";
+    if(!empty($commercialData['price'])) echo "<span>Ежемесячная арендная ставка:&nbsp;</span>" . number_format($commercialData['price'], 0, '.', ' ') . "&nbsp;" . $currencyList[$commercialData['currency']] . "<br />";
 } else {
 
-    if(!empty($commercialData['price'])) echo "<span>Стоимость:&nbsp;</span>" . number_format($commercialData['price'] / $currencyValue, 0, '.', ' ') . "&nbsp;" . $currencyList[$commercialData['currency']] . "<br />";
-    if(!empty($commercialData['price_m'])) echo "<span>Стоимость за 1м<sup>2</sup>:&nbsp;</span>" . number_format($commercialData['price_m'] / $currencyValue, 0, '.', ' ') . "&nbsp;" . $currencyList[$commercialData['currency']] . "<br />";
+    if(!empty($commercialData['price'])) echo "<span>Стоимость:&nbsp;</span>" . number_format($commercialData['price'], 0, '.', ' ') . "&nbsp;" . $currencyList[$commercialData['currency']] . "<br />";
+    if(!empty($commercialData['price_m'])) echo "<span>Стоимость за 1м<sup>2</sup>:&nbsp;</span>" . number_format($commercialData['price_m'], 0, '.', ' ') . "&nbsp;" . $currencyList[$commercialData['currency']] . "<br />";
 }
 
 if (!empty($commercialData['square'])&&$commercialData['square']!='0.0'):                 ?><span>Площадь:&nbsp;</span><?php echo $commercialData['square']; ?>м<sup>2</sup><br /><?php endif; ?>

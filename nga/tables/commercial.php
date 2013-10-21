@@ -192,6 +192,6 @@ $commercial->addOrderBy('parent', 'ASC');
 $commercial->addOrderBy('commercialID', 'DESC');
 $commercial->groupField =  'parent';
 $commercial->setListShow($commercial_block[3], $commercial_block[25], $commercial_block[0], $commercial_block[1],
-    $commercial_block[4], $commercial_block[5], $commercial_block[6]
+    $commercial_block[4], $commercial_block[5], $commercial_block[8], $commercial_block[9]
 );
 ?>
