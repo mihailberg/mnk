@@ -26,9 +26,9 @@
             }?></td>
             <td class="noPhoto">#&nbsp;<?php echo $gk['tid'];?></td>
             <td class="noPhoto"><?php echo $gk['square'];?></td>
-            <td class="noPhoto"><?php echo $gk['price_m'];?></td>
-            <td class="noPhoto"><?php echo $gk['price'];?></td>
-            <td class="noPhoto"><?php echo $assign[$gk['assign']];?></td>
+            <td class="noPhoto"><?php echo number_format($gk['rub_price_m'] / $currencyValue, 0, '.', ' ');?></td>
+            <td class="noPhoto"><?php echo number_format($gk['rub_price'] / $currencyValue, 0, '.', ' ');?></td>
+            <td class="noPhoto"><?php if(!empty($gk['assignArray'][0])) echo implode(', ',$gk['assignArray']);?></td>
             <td style="text-align: center;"><?php if ($gk['planing']) {
                 echo '<a class="fancybox" rel="mainPhoto" href="' . $gk['planing'] . '" style="z-index:100;");"><img src="/img/photo.png" onclick = "return false;" /></a>';
             } else {

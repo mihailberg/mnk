@@ -127,6 +127,7 @@ abstract class ngaController
     public $currencyValue = 1;
 
     public $currSettings = array();
+    public $exchange = array();
 
     public function checkCurrency()
     {
@@ -138,6 +139,10 @@ abstract class ngaController
         include('nga/tables/settings.php');
         $this->currSettings = $settings = $tableSettings->getData();
 
+        //for calculates
+        foreach($this->currSettings as $row){
+			$this->exchange[$row['tid']] = $row['value'];
+		}
         if ($_SESSION['currency'] > 1) {
             $this->currencyValue = $settings[$_SESSION['currency']]['value'];
         }
@@ -390,7 +395,6 @@ abstract class ngaController
         }
         return $SQL;
     }
-
 
     protected function assignDistrict(){
         $this->tplData['district'] = array('', 'ЦАО', 'САО', 'ЗАО', 'ВАО', 'ЮАО', 'СВАО', 'СЗАО', 'ЮЗАО', 'ЮВАО');

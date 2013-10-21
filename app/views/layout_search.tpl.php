@@ -145,8 +145,10 @@
             $('.cottage_set').advSearchFilter('#cottage_setPlace');
             $('.train_way').advSearchFilter('#train_wayPlace');
 
+//            $('.mo_tab').find('input,select,textarea').attr('disabled','disabled');
             if (window.location.hash == '#mo') {
                 $('.moscow_tab').removeClass('current');
+
                 $('.mo_tab').addClass('current');
 
                 $('.all_view_link').attr('href',function(){

@@ -303,7 +303,7 @@ class foreign extends ngaController
                 	WHERE
 
                 	    ( (`settings`.`value` * `t`.price)  <= " .   $this->currencyValue * $price ." )
-                	    AND ( (`settings`.`value` * `t`.price)  >= " .   $this->currencyValue * $price ." * 0.5 ) 
+                	    AND ( (`settings`.`value` * `t`.price)  >= " .   $this->currencyValue * $price ." * 0.5 )
 
                 	AND t.`" . $idField . "` != " . (int)$id . " " . $addWhere . "
                 	ORDER BY `rub_price` DESC,  `photo`. `photoID` ASC
@@ -328,10 +328,11 @@ class foreign extends ngaController
                     AND ( (`settings`.`value` * `t`.price)  <= " .   $this->currencyValue * $price ." * 1.5)
 
                 	AND t.`" . $idField . "` != " . (int)$id . " " . $addWhere . "
-                	ORDER BY `price` ASC, `photo`. `photoID` ASC
+                	ORDER BY `rub_price` ASC, `photo`. `photoID` ASC
                 	LIMIT 2
                 ) b
                 GROUP BY `tid`
+                ORDER BY `rub_price` ASC
                 ";
 
 //                	(SELECT `value`* t." . $priceColumn . " FROM `settings` WHERE `settingsID` = t.currency) as `price`,

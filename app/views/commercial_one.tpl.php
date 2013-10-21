@@ -1,4 +1,3 @@
-<h2><?php echo $commercialData['title']; ?></h2>
 <?php if($commercialData['cityID']!=1){?>
     <?php if(!empty($cityid[$commercialData['cityID']])){?><span>Город:&nbsp;</span><?php echo $cityid[$commercialData['cityID']]; ?><br /><?php }?>
 <?php } else {

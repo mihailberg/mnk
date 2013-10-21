@@ -46,12 +46,20 @@ $invest_table_block[8] = $invest_table->add('Наличие зданий/стр�
 
 
 $invest_table_block[9] = $invest_table->add('Вид права', 'rights_type', 'string');
-$invest_table_block[10] = $invest_table->add('Стоимость', 'price', 'num');
+
+$invest_table_block[10] = $invest_table->add('Валюта', 'currency', 'select');
+$invest_table_block[10]->setValueList(array(
+        1 => 'Рубли',
+        2 => '$',
+        3 => 'Евро'
+    ));
+
+$invest_table_block[11] = $invest_table->add('Стоимость', 'price', 'num');
 
 include(nga_config::i()->pathServer['nga'] . '/tables/city.php');
-$invest_table_block[10] = $invest_table->add('Город', 'cityID', 'select');
-$invest_table_block[10]->constructFromTable($city);
-$invest_table_block[11] = $invest_table->add("Название", "title", "string");
+$invest_table_block[12] = $invest_table->add('Город', 'cityID', 'select');
+$invest_table_block[12]->constructFromTable($city);
+$invest_table_block[13] = $invest_table->add("Название", "title", "string");
 
 
 $invest_table->preInsert = 1;
@@ -122,6 +130,6 @@ $invest_table_block2[3] = $invest_table->add('Презентация', 'file', '
 
 
 
-$invest_table->setListShow($invest_table_block[0], $invest_table_block[1], $invest_table_block[2], $invest_table_block[3],$invest_table_block[10]);
+$invest_table->setListShow($invest_table_block[0], $invest_table_block[1], $invest_table_block[2], $invest_table_block[3],$invest_table_block[10],$invest_table_block[11],$invest_table_block[12]);
 $invest_table->setFormNoShow($investID);
 ?>

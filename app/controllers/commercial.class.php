@@ -61,12 +61,9 @@ class commercial extends ngaController
         $this->assignMetro();
 
         $commercial->OverrideQuerySelect = "
-        SELECT `commercial`.`commercialID` AS `tid`, `commercial`.`cityID`, `commercial`.`address`, `commercial`.`stationID`,
-         `commercial`.`title`, `commercial`.`assign`, `commercial`.`parent`, `commercial`.`type`, `commercial`.`square`, `commercial`.`rent`, `commercial`.`price`, `commercial`.`price_m`, `commercial`.`floor`, `commercial`.`floors`, `commercial`.`otdelka`, `commercial`.`security`, `commercial`.`furniture`, `commercial`.`provider`, `commercial`.`tele`, `commercial`.`conditioning`, `commercial`.`planing`, `commercial`.`parking`, `commercial`.`class`, `commercial`.`square_full`, `commercial`.`overlap`, `commercial`.`desc_place`, `commercial`.`desc_bc`, `commercial`.`district`, `commercial`.`best`, `commercial`.`nds`, `commercial`.`operating_costs`, `commercial`.`utility_payments`, `commercial`.`rent_contract`, `commercial`.`lease`, `commercial`.`electricity`,
-        `commercial`.`communication`,
-        `commercial`.`kwt`,
+        SELECT `commercial`.`commercialID` AS `tid`,
+         `commercial`.*,
         photo.THUMB, photo.MID
-
 
         FROM `commercial`
         LEFT JOIN `photo` ON (`commercial`.`commercialID` = photo.R_ID AND photo.R_TYPE = 4)
@@ -74,7 +71,7 @@ class commercial extends ngaController
 
 
        $mo = 0;
-       if(isset($_GET['mo'])&&$_GET['mo']==1)$mo =1;
+       if(isset($_GET['mo'])&&$_GET['mo']==1)$mo = 1;
        if($mo == 0){
            $commercial->OverrideQuerySelect .= " = 1 ";
        } else {
@@ -86,7 +83,7 @@ class commercial extends ngaController
         }
 
         $commercial->OverrideQuerySelect .= " GROUP BY `commercial`.`commercialID`
-        ORDER BY `commercial`.`price_m` ASC
+        ORDER BY `commercial`.`price` ASC
         ";
 
         $commercial->OverrideQuerySelect .= " LIMIT " . ($this->page - 1) * $this->perPage . ", " . $this->perPage;
@@ -102,6 +99,8 @@ class commercial extends ngaController
         //print_r($commercial);
     }
 
+    protected $assignValues;
+    protected $typeValues;
     protected function getSubObjects($id)
     {
         //if($sub = getSubObjects($id))
@@ -124,26 +123,53 @@ class commercial extends ngaController
     {
         $this->layout = 'layout_one';
         $this->tpl = 'commercial_list_sub';
-        include('nga/tables/commercial.php');
+//        include('nga/tables/commercial.php');
 
-        $commercial->OverrideQuerySelect = "
-        SELECT `commercial`.`commercialID` AS `tid`, `commercial`.`cityID`, `commercial`.`address`, `commercial`.`stationID`, `commercial`.`title`, `commercial`.`assign`, `commercial`.`parent`, `commercial`.`type`, `commercial`.`square`, `commercial`.`rent`, `commercial`.`price`, `commercial`.`price_m`, `commercial`.`floor`, `commercial`.`floors`, `commercial`.`otdelka`, `commercial`.`security`, `commercial`.`furniture`, `commercial`.`provider`, `commercial`.`tele`, `commercial`.`conditioning`, `commercial`.`planing`, `commercial`.`parking`, `commercial`.`class`, `commercial`.`square_full`, `commercial`.`overlap`, `commercial`.`desc_place`, `commercial`.`desc_bc`, `commercial`.`district`, `commercial`.`best`, `commercial`.`nds`, `commercial`.`operating_costs`, `commercial`.`utility_payments`, `commercial`.`rent_contract`, `commercial`.`lease`, `commercial`.`electricity`,
-        `commercial`.`communication`,
-        photo.THUMB, photo.MID
+        $sql = "SELECT SQL_CALC_FOUND_ROWS
+                `commercial`.`commercialID` AS `tid`,
+                `commercial`.*,
+                (`commercial`.`price` * `settings`.`value`) as `rub_price`,
+                (`commercial`.`price_m` * `settings`.`value`) as `rub_price_m`,
+                photo.THUMB, photo.MID
 
+                FROM `commercial`
+                JOIN `settings` ON (`settingsID` = commercial.currency)
+                LEFT JOIN `photo` ON (`commercial`.`commercialID` = photo.R_ID AND photo.R_TYPE = 4)
+                WHERE `parent`=" . $id . "
+                GROUP BY `commercial`.`commercialID`
+                ORDER BY `commercial`.`price` ASC";
 
-        FROM `commercial`
-        LEFT JOIN `photo` ON (`commercial`.`commercialID` = photo.R_ID AND photo.R_TYPE = 4)
-        WHERE `parent`=" . $id . "
-        GROUP BY `commercial`.`commercialID`
-        ORDER BY `commercial`.`price` ASC
-        ";
+        $res = nga_config::db()->query($sql);
+        $data = array();
+        while ($row = $res->fetch_assoc()) {
+            //MultiSelect fields
 
-        //$commercial->addWhere('rent',1,'!=');
+            //type
+            $row['type'] = $this->value2Array($row['type']);
+            $typeArray = array();
+            foreach($row['type'] as $t){
+                if(isset($this->typeValues[$t])){
+                    $typeArray[] = $this->typeValues[$t];
+                }
+            }
+            $row['typeArray'] = $typeArray;
 
+            //assign
+            $row['assign'] = $this->value2Array($row['assign']);
+            $assignArray = array();
+            foreach($row['assign'] as $t){
+                if(isset($this->assignValues[$t])){
+                    $assignArray[] = $this->assignValues[$t];
+                }
+            }
+            $row['assignArray'] = $assignArray;
 
-        $this->tplData['searchResult'] = $commercial->getData();
-        $this->tplData['rowCount'] = $commercial->foundRows;
+            $data[$row['commercialID']] = $row;
+        }
+
+        $this->tplData['searchResult'] = $data;//$commercial->getData();
+
+        $this->tplData['rowCount'] = $this->getFoundRows();//$commercial->foundRows;
         $this->tplData['id'] = $this->layoutData['id']  = $id;
         $this->layoutData['title'] = 'Продажа и аренда коммерческой недвижимости';
         $this->layoutData['h1'] = htmlspecialchars($this->tplData['commercialData'] ['title']);
@@ -167,19 +193,10 @@ class commercial extends ngaController
         if (!is_array($data))
             return false;
 
-        //Sub objects commercial estate. `parent`=`this.id`
-        if ($sub = $this->getSubObjects($id)) {
-            if ($sub['rowCount'] > 0) {
-                $this->tplData['subObjects'] = true;
-                $this->layoutData['subObjects'] = true;
-            }
-        }
-
-
-
         //  ==>     Assign multiselect   <==  //
         $assign = $commercial_block[4]->getValues();
         $assign[0] = '';
+        $this->assignValues = $assign;
         //self values
         $data[$id]['assign'] = $this->value2Array($data[$id]['assign']);
 
@@ -195,9 +212,11 @@ class commercial extends ngaController
         if($assignSQL == ' AND') $assignSQL = '';
 
 
+
         //  ==>     Type multiselect   <==  //
         $type = $commercial_block[5]->getValues();
         $type[0] = '';
+        $this->typeValues = $type;
         //self values
         $data[$id]['type'] = $this->value2Array($data[$id]['type']);
 
@@ -211,13 +230,23 @@ class commercial extends ngaController
         // 2 sql
         $typeSQL = ' AND'.self::makeMultiSelectSql('`type`',$data[$id]['type']);
         if($typeSQL == ' AND') $typeSQL = '';
+//        ignore type in similar
+//        $typeSQL = '';
+
+
+
+        //Sub objects commercial estate. `parent`=`this.id`
+        if ($sub = $this->getSubObjects($id)) {
+            if ($sub['rowCount'] > 0) {
+                $this->tplData['subObjects'] = true;
+                $this->layoutData['subObjects'] = true;
+            }
+        }
 
 
 
 
-//        var_dump($typeSQL);
-//        var_dump($assignSQL);
-//die();
+
         $this->tplData['commercialData'] = $data[$id];
 
 
@@ -232,6 +261,9 @@ class commercial extends ngaController
 
         $this->layoutData['photos'] = $this->getPhoto(4, $id);
         $this->tplData['coords'] = array('title' => $id, 'latitude' => $data[$id]['latitude'], 'longitude' => $data[$id]['longitude']);
+
+
+        //City SQL
 		$city = ($data[$id]['cityID'] == 1) ? ' AND cityID = 1' : ' AND cityID != 1';
 
 
@@ -279,8 +311,8 @@ class commercial extends ngaController
 
 		$this->layoutData['currency'] = (int)$data[$id]['currency'];
         $this->layoutData['description'] = $data[$id]['desc_bc'];
-        $this->layoutData['title'] = 'Коммерческая недвижимость > Все предложения';
-        $this->layoutData['h1'] = $data[$id]['address'];
+        $this->layoutData['title'] = 'Коммерческая недвижимость > '.$data[$id]['title'];
+        $this->layoutData['h1'] = $data[$id]['title'];
         $this->layoutData['id'] = $id;
     }
 
@@ -313,13 +345,21 @@ class commercial extends ngaController
     // ПОИСК
     protected function search()
     {
+        $rub_price_sql = "(`commercial`.`price` * `settings`.`value`)";
+        $rub_price_m_sql = "(`commercial`.`price_m` * `settings`.`value`)";
         $sql = $Hsql = "
-                SELECT SQL_CALC_FOUND_ROWS `commercial`.`commercialID` AS `tid`, `commercial`.*,
+                SELECT SQL_CALC_FOUND_ROWS
+                `commercial`.`commercialID` AS `tid`,
+                `commercial`.*,
+                (`commercial`.`price` * `settings`.`value`) as `rub_price`,
+                (`commercial`.`price_m` * `settings`.`value`) as `rub_price_m`,
                 photo.THUMB, photo.MID,
                 photo.SRC as `SRC`
 
                 FROM `commercial`
+                JOIN `settings` ON (`settingsID` = commercial.currency)
                 LEFT JOIN `photo` ON (`commercial`.`commercialID` = photo.R_ID AND photo.R_TYPE = 4)
+
                 WHERE `parent`=0";
 
         $glue = ' AND ';
@@ -355,11 +395,11 @@ class commercial extends ngaController
         if (!empty($_GET['price'])) {
             //от
             if ((int)$_GET['price']['from'] > 0) {
-                $sql .= $glue . '`price` >= ' . $this->currencyValue * (int)$_GET['price']['from'] . '';
+                $sql .= $glue . $rub_price_sql . ' >= ' . $this->exchange[(int)$_GET['currency']] * (int)$_GET['price']['from'];
             }
             //до
             if ((int)$_GET['price']['to'] > 0 && (int)$_GET['price']['to'] > (int)$_GET['price']['from']) {
-                $sql .= $glue . '`price` <=' . $this->currencyValue * (int)$_GET['price']['to'];
+                $sql .= $glue . $rub_price_sql . ' <= ' . $this->exchange[(int)$_GET['currency']] * (int)$_GET['price']['to'];
             }
         }
 
@@ -367,11 +407,11 @@ class commercial extends ngaController
         if (!empty($_GET['price_m'])) {
             //от
             if ((int)$_GET['price_m']['from'] > 0) {
-                $sql .= $glue . '`price_m` >= ' . $this->currencyValue * (int)$_GET['price_m']['from'] . '';
+                $sql .= $glue . $rub_price_m_sql . ' >= ' . $this->exchange[(int)$_GET['currency_m']] * (int)$_GET['price_m']['from'];
             }
             //до
             if ((int)$_GET['price_m']['to'] > 0 && (int)$_GET['price_m']['to'] > (int)$_GET['price_m']['from']) {
-                $sql .= $glue . '`price_m` <=' . $this->currencyValue * (int)$_GET['price_m']['to'];
+                $sql .= $glue . $rub_price_m_sql . ' <=' . $this->exchange[(int)$_GET['currency_m']] * (int)$_GET['price_m']['to'];
             }
         }
         //Площадь
@@ -417,37 +457,15 @@ class commercial extends ngaController
         //Тип объекта
         if (!empty($_GET['type']) && is_array($_GET['type']) //Это если галочка "все типы дома" тогда условия не добавляем
         ) {
-            $sql.=' '.' AND'.self::makeMultiSelectSql('`type`',$_GET['type']);
-
-//            $type = array();
-//            foreach ($_GET['type'] as $r) {
-//
-//                if ((int)$r > 0) {
-//                    $type[] = (int)$r;
-//                }
-//            }
-//
-//            if(count($type)){
-//                $sql .= $glue . '`type` IN (' . implode(",", $type) . ')';
-//                $glue = ' AND ';
-//            }
+            $sql.=$glue . self::makeMultiSelectSql('`type`',$_GET['type']);
+            $glue = ' AND ';
         }
 
-        //Тип объекта
+        //Назначение
         if (!empty($_GET['assign']) && is_array($_GET['assign']) //Это если галочка "все типы дома" тогда условия не добавляем
         ) {
-            $sql.=' '.' AND'.self::makeMultiSelectSql('`assign`',$_GET['assign']);
-//            $assign = array();
-//            foreach ($_GET['assign'] as $r) {
-//
-//                if ((int)$r > 0) {
-//                    $assign[] = (int)$r;
-//                }
-//            }
-//            if(count($assign)){
-//                $sql .= $glue . '`assign` IN (' . implode(",", $assign) . ')';
-//                $glue = ' AND ';
-//            }
+            $sql.=$glue . self::makeMultiSelectSql('`assign`',$_GET['assign']);
+            $glue = ' AND ';
         }
 
 
@@ -456,7 +474,7 @@ class commercial extends ngaController
 
         $Fsql = "
             GROUP BY `commercial`.`commercialID`
-            ORDER BY `commercial`.`price_m` ASC
+            ORDER BY `rub_price` ASC
             ";
         $Fsql .= " LIMIT " . ($this->page - 1) * $this->perPage . ", " . $this->perPage;
 
@@ -467,6 +485,7 @@ class commercial extends ngaController
         //echo nga_config::db()->error;
 
         if (!$res) {
+            echo nga_config::db()->error;
             return false;
         }
 
@@ -477,28 +496,16 @@ class commercial extends ngaController
 
             //Есть направление
             if (!empty($_GET['assign']) && is_array($_GET['assign'])) {
-                $sql.=' '.' AND'.self::makeMultiSelectSql('`assign`',$_GET['assign']);
-//                $assign = array();
-//                foreach ($_GET['assign'] as $r) {
-//
-//                    if ((int)$r > 0) {
-//                        $assign[] = (int)$r;
-//                    }
-//                }
-//                $sql .= $glue . '`assign` IN (' . implode(",", $assign) . ')';
+                $sql.=$glue . self::makeMultiSelectSql('`assign`',$_GET['assign']);
                 $glue = ' AND ';
+
             //Нет направления есть тип
             } elseif (!empty($_GET['type']) && is_array($_GET['type']) && (empty($_GET['assign']))) {
-                $sql.=' AND'.self::makeMultiSelectSql('`type`',$_GET['type']);
-//                $type = array();
-//                foreach ($_GET['type'] as $r) {
-//
-//                    if ((int)$r > 0) {
-//                        $type[] = (int)$r;
-//                    }
-//                }
-//                $sql .= $glue . '`type` IN (' . implode(",", $type) . ')';
+                $sql.=$glue . self::makeMultiSelectSql('`type`',$_GET['type']);
+                $glue = ' AND ';
             }
+
+            //что-то есть
             if (!empty($_GET['assign']) || !empty($_GET['type'])) {
                 $sql .= $Fsql;
                 $res = nga_config::db()->query($sql);
@@ -509,53 +516,80 @@ class commercial extends ngaController
         return $res;
     }
 
+    /**
+     *
+     *  $this->layoutData['similarObjects'] = $this->getSimilarObjects(__CLASS__, $id, $data[$id]['price'], 4, $data[$id]['currency'], ' AND `parent`=0 '.$typeSQL.$assignSQL.' AND rent = '.$data[$id]['rent'].$city);
+     *
+     *  $table = __CLASS__;
+     *  $id=                      external
+     *  $price =                  ext  $data[$id]['price']
+     *  $photoType =                  4
+     *  $currency                 ext
+     *  $data[$id]['currency']    ext
+     *  $addWhere   ' AND `parent`=0 '.$typeSQL.$assignSQL.' AND rent = '.$data[$id]['rent'].$city
+     *  $priceColumn = 'price';
+     *  $squareColumn = 'square';
+     *  $idField = false;
+     *
+     *
+     * @param $table
+     * @param $id
+     * @param $price
+     * @param $photoType
+     * @param int $currency
+     * @param string $addWhere
+     * @param string $priceColumn
+     * @param string $squareColumn
+     * @param bool $idField
+     * @return array
+     */
     protected function getSimilarObjects($table, $id, $price, $photoType, $currency = 1, $addWhere = '', $priceColumn = 'price', $squareColumn = 'square', $idField = false)
     {
         if (empty($price)) $price = 0;
         if (!$idField) $idField = $table . "ID";
-        
-		$curquery = "SELECT settingsID, value FROM settings WHERE 1";
-		$curres = nga_config::db()->query($curquery);
-		$exchange = array();
-        while ($row = $curres->fetch_assoc()) {
-			$exchange[$row['settingsID']] = $row['value'];
-		}
-		
+
+        // Price in rubles
+        $rubPrice = $price *  $this->exchange[$currency];
+
         $sql = "
                 SELECT * FROM (
                 	SELECT
                 	 t .`" . $idField . "` as `tid`,
                 	 t." . $squareColumn . " as `square`,
                 	 t." . $priceColumn . " as `price`,
+                	 (`settings`.`value` * `t`." . $priceColumn . " ) AS `rub_price`,
                 	 photo.THUMB, photo.MID,
                 	 t.currency as `currency`
-
                 	FROM `" . $table . "` t
+                	JOIN `settings` ON (`settingsID` = t.currency)
                 	LEFT JOIN `photo` ON (t .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
-                	WHERE 
-                	  " . $priceColumn . "<= " . $price  . " * ". $exchange[$currency] . " 
-                	  AND " . $priceColumn . ">= " . $price  . " * ". $exchange[$currency] . " * 0.5
-                	  AND t.`" . $idField . "` != " . (int)$id . "
-                	" . $addWhere . "
-                	ORDER BY `price` DESC,  `photo`. `photoID` ASC
+                	WHERE
+                            (   (`settings`.`value` * `t`." . $priceColumn . ")  <= " .   $rubPrice ." )
+                	    AND (   (`settings`.`value` * `t`." . $priceColumn . ")  >= " .  ( $rubPrice * 0.5 ) . " )
+                        AND t.`" . $idField . "` != " . (int)$id . "
+                	    " . $addWhere . "
+                	ORDER BY rub_price DESC,  `photo`. `photoID` ASC
                 	LIMIT 1) a UNION
                 SELECT * FROM (
                 	SELECT t .`" . $idField . "` as `tid`,
                 	t." . $squareColumn . " as `square`,
                 	t." . $priceColumn . " as `price`,
+                	(`settings`.`value` * `t`." . $priceColumn . " ) AS `rub_price`,
                 	 photo.THUMB, photo.MID,
                 	 t.currency as `currency`
                 	FROM `" . $table . "` t
+                	JOIN `settings` ON (`settingsID` = t.currency)
                 	LEFT JOIN `photo` ON (t .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
                 	WHERE 
-                	  " . $priceColumn . ">= " . $price  . " * ". $exchange[$currency] . " 
-                	  AND " . $priceColumn . "<= " . $price  . " * ". $exchange[$currency] . " * 1.5
-                	  AND t.`" . $idField . "` != " . (int)$id . "
-                    " . $addWhere . "
-                	ORDER BY `price` ASC, `photo`. `photoID` ASC
+                            (   (`settings`.`value` * `t`." . $priceColumn . ")  >= " .   $rubPrice ." )
+                	    AND (   (`settings`.`value` * `t`." . $priceColumn . ")  <= " .  ( $rubPrice  * 1.5 ) . " )
+                        AND t.`" . $idField . "` != " . (int)$id . "
+                        " . $addWhere . "
+                	ORDER BY rub_price ASC, `photo`. `photoID` ASC
                 	LIMIT 2
                 ) b
                 GROUP BY `tid`
+                ORDER BY rub_price ASC
                 ";
 
         $res = nga_config::db()->query($sql);

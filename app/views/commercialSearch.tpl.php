@@ -14,70 +14,6 @@
 						<div class="cb"></div>
             <div id="typePlace"></div>
 
-<?php /*
-<!-- Офис/ангар, зем.участок,-->
-<!--                Помещение свободного назначения/ангар, земельный участок,-->
-<!--                Торговое помещение/ангар, земельный участок,-->
-<!--                Помещение под ресторан/ангар, земельный участок,-->
-
-<!--                Помещение под банк/кап.строение, ангар, земельный участок,-->
-<!--                Помещние под мед.центр/кап.строение, ангар, земельный участок,-->
-<!--                Помещение под салон красоты/ангар, зем.участок,-->
-<!--                Помещение под бытовые услуги/ангар, зем.участок,-->
-
-
-<!--                Склад/бизнес-центры, новостройка, жилой дом, особняк,-->
-<!--                Производство/ бизнес-центры, новостройка, жилой дом, особняк,-->
-<!--                Автосервис/биснес-центры, новостройка, жилой дом, особняк.-->
- */
-            ?>
-<script>
-
-    $(document).ready(function(){
-
-        $('.all_view_link').attr('href',function(){
-           var rentCheck = $(this).val();
-           return UpdateQueryString('rent',$('input[name="rent"]').val(),this.href);
-        });
-
-
-        $('input[name="rent"]').change(function(){
-            var rentCheck = $(this).val();
-            $('.all_view_link').attr('href',function(){
-               return UpdateQueryString('rent',rentCheck,this.href);
-            })
-        });
-    });
-
-
-    var disabled = {
-
-        'assign[value=1]': ['type[value=8]','type[value=9]'],//офис
-        'assign[value=2]': ['type[value=8]','type[value=9]'],//Помещение свободного назначения
-        'assign[value=3]': ['type[value=8]','type[value=9]'],//Торговые помещения
-        'assign[value=4]': ['type[value=8]','type[value=9]'],//Помещения под ресторан/кафе
-        'assign[value=5]': ['type[value=8]','type[value=9]','type[value=7]'],//Помещения под банк
-        'assign[value=6]': ['type[value=8]','type[value=9]','type[value=7]'],//Помещения под мед.центры
-        'assign[value=7]': ['type[value=8]','type[value=9]'],//Помещения под салон красоты
-        'assign[value=8]': ['type[value=8]','type[value=9]'],//Помещения под бытовые услуги
-        'assign[value=9]': ['type[value=1]','type[value=2]','type[value=4]','type[value=5]','type[value=6]'],//Склад
-        'assign[value=10]':['type[value=1]','type[value=2]','type[value=4]','type[value=5]','type[value=6]'],//Производство
-        'assign[value=11]':['type[value=1]','type[value=2]','type[value=4]','type[value=5]','type[value=6]'],//Автосервис
-        'assign[value=12]':[],//иное
-
-        'type[value=1]': ['assign[value=9]','assign[value=10]','assign[value=11]'],//Бизнес-центр (строящийся)
-        'type[value=2]': ['assign[value=9]','assign[value=10]','assign[value=11]'],//Бизнес-центр (готовый)
-        'type[value=3]': [],//Здание
-        'type[value=4]': ['assign[value=9]','assign[value=10]','assign[value=11]'],//Новостройка
-        'type[value=5]': ['assign[value=9]','assign[value=10]','assign[value=11]'],//Жилой дом
-        'type[value=6]': ['assign[value=9]','assign[value=10]','assign[value=11]'],//Особняк
-        'type[value=7]': ['assign[value=5]','assign[value=6]'],//Капитальное строение
-        'type[value=8]': ['assign[value=1]','assign[value=2]','assign[value=3]','assign[value=4]','assign[value=5]','assign[value=6]','assign[value=7]','assign[value=8]'],//Ангар
-        'type[value=9]': ['assign[value=1]','assign[value=2]','assign[value=3]','assign[value=4]','assign[value=5]','assign[value=6]','assign[value=7]','assign[value=8]'],//Земельный участок
-        'type[value=10]': []//иное
-    };
-</script>
-
             <div class="b-form-dialog-box two">
                 <span><b>Выберите тип и/или назначение объекта</b></span>
                 <div class="cb"></div>
@@ -203,7 +139,7 @@
     <div class="b-form-box pricesell">
         <div class="b-form-title-item">Стоимость за 1м<sup>2</sup></div>
         <div class="b-form-inp margin5">
-            <select name="currency">
+            <select name="currency_m">
                 <?php foreach ($currencyList as $k => $v) { ?>
                 <option value="<?php echo $k;?>" <?php if ($k == $currency) {
                     echo "selected";
@@ -231,7 +167,7 @@
 		<div class="b-form-box pricerent">
 			<div class="b-form-title-item">Арендная ставка за 1м<sup>2</sup> в год</div>
 			<div class="b-form-inp  margin8">
-                <select name="currency">
+                <select name="currency_m">
                                 <?php foreach ($currencyList as $k => $v) { ?>
                                 <option value="<?php echo $k;?>" <?php if ($k == $currency) {
                                     echo "selected";
@@ -247,7 +183,48 @@
 
 </div>
 <script type="text/javascript">
+    var disabled = {
+
+        'assign[value=1]': ['type[value=8]','type[value=9]'],//офис
+        'assign[value=2]': ['type[value=8]','type[value=9]'],//Помещение свободного назначения
+        'assign[value=3]': ['type[value=8]','type[value=9]'],//Торговые помещения
+        'assign[value=4]': ['type[value=8]','type[value=9]'],//Помещения под ресторан/кафе
+        'assign[value=5]': ['type[value=8]','type[value=9]','type[value=7]'],//Помещения под банк
+        'assign[value=6]': ['type[value=8]','type[value=9]','type[value=7]'],//Помещения под мед.центры
+        'assign[value=7]': ['type[value=8]','type[value=9]'],//Помещения под салон красоты
+        'assign[value=8]': ['type[value=8]','type[value=9]'],//Помещения под бытовые услуги
+        'assign[value=9]': ['type[value=1]','type[value=2]','type[value=4]','type[value=5]','type[value=6]'],//Склад
+        'assign[value=10]':['type[value=1]','type[value=2]','type[value=4]','type[value=5]','type[value=6]'],//Производство
+        'assign[value=11]':['type[value=1]','type[value=2]','type[value=4]','type[value=5]','type[value=6]'],//Автосервис
+        'assign[value=12]':[],//иное
+
+        'type[value=1]': ['assign[value=9]','assign[value=10]','assign[value=11]'],//Бизнес-центр (строящийся)
+        'type[value=2]': ['assign[value=9]','assign[value=10]','assign[value=11]'],//Бизнес-центр (готовый)
+        'type[value=3]': [],//Здание
+        'type[value=4]': ['assign[value=9]','assign[value=10]','assign[value=11]'],//Новостройка
+        'type[value=5]': ['assign[value=9]','assign[value=10]','assign[value=11]'],//Жилой дом
+        'type[value=6]': ['assign[value=9]','assign[value=10]','assign[value=11]'],//Особняк
+        'type[value=7]': ['assign[value=5]','assign[value=6]'],//Капитальное строение
+        'type[value=8]': ['assign[value=1]','assign[value=2]','assign[value=3]','assign[value=4]','assign[value=5]','assign[value=6]','assign[value=7]','assign[value=8]'],//Ангар
+        'type[value=9]': ['assign[value=1]','assign[value=2]','assign[value=3]','assign[value=4]','assign[value=5]','assign[value=6]','assign[value=7]','assign[value=8]'],//Земельный участок
+        'type[value=10]': []//иное
+    };
+
 	$(document).ready(function () {
+
+        $('.all_view_link').attr('href',function(){
+           var rentCheck = $(this).val();
+           return UpdateQueryString('rent',$('input[name="rent"]').val(),this.href);
+        });
+
+
+        $('input[name="rent"]').change(function(){
+            var rentCheck = $(this).val();
+            $('.all_view_link').attr('href',function(){
+               return UpdateQueryString('rent',rentCheck,this.href);
+            })
+        });
+
 		if (window.location.hash == "#mo") {
 			$('.b-form-box.city').css('display', 'block');
 			$('.b-form-box.district').css('display', 'none');
@@ -311,13 +288,21 @@
         });
 
 		$('.b-form-box.pricerent').hide();
+        $('.b-form-box.pricerent').find('input,select,textarea').attr('disabled','disabled');
 		$('.b-form-radio input').click(function () {
 			if ($(this).attr('value') == 1) {
 				$('.b-form-box.pricesell').hide();
+                $('.b-form-box.pricesell').find('input,select,textarea').attr('disabled','disabled');
+
 				$('.b-form-box.pricerent').show();
+                $('.b-form-box.pricerent').find('input,select,textarea').removeAttr('disabled');
 			} else {
 				$('.b-form-box.pricerent').hide();
+                $('.b-form-box.pricerent').find('input,select,textarea').attr('disabled','disabled');
+
 				$('.b-form-box.pricesell').show();
+                $('.b-form-box.pricesell').find('input,select,textarea').removeAttr('disabled');
+
 			}
 		});
 

@@ -91,7 +91,7 @@ class field_select_multi extends field_select implements fieldI{
             $this->value = $this->value2Array($this->value);
             $newval = array();
             foreach($this->value as $v){
-                $newval[] = $this->values[$v];
+                if(isset($this->values[$v])) $newval[] = $this->values[$v];
             }
 
             $html = implode(', ',$newval);

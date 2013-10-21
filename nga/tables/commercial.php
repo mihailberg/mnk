@@ -12,7 +12,7 @@ $commercial_block[1] = $commercial->add('Адрес', 'address', 'textarea');
 $commercial_block[2] = $commercial->add('Метро', 'stationID', 'select');
 include(nga_config::i()->pathServer['nga'] . '/tables/subway_stations.php');
 $commercial_block[2]->constructFromTable($subway_stations);
-$commercial_block[3] = $commercial->add('Объект', 'title', 'string');
+$commercial_block[3] = $commercial->add('Название', 'title', 'string');
 //PARENT
 $parent = clone $commercial;
 
