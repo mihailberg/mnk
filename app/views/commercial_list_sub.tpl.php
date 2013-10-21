@@ -1,4 +1,10 @@
-<div id="searchResult" class="searchResult newflat">
+<?php
+/**
+ *
+ * Price From session
+ *
+ */
+?><div id="searchResult" class="searchResult newflat">
     <?php
     if (!is_array($searchResult)) {
         echo 'Свободных помещений нет</div>';
@@ -12,8 +18,8 @@
             <td width="1%">&nbsp;</td>
             <td width="1%">ID</td>
             <td>Площадь</td>
-            <td><?php echo ($gk['rent']==1)?'Арендная ставка за 1м<sup>2</sup> в год': 'Стоимость 1 м<sup>2</sup> ';?> (руб.)</td>
-            <td><?php echo ($gk['rent']==1)?'Ежемесячная арендная ставка': 'Стоимость';?> (руб.)</td>
+            <td><?php echo ($gk['rent']==1)?'Арендная ставка за 1м<sup>2</sup> в год': 'Стоимость 1 м<sup>2</sup> ';?> (<?php echo $currencyList[$currency];?>)</td>
+            <td><?php echo ($gk['rent']==1)?'Ежемесячная арендная ставка': 'Стоимость';?> (<?php echo $currencyList[$currency];?>)</td>
             <td>Назначение</td>
             <td width="1%">Планировка</td>
         </tr>

@@ -1,4 +1,10 @@
-<?php if($commercialData['cityID']!=1){?>
+<?php
+/**
+ *
+ * Price In natural currency
+ *
+ */
+?><?php if($commercialData['cityID']!=1){?>
     <?php if(!empty($cityid[$commercialData['cityID']])){?><span>Город:&nbsp;</span><?php echo $cityid[$commercialData['cityID']]; ?><br /><?php }?>
 <?php } else {
 

@@ -309,9 +309,6 @@ class commercial extends ngaController
 
 
 
-
-
-		$this->layoutData['currency'] = (int)$data[$id]['currency'];
         $this->layoutData['description'] = $data[$id]['desc_bc'];
         $this->layoutData['title'] = 'Коммерческая недвижимость > '.$data[$id]['title'];
         $this->layoutData['h1'] = $data[$id]['title'];
