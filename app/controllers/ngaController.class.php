@@ -342,6 +342,56 @@ abstract class ngaController
         return $data;
     }
 
+
+
+    /**
+     * Multiselect Values 2 array
+     *
+     * @param $str
+     * @return array
+     */
+    public function value2Array($str){
+//        var_dump(func_get_args());
+//        debug_print_backtrace();
+        $r = explode('_',$str);
+        if(count($r)>1){
+            array_pop($r);
+            array_shift($r);
+        }
+        return $r;
+    }
+
+    /**
+     * Array 2 multiselect values string
+     *
+     * @param $value
+     * @return string
+     */
+    public function array2Value($value){
+        return '_'.implode("_",$value).'_';
+    }
+
+
+    /**
+     * Make sql for similar objects FORMAT " (column like %%) "
+     *
+     * @param $column `type`
+     * @param $data
+     * @return string
+     */
+    public static function makeMultiSelectSql($column,$data){
+        $SQL = '';
+        if(count($data)>0&&(int)$data[0]!=0){
+            foreach($data as $k=>$v){
+                $SQL .=" ".$column." LIKE '%_".$v."_%' OR";
+            }
+
+            $SQL = ' ('.mb_substr($SQL,0,-2).') ';
+        }
+        return $SQL;
+    }
+
+
     protected function assignDistrict(){
         $this->tplData['district'] = array('', 'ЦАО', 'САО', 'ЗАО', 'ВАО', 'ЮАО', 'СВАО', 'СЗАО', 'ЮЗАО', 'ЮВАО');
         return $this->tplData['district'];

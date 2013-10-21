@@ -17,12 +17,14 @@ $commercial_block[3] = $commercial->add('Объект', 'title', 'string');
 $parent = clone $commercial;
 
 $parent->addWhere('parent', 0);
-$parent->addWhere('type', '(1,2,3,4)', 'IN');
+require_once(nga_config::i()->pathServer['nga'].'/../app/controllers/ngaController.class.php');
+$parent->addSqlWhere(ngaController::makeMultiSelectSql('`type`',array(1,2,3,4)));
+//$parent->addWhere('type', '(1,2,3,4)', 'IN');
 //m-s 'Бизнес-центр (строящийся)',
 //m-s 'Бизнес-центр (готовый)',
 //m-s 'Здание',
 //m-s 'Жилой дом (строящийся)',
-$commercial_block[4] = $commercial->add('Назначение', 'assign', 'select');
+$commercial_block[4] = $commercial->add('Назначение', 'assign', 'select_multi');
 $commercial_block[4]->addValues(
     'не указано',
     'Офис',
@@ -47,7 +49,7 @@ if(!empty($_GET['gid'])){
     $commercial_block[25]->addValues('не выбран');
     $commercial_block[25]->constructFromTable($parent);
 }
-$commercial_block[5] = $commercial->add('Тип объекта', 'type', 'select');
+$commercial_block[5] = $commercial->add('Тип объекта', 'type', 'select_multi');
 $commercial_block[5]->addValues(
     'не указан',
     'Бизнес-центр (строящийся)',

@@ -17,7 +17,7 @@ class field_select_multi extends field_select implements fieldI{
 			$html.=' disabled="disabled"';
 		}
 		$html.='>';
-		$html.=$this->getOptions(array_flip(explode(',',$this->value)));
+		$html.=$this->getOptions(array_flip($this->value2Array($this->value)));
 		$html.='</select>';
 		if($this->source == 'table'){
                 $html.='</td><td width="20"></td></tr></table>';
@@ -80,24 +80,44 @@ class field_select_multi extends field_select implements fieldI{
 		$html = '';
 		$html.='
 		<select multiple="multiple" class="field select list" name="'.$this->sqlField.'" size="1">';
-		$html.=$this->getOptions(array_flip(explode(',',$this->value)));
+		$html.=$this->getOptions(array_flip($this->value2Array($this->value)));
 		$html.='</select>';
 		return $html;
 	}
-	public function getList(){
-		if($this->value==0) return '<i>не указано</i>';
-			if(!isset($this->values[$this->value])){
-				$html = '<i>не указано</i>';
-			} else {
-				$html = $this->values[$this->value];
-			}
 
+	public function getList(){
+        $html = '';
+        if(!is_array($this->value)){
+            $this->value = $this->value2Array($this->value);
+            $newval = array();
+            foreach($this->value as $v){
+                $newval[] = $this->values[$v];
+            }
+
+            $html = implode(', ',$newval);
+        }
 		return $html;
 	}
 
     public function Save($type){
+        $this->value = $this->array2Value($this->value);
+    }
 
-        $this->value = implode(",",$this->value);
+    /**
+     * @param $str
+     * @return array
+     */
+    protected function value2Array($str){
+        $r = explode('_',$str);
+        if(count($r)>1){
+            array_pop($r);
+            array_shift($r);
+        }
+        return $r;
+    }
+
+    protected function array2Value($value){
+        return '_'.implode("_",$value).'_';
     }
 }
 ?>

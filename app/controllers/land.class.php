@@ -120,6 +120,8 @@ ORDER BY (`settings`.`value` * land.price) ASC
         }
 
         $data[$id] = $res->fetch_assoc();
+
+
         $this->layoutData['similarObjects'] = $this->getSimilarObjects(__CLASS__, $id, $data[$id]['price'], 5, 'AND (`elite`=0 OR `elite_check`=1) AND type = '.$data[$id]['type'], 'price', 'square_house');
         $data[$id]['type'] = explode(',',$data[$id]['type']);
         

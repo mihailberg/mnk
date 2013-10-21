@@ -9,7 +9,11 @@
 } ?>
 <?php if(!empty($metro[$commercialData['stationID']]['name'])){?><span>Ближайшее метро:&nbsp;</span><?php echo $metro[$commercialData['stationID']]['name']; ?><br /><?php }?>
 <?php if(!empty($commercialData['address'])){?><span>Адрес:&nbsp;</span><?php echo $commercialData['address']; ?><br /><?php }?>
-<?php if(!empty($commercialData['assign'])){ ?><span>Назначение:</span>&nbsp; <?php echo $assign[$commercialData['assign']];?><br /><?php } ?>
+
+<?php
+if(!empty($assignArray[0])){
+    echo '<span>Назначение:</span>&nbsp;'.implode(', ',$assignArray).'<br />';
+} ?>
 <span>Тип сделки:&nbsp;</span><?php echo ($commercialData['rent']==0)?'продажа':'аренда'; ?><br />
 <?php
 if ($commercialData['rent']) {

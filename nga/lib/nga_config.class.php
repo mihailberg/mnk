@@ -170,7 +170,13 @@ class nga_config{
 class mysqliLayer extends mysqli{
 
 	function query($sql){
-		//echo $sql."<br />\n\n\n<br />";
+//		if(isset($_GET['nga_debug']))
+//        echo $sql;
+//        debug_print_backtrace();
+//        $o = debug_backtrace();
+//        print_r($o); die();
+        if($_SERVER['HTTP_HOST'] == 'mnk.local')
+            echo '<script>console.log("'.str_replace("\n"," ",$sql).'");</script>';//."<br />\n\n\n<br />";
         // if(mb_strpos($sql,'UPDATE')!==false){
             // print_r($_POST);
             // die();

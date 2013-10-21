@@ -167,16 +167,61 @@ class commercial extends ngaController
         if (!is_array($data))
             return false;
 
+        //Sub objects commercial estate. `parent`=`this.id`
         if ($sub = $this->getSubObjects($id)) {
             if ($sub['rowCount'] > 0) {
                 $this->tplData['subObjects'] = true;
                 $this->layoutData['subObjects'] = true;
             }
         }
+
+
+
+        //  ==>     Assign multiselect   <==  //
+        $assign = $commercial_block[4]->getValues();
+        $assign[0] = '';
+        //self values
+        $data[$id]['assign'] = $this->value2Array($data[$id]['assign']);
+
+        // 2 template
+        $assignArray = array();
+        foreach($data[$id]['assign'] as $as){
+            $assignArray[] = $assign[$as];
+        }
+        $this->tplData['assignArray'] = $assignArray;
+
+        // 2 sql
+        $assignSQL = ' AND'.self::makeMultiSelectSql('`assign`',$data[$id]['assign']);
+        if($assignSQL == ' AND') $assignSQL = '';
+
+
+        //  ==>     Type multiselect   <==  //
+        $type = $commercial_block[5]->getValues();
+        $type[0] = '';
+        //self values
+        $data[$id]['type'] = $this->value2Array($data[$id]['type']);
+
+        // 2 template
+        $typeArray = array();
+        foreach($data[$id]['type'] as $as){
+            $typeArray[] = $type[$as];
+        }
+        $this->tplData['typeArray'] = $typeArray;
+
+        // 2 sql
+        $typeSQL = ' AND'.self::makeMultiSelectSql('`type`',$data[$id]['type']);
+        if($typeSQL == ' AND') $typeSQL = '';
+
+
+
+
+//        var_dump($typeSQL);
+//        var_dump($assignSQL);
+//die();
         $this->tplData['commercialData'] = $data[$id];
 
-        $this->tplData['assign'] = $commercial_block[4]->getValues();
-        $this->tplData['assign'][0] = '';
+
+
         $this->tplData['cityid'] = $commercial_block[0]->getValues();
         $this->tplData['cityid'][0] = '';
 
@@ -188,7 +233,11 @@ class commercial extends ngaController
         $this->layoutData['photos'] = $this->getPhoto(4, $id);
         $this->tplData['coords'] = array('title' => $id, 'latitude' => $data[$id]['latitude'], 'longitude' => $data[$id]['longitude']);
 		$city = ($data[$id]['cityID'] == 1) ? ' AND cityID = 1' : ' AND cityID != 1';
-        $this->layoutData['similarObjects'] = $this->getSimilarObjects(__CLASS__, $id, $data[$id]['price'], 4, $data[$id]['currency'], ' AND `parent`=0 AND `type` = '.$data[$id]['type'].' AND rent = '.$data[$id]['rent'].$city);
+
+
+        //Похожие объекты
+        $this->layoutData['similarObjects'] = $this->getSimilarObjects(__CLASS__, $id, $data[$id]['price'], 4, $data[$id]['currency'], ' AND `parent`=0 '.$typeSQL.$assignSQL.' AND rent = '.$data[$id]['rent'].$city);
+
 
         $this->tplData['id'] = $id;
         $m = $subway_stations->getData('id', $data[$id]['stationID']);
@@ -302,7 +351,7 @@ class commercial extends ngaController
             }
         }
 
-        //Цена        
+        //Цена
         if (!empty($_GET['price'])) {
             //от
             if ((int)$_GET['price']['from'] > 0) {
@@ -368,33 +417,37 @@ class commercial extends ngaController
         //Тип объекта
         if (!empty($_GET['type']) && is_array($_GET['type']) //Это если галочка "все типы дома" тогда условия не добавляем
         ) {
-            $type = array();
-            foreach ($_GET['type'] as $r) {
+            $sql.=' '.' AND'.self::makeMultiSelectSql('`type`',$_GET['type']);
 
-                if ((int)$r > 0) {
-                    $type[] = (int)$r;
-                }
-            }
-            if(count($type)){
-                $sql .= $glue . '`type` IN (' . implode(",", $type) . ')';
-                $glue = ' AND ';
-            }
+//            $type = array();
+//            foreach ($_GET['type'] as $r) {
+//
+//                if ((int)$r > 0) {
+//                    $type[] = (int)$r;
+//                }
+//            }
+//
+//            if(count($type)){
+//                $sql .= $glue . '`type` IN (' . implode(",", $type) . ')';
+//                $glue = ' AND ';
+//            }
         }
 
         //Тип объекта
         if (!empty($_GET['assign']) && is_array($_GET['assign']) //Это если галочка "все типы дома" тогда условия не добавляем
         ) {
-            $assign = array();
-            foreach ($_GET['assign'] as $r) {
-
-                if ((int)$r > 0) {
-                    $assign[] = (int)$r;
-                }
-            }
-            if(count($assign)){
-                $sql .= $glue . '`assign` IN (' . implode(",", $assign) . ')';
-                $glue = ' AND ';
-            }
+            $sql.=' '.' AND'.self::makeMultiSelectSql('`assign`',$_GET['assign']);
+//            $assign = array();
+//            foreach ($_GET['assign'] as $r) {
+//
+//                if ((int)$r > 0) {
+//                    $assign[] = (int)$r;
+//                }
+//            }
+//            if(count($assign)){
+//                $sql .= $glue . '`assign` IN (' . implode(",", $assign) . ')';
+//                $glue = ' AND ';
+//            }
         }
 
 
@@ -422,26 +475,29 @@ class commercial extends ngaController
         if ($this->rowCount == 0) {
             $sql = $Hsql;
 
-            //Тип объекта
+            //Есть направление
             if (!empty($_GET['assign']) && is_array($_GET['assign'])) {
-                $assign = array();
-                foreach ($_GET['assign'] as $r) {
-
-                    if ((int)$r > 0) {
-                        $assign[] = (int)$r;
-                    }
-                }
-                $sql .= $glue . '`assign` IN (' . implode(",", $assign) . ')';
+                $sql.=' '.' AND'.self::makeMultiSelectSql('`assign`',$_GET['assign']);
+//                $assign = array();
+//                foreach ($_GET['assign'] as $r) {
+//
+//                    if ((int)$r > 0) {
+//                        $assign[] = (int)$r;
+//                    }
+//                }
+//                $sql .= $glue . '`assign` IN (' . implode(",", $assign) . ')';
                 $glue = ' AND ';
+            //Нет направления есть тип
             } elseif (!empty($_GET['type']) && is_array($_GET['type']) && (empty($_GET['assign']))) {
-                $type = array();
-                foreach ($_GET['type'] as $r) {
-
-                    if ((int)$r > 0) {
-                        $type[] = (int)$r;
-                    }
-                }
-                $sql .= $glue . '`type` IN (' . implode(",", $type) . ')';
+                $sql.=' AND'.self::makeMultiSelectSql('`type`',$_GET['type']);
+//                $type = array();
+//                foreach ($_GET['type'] as $r) {
+//
+//                    if ((int)$r > 0) {
+//                        $type[] = (int)$r;
+//                    }
+//                }
+//                $sql .= $glue . '`type` IN (' . implode(",", $type) . ')';
             }
             if (!empty($_GET['assign']) || !empty($_GET['type'])) {
                 $sql .= $Fsql;
