@@ -243,12 +243,7 @@ class commercial extends ngaController
             }
         }
 
-
-
-
-
         $this->tplData['commercialData'] = $data[$id];
-
 
 
         $this->tplData['cityid'] = $commercial_block[0]->getValues();
@@ -603,7 +598,6 @@ class commercial extends ngaController
         $data = array();
         while ($row = $res->fetch_assoc()) {
             $data[$row['tid']] = $row;
-			// $data[$row['tid']]['price'] = $data[$row['tid']]['price'] * $exchange[$data[$row['tid']]['currency']]; 
         }
         return $data;
     }

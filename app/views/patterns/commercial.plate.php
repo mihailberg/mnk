@@ -1,5 +1,4 @@
 <?php
-
 $title = $gk['title'];
 
 echo "  <td class='results_item commercial'><a href='/kommercheskaja-nedvizhimost/commercial/" . $gk['tid'] . "'>
@@ -20,8 +19,6 @@ echo "
 
 if (isset($gk['stationID']) && (int)$gk['stationID'] > 0 && isset($metro[$gk['stationID']]['name']))
     echo "<li><strong>Метро:</strong>&nbsp;" . $metro[$gk['stationID']]['name'] . "</li>";
-
-
 
 if (!empty($gk['price_m'])) {
     echo "<li>";
