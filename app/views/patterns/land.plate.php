@@ -66,13 +66,13 @@ echo "
 
                     if(!empty($gk['settlement'])) echo "<li><strong>Населеный пункт:</strong>&nbsp;" . $gk['settlement'] . "</li>";
 
-                    if (!in_array(2,$gk['type']) && ! empty($gk['train_way']) && isset($train_wayTypes[$gk['train_way']])) {
+                    if (is_array($gk['type']) && !in_array(2,$gk['type']) && ! empty($gk['train_way']) && isset($train_wayTypes[$gk['train_way']])) {
                         echo "<li><strong>ЖД направление:</strong>&nbsp;" . $train_wayTypes[$gk['train_way']] . "</li>";
                     }
-                    if ( (in_array(1,$gk['type']) || in_array(3,$gk['type']) ) && !empty($gk['square_house'])) {
+                    if (is_array($gk['type']) &&  (in_array(1,$gk['type']) || in_array(3,$gk['type']) ) && !empty($gk['square_house'])) {
                         echo "<li><strong>Площадь дома:</strong>&nbsp;" . $gk['square_house'] . " м<sup>2</sup></li>";
                     }
-                    if ( in_array(4,$gk['type']) && ! empty($gk['square_house'])) {
+                    if (is_array($gk['type']) &&  in_array(4,$gk['type']) && ! empty($gk['square_house'])) {
                         echo "<li><strong>Площадь таунхауса:</strong>&nbsp;" . $gk['square_house'] . " м<sup>2</sup></li>";
                     }
 
