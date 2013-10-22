@@ -299,19 +299,10 @@ $first = array_shift($photos);
         }
 
         foreach ($similarObjects as $o) {
-
+            if(!isset($o['title'])) $o['title'] = '';
             //Square
 
             echo '<div class="like-box">';
-
-
-//                if(!empty($o['currency'])){
-//                    //Forign & Eilte
-//                    echo number_format($o['price'], 0, '.', ' ') . ' ' . $currencyList[$o['currency']];
-//                } else {
-//                    echo number_format($o['price'] / $currencyValue, 0, '.', ' ') . ' ' . $currencyList[$currency];
-//                }
-
 
             if (!empty($o['THUMB'])) {
                 echo '<a href="/' . $urlArray[0] . '/' . $oneUrl . '/' . $o['tid'] . '"><img src="' . $o['THUMB'] . '" alt = "' . $o['title'] . '" />';
