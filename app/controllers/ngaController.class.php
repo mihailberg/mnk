@@ -301,10 +301,14 @@ abstract class ngaController
         return $foundRows;
     }
 
-    protected function getSimilarObjects($table, $id, $price, $photoType, $addWhere = '', $priceColumn = 'price', $squareColumn = 'square', $idField = false)
+
+    protected function getSimilarObjects($table, $id, $price, $photoType, $currency = 1, $addWhere = '', $priceColumn = 'price', $squareColumn = 'square', $idField = false)
     {
         if (empty($price)) $price = 0;
         if (!$idField) $idField = $table . "ID";
+
+        // Price in rubles
+        $rubPrice = $price *  $this->exchange[$currency];
 
         $sql = "
                 SELECT * FROM (
@@ -312,35 +316,46 @@ abstract class ngaController
                 	 t .`" . $idField . "` as `tid`,
                 	 t." . $squareColumn . " as `square`,
                 	 t." . $priceColumn . " as `price`,
-                	 photo.THUMB, photo.MID
-
+                	 t.title as `title`,
+                	 (`settings`.`value` * `t`." . $priceColumn . " ) AS `rub_price`,
+                	 photo.THUMB, photo.MID,
+                	 t.currency as `currency`
                 	FROM `" . $table . "` t
+                	JOIN `settings` ON (`settingsID` = t.currency)
                 	LEFT JOIN `photo` ON (t .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
-                	WHERE " . $priceColumn . "<= " . $price . " AND t.`" . $idField . "` != " . (int)$id . "
-                	" . $addWhere . "
-                	ORDER BY `price` DESC,  `photo`. `photoID` ASC
+                	WHERE
+                            (   (`settings`.`value` * `t`." . $priceColumn . ")  <= " .   $rubPrice ." )
+                	    AND (   (`settings`.`value` * `t`." . $priceColumn . ")  >= " .  ( $rubPrice * 0.5 ) . " )
+                        AND t.`" . $idField . "` != " . (int)$id . "
+                	    " . $addWhere . "
+                	ORDER BY rub_price DESC,  `photo`. `photoID` ASC
                 	LIMIT 1) a UNION
                 SELECT * FROM (
                 	SELECT t .`" . $idField . "` as `tid`,
                 	t." . $squareColumn . " as `square`,
                 	t." . $priceColumn . " as `price`,
-                	 photo.THUMB, photo.MID
+                	t.title as `title`,
+                	(`settings`.`value` * `t`." . $priceColumn . " ) AS `rub_price`,
+                	 photo.THUMB, photo.MID,
+                	 t.currency as `currency`
                 	FROM `" . $table . "` t
+                	JOIN `settings` ON (`settingsID` = t.currency)
                 	LEFT JOIN `photo` ON (t .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
-                	WHERE " . $priceColumn . ">= " . $price . " AND t.`" . $idField . "` != " . (int)$id . "
-                    " . $addWhere . "
-                	ORDER BY `price` ASC, `photo`. `photoID` ASC
+                	WHERE
+                            (   (`settings`.`value` * `t`." . $priceColumn . ")  >= " .   $rubPrice ." )
+                	    AND (   (`settings`.`value` * `t`." . $priceColumn . ")  <= " .  ( $rubPrice  * 1.5 ) . " )
+                        AND t.`" . $idField . "` != " . (int)$id . "
+                        " . $addWhere . "
+                	ORDER BY rub_price ASC, `photo`. `photoID` ASC
                 	LIMIT 2
                 ) b
                 GROUP BY `tid`
+                ORDER BY rub_price ASC
                 ";
 
         $res = nga_config::db()->query($sql);
-//        echo $sql;
         if (!$res){
-            echo nga_config::db()->error; // return false;
-            echo $sql;
-            debug_print_backtrace();
+            return false;
         }
 
         $data = array();
@@ -349,7 +364,6 @@ abstract class ngaController
         }
         return $data;
     }
-
 
 
     /**

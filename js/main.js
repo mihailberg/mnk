@@ -26,12 +26,26 @@ function UpdateQueryString(key, value, url) {
             return url;
     }
 }
+var uniqCount = [];
+function uniqImgCount(){
+
+    var i = 0;
+
+    $('#product_carousel').find('li a img').each(function(){
+        uniqCount[++i] = encodeURI($(this).attr('src'));
+    });
+    console.log($(uniqCount).length);
+    console.log($(uniqCount));
+    console.log($($.unique(uniqCount)));
+    console.log($.unique(uniqCount).length);
+}
 
 function mycarousel_initCallback(carousel)
   {
       // Disable autoscrolling if the user clicks the prev or next button.
       carousel.buttonNext.bind('click', function() {
           carousel.startAuto(0);
+//          uniqImgCount();
       });
 
       carousel.buttonPrev.bind('click', function() {
@@ -44,7 +58,7 @@ function mycarousel_initCallback(carousel)
       }, function() {
           carousel.startAuto();
       });
-  };
+};
 
 
 

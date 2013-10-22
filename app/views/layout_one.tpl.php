@@ -59,23 +59,17 @@
         <?php endif;?>
 
         $(document).ready(function () {
+
+
             $('a.fancybox').fancybox({
-                'titlePosition': 'over',
-                'titleFormat': function (title, currentArray, currentIndex, currentOpts) {
-                    var l = currentArray.length;
-
-//                    if (l > 1) {
-//                        l = (l - 1) / 3 + 1;
-//                    }
-
-                    var curI = (currentIndex + 1);
-                    if (curI > l) curI -= l;
-
-                    if (curI > l) {
-                        curI -= l;
-                        ++curI;
-                    }
-                    return '<span id="fancybox-title-over">Фото ' + curI + ' / ' + l + (title.length ? ' &nbsp; ' + title : '') + '</span>';
+                'titleFormat': function(title, currentArray, currentIndex, currentOpts) {
+                      var l = currentArray.length; var curI = (currentIndex + 1);
+                      if (curI > l) curI -= l;
+                      if (curI > l) {                 curI -= l;                          ++curI;             }
+                      return '<span id="fancybox-title-over">Фото ' + curI + ' / ' + l +''+ (title.length ? ' &nbsp; ' + title : '') + '</span>';
+                },
+                onAfterAnimation: function(){
+                    console.log($(this));
                 }
             });
             $('a.fancybox2').fancybox({
@@ -164,12 +158,12 @@ $first = array_shift($photos);
                                auto: 0,
                                wrap: 'last',
                                initCallback: mycarousel_initCallback,
-                               scroll: 1
-                               size: <?php count($photos); ?>
+                               scroll: 1,
                            });
                        });
                 </script>
         <?php
+                //size: <?php count($photos);
             }
 
                 echo '<ul id="product_carousel" class="infiniteCarousel jcarousel-skin-tango small">';
@@ -203,15 +197,29 @@ $first = array_shift($photos);
                 ?>
 
                 <script>jQuery(document).ready(function() {
-                               jQuery('#product_carousel').jcarousel({
-                                   auto: 0,
-                                   wrap: 'circular',
-                                   initCallback: mycarousel_initCallback,
-                                   scroll: 3,
-                                   size: <?php echo count($photos)-1; ?>
-                               });
+                           jQuery('#product_carousel').jcarousel({
+                               auto: 0,
+                               //wrap: 'circular',
+                               initCallback: mycarousel_initCallback,
+                               scroll: 3,
+                               size: <?php echo (int)count($photos); ?>
                            });
-                </script>
+                       });
+
+//                                   itemVisibleOutCallback: function(e,e1,e2){
+//                                       console.log($(e2));        number++
+//                                       $(e1).find('a').unbind('fancybox');
+//                                   },
+//                                   itemVisibleInCallback: function(e,e1,e2){
+//                                       $(e1).find('a').fancybox({
+//                                       });
+//                                   },
+//                                     itemVisibleInCallback: function(){
+//                                       console.log(this);
+//
+//                                       $(this).children('a').addClass('.fancybox');
+//                                   },
+</script>
         <?php
 
         echo '

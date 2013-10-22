@@ -5,6 +5,8 @@ if (isset($gk['eliteType'])) {
 } else $class = 'newflat';
 
 $title = $gk['address'];
+$gk['price'] = $gk['price']*$this->exchange[$gk['currency']] / $currencyValue;
+$gk['price_m'] = $gk['price_m']*$this->exchange[$gk['currency']] / $currencyValue;
 
 echo "
     <td class='results_item " . $class . "'>";
@@ -34,8 +36,8 @@ echo "</h3>
 <?php if(!empty($city[$gk['cityID']]['title'])):?><li><strong>Город:</strong>&nbsp;<?php echo $city[$gk['cityID']]['title'];?></li><?php endif;?><?php
                 echo "<li><strong>Адрес:</strong>&nbsp;" . $gk['address'] . "</li>";
                 if(isset($currencyList[$gk['currency']])){
-                    echo "<li><strong>Стоимость 1м<sup>2</sup> от:</strong>&nbsp;" . number_format($gk['price_m'], 0, '.', ' ') . "&nbsp;<span class='price_units_rub'>" . $currencyList[$gk['currency']] . "</span></li>";
-                    echo "<li><strong>Стоимость от:</strong>&nbsp;" . number_format($gk['price'], 0, '.', ' ') . "&nbsp;<span class='price_units_rub'>" . $currencyList[$gk['currency']] . "</span></li>";
+                    echo "<li><strong>Стоимость 1м<sup>2</sup> от:</strong>&nbsp;" . number_format($gk['price_m'], 0, '.', ' ') . "&nbsp;<span class='price_units_rub'>" . $currencyList[$currency] . "</span></li>";
+                    echo "<li><strong>Стоимость от:</strong>&nbsp;" . number_format($gk['price'], 0, '.', ' ') . "&nbsp;<span class='price_units_rub'>" . $currencyList[$currency] . "</span></li>";
                 }
                 if($gk['square']){
                     echo "<li><strong>Площадь от:</strong>&nbsp;" . $gk['square'] . "&nbsp;м<sup>2</sup></li>";

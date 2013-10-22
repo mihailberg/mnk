@@ -43,6 +43,7 @@ setlocale(LC_ALL, "ru_RU.UTF8");
 set_include_path($_SERVER['DOCUMENT_ROOT']);
 
 require_once('nga/lib/nga.php');
+error_reporting(E_ERROR);
 
 /**
  * URL

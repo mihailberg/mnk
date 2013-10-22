@@ -41,6 +41,7 @@
         $('.changebox.moscow_tab').click(function () {
             var current = $('.typeHidden').attr('value');
             var value = $(this).attr('id');
+
             //Если другая вкладка
             if(current!=value){
                 window.location.hash = 'msk';
@@ -58,6 +59,8 @@
         $('.changebox.mo_tab').click(function () {
             var current = $('.typeHidden').attr('value');
             var value = $(this).attr('id');
+
+
             //Если другая вкладка
             if(current!=value){
                 window.location.hash = 'mo';
@@ -174,11 +177,6 @@
 
 
     </div>
-
-
-
-
-
 
 
 

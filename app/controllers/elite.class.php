@@ -518,6 +518,7 @@ class elite extends ngaController
 
         $this->layoutData['title'] = 'Элитная невижимсть результаты поиска';
         $this->layoutData['h1'] = 'Элитная невижимсть > Результаты поиска';
+//        print_r($this->tplData);
     }
 
 
@@ -880,8 +881,8 @@ class elite extends ngaController
         }
         return $data;
     }
-    
-	protected function getSimilarObjects($table, $id, $price, $photoType, $currency, $addWhere = '', $priceColumn = 'price', $squareColumn = 'square', $idField = false)
+
+    protected function getSimilarObjects($table, $id, $price, $photoType, $currency = 1, $addWhere = '', $priceColumn = 'price', $squareColumn = 'square', $idField = false)
     {
         if (empty($price)) $price = 0;
         if (!$idField) $idField = $table . "ID";
