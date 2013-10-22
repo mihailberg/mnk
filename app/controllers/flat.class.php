@@ -68,30 +68,17 @@ class flat extends ngaController
         include ('nga/tables/flat.php');
         $this->tplData['house_types'] = $comment[21]->getValues();
         $this->tplData['house_types'][0] = '';
-        /*
-                $this->tplData['metro'] = $comment[3]->getValues();
-             //print_r($flat);
 
-
-        print_r($_GET);
-
-        //echo $sql;
-        /*
-        $this->noLayout = true;
-
-        //$this->layout = '';
-
-        print_r($_POST);
-        print_r($_SERVER);
-        */
     }
 
     public function search()
     {
+        $rub_price_sql = "(`flat`.`price` * `settings`.`value`)";
+        $rub_price_m_sql = "(`flat`.`price_m` * `settings`.`value`)";
 
         $sql = "SELECT SQL_CALC_FOUND_ROWS `flat`.`flatID` AS `tid`, `flat`.*, `photo`.*,
-(`settings`.`value` * `flat`.price) AS `rub_price`,
-    (`settings`.`value` * `flat`.price_m) AS `rub_price_m`
+                        ".$rub_price_sql." AS `rub_price`,
+                        ".$rub_price_m_sql." AS `rub_price_m`
 
                     FROM `flat`
                     LEFT JOIN `photo` ON (`flat`.`flatID` = photo.R_ID AND photo.R_TYPE = 3)
@@ -117,16 +104,15 @@ class flat extends ngaController
             $sql .= $glue . $this->makeRoomSql(); //newflat room isroom
         }
 
-        //цена цена (содержит окошки для заполнения вручную: от __ до___,  валюта постоянная – рубли, можно выбрать доллары и евро через стрелочку в окошке),
-        //@todo curre
+        //Цена
         if (!empty($_GET['price'])) {
             //от
             if ((int)$_GET['price']['from'] > 0) {
-                $sql .= $glue . '`price` >= ' . $this->currencyValue * (int)$_GET['price']['from'] . '';
+                $sql .= $glue . $rub_price_sql . ' >= ' . $this->exchange[(int)$_GET['currency']] * (int)$_GET['price']['from'];
             }
             //до
             if ((int)$_GET['price']['to'] > 0 && (int)$_GET['price']['to'] > (int)$_GET['price']['from']) {
-                $sql .= $glue . '`price` <=' . $this->currencyValue * (int)$_GET['price']['to'];
+                $sql .= $glue . $rub_price_sql . ' <= ' . $this->exchange[(int)$_GET['currency']] * (int)$_GET['price']['to'];
             }
         }
 
@@ -201,12 +187,9 @@ class flat extends ngaController
 
         $sql .= "
                             GROUP BY  `flat`.`flatID`
-                            ORDER BY `flat`.`price` ASC
+                            ORDER BY (`settings`.`value` * `flat`.price) ASC,  `photo`. `photoID` ASC
                                     ";
         $sql .= " LIMIT " . ($this->page - 1) * $this->perPage . ", " . $this->perPage;
-
-
-//        echo $sql;
 
         return nga_config::db()->query($sql);
     }
@@ -221,18 +204,12 @@ class flat extends ngaController
         /**
          * @var $flat nga_table
          */
-        $flat->OverrideQuerySelect = "SELECT `flat`.`flatID` AS `tid`, `flat`.`address`, `flat`.`cityID`, `flat`.`regionID`, `flat`.`stationID`,
-
-                                `flat`.`price`,
-                                `flat`.`price_m`,
-
+        $flat->OverrideQuerySelect = "SELECT
+                                `flat`.`flatID` AS `tid`,
+                                `flat`.*,
                                 (`settings`.`value` * `flat`.price) AS `rub_price`,
                                 (`settings`.`value` * `flat`.price_m) AS `rub_price_m`,
-                                `flat`.`isroom`, `flat`.`room`, `flat`.`floor`, `flat`.`floors`, `flat`.`square`, `flat`.`square_live`, `flat`.`square_rooms`, `flat`.`square_kitchen`, `flat`.`bath_count`, `flat`.`status`, `flat`.`balcony`, `flat`.`window`, `flat`.`phone`, `flat`.`type`, `flat`.`lift`, `flat`.`metro_remoteness`, `flat`.`banks`, `flat`.`best`, `flat`.`latitude`, `flat`.`longitude`, `flat`.`incity`, `flat`.`district`,
-                                `flat`.`elite`,
-                                `flat`.`currency`,
-                                flat.title,
-                                  `photo`.`photoID` as `photoID`
+                                 `photo`.`photoID` as `photoID`
 
                                     FROM `flat`
                                     JOIN `settings` ON (`settingsID` = `flat`.currency)
@@ -249,7 +226,7 @@ class flat extends ngaController
 
         $flat->OverrideQuerySelect .="
                                     GROUP BY  `flat`.`flatID`
-                                    ORDER BY `flat`.`price` ASC
+                                    ORDER BY (`settings`.`value` * `flat`.price) ASC,  `photo`. `photoID` ASC
                             ";
         $flat->OverrideQuerySelect .= " LIMIT " . ($this->page - 1) * $this->perPage . ", " . $this->perPage;
 
@@ -259,6 +236,7 @@ class flat extends ngaController
         $this->tplData['resultCount'] = $flat->foundRows;
         $this->tplData['house_types'] = $comment[21]->getValues();
         $this->tplData['house_types'][0] = '';
+
 
         include ('nga/tables/subway_stations.php');
         $subway_stations->perPage = 1000;
@@ -320,9 +298,10 @@ class flat extends ngaController
 
         $this->assignCity();
         $this->assignMetro();
+        $rooms = ' AND `room` ='.$data['room'].' ';
 		
 		$city = ($data['cityID'] == 1) ? ' AND cityID = 1' : 'AND cityID != 1';
-        $this->layoutData['similarObjects'] = $this->getSimilarObjects(__CLASS__, $id, $data['price'], 3, 'AND (`elite`=0 OR `elite_check`=1) AND `room` ='.$data['room'].$city, 'price');
+        $this->layoutData['similarObjects'] = $this->getSimilarObjects(__CLASS__, $id, $data['price'], 3, $data['currency'], 'AND (`elite`=0 OR `elite_check`=1)'.$rooms.$city, 'price');
 
 
 
@@ -334,77 +313,60 @@ class flat extends ngaController
         $this->layoutData['h1'] = $this->tplData['flatData']['title'];
     }
 
-    /**
-     *
-     * WITH CURRENCY
-     *
-     * @param $table
-     * @param $id
-     * @param $price
-     * @param $photoType
-     * @param string $addWhere
-     * @param string $priceColumn
-     * @param string $squareColumn
-     * @param bool $idField
-     * @return array
-     */
-    protected function getSimilarObjects($table, $id, $price, $photoType, $addWhere = '', $priceColumn = 'price', $squareColumn = 'square', $idField = false)
+    protected function getSimilarObjects($table, $id, $price, $photoType, $currency = 1, $addWhere = '', $priceColumn = 'price', $squareColumn = 'square', $idField = false)
     {
         if (empty($price)) $price = 0;
         if (!$idField) $idField = $table . "ID";
 
+        // Price in rubles
+        $rubPrice = $price *  $this->exchange[$currency];
+
         $sql = "
                 SELECT * FROM (
-
                 	SELECT
-                	 t.`" . $idField . "` as `tid`,
+                	 t .`" . $idField . "` as `tid`,
                 	 t." . $squareColumn . " as `square`,
-                	 t.price,
-                	 t.currency,
-                	 (`settings`.`value` * `t`." . $priceColumn . ") AS `rub_price`,
-                	 photo.THUMB, photo.MID
-
+                	 t." . $priceColumn . " as `price`,
+                	 t.title as `title`,
+                	 (`settings`.`value` * `t`." . $priceColumn . " ) AS `rub_price`,
+                	 photo.THUMB, photo.MID,
+                	 t.currency as `currency`
                 	FROM `" . $table . "` t
+                	JOIN `settings` ON (`settingsID` = t.currency)
                 	LEFT JOIN `photo` ON (t .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
-                    JOIN `settings` ON (`settingsID` = t.currency)
-
                 	WHERE
-                            ( (`settings`.`value` * `t`." . $priceColumn . ")  <= `settings`.`value` * " . $price .")
-                            AND ( (`settings`.`value` * `t`." . $priceColumn . ")  >= `settings`.`value` * " . $price ." * 0.5)
-                	    AND t.`" . $idField . "` != " . (int)$id . "
-                	" . $addWhere . "
-                	ORDER BY (`settings`.`value` * `t`." . $priceColumn . ") DESC,  `photo`. `photoID` ASC
+                            (   (`settings`.`value` * `t`." . $priceColumn . ")  <= " .   $rubPrice ." )
+                	    AND (   (`settings`.`value` * `t`." . $priceColumn . ")  >= " .  ( $rubPrice * 0.5 ) . " )
+                        AND t.`" . $idField . "` != " . (int)$id . "
+                	    " . $addWhere . "
+                	ORDER BY rub_price DESC,  `photo`. `photoID` ASC
                 	LIMIT 1) a UNION
                 SELECT * FROM (
-
-                	SELECT
-                	t.`" . $idField . "` as `tid`,
+                	SELECT t .`" . $idField . "` as `tid`,
                 	t." . $squareColumn . " as `square`,
-                     t.price,
-                	 t.currency,
+                	t." . $priceColumn . " as `price`,
+                	t.title as `title`,
+                	(`settings`.`value` * `t`." . $priceColumn . " ) AS `rub_price`,
                 	 photo.THUMB, photo.MID,
-                	(`settings`.`value` * `t`." . $priceColumn . ") AS `rub_price`
-
+                	 t.currency as `currency`
                 	FROM `" . $table . "` t
-                	LEFT JOIN `photo` ON (t .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
                 	JOIN `settings` ON (`settingsID` = t.currency)
+                	LEFT JOIN `photo` ON (t .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
                 	WHERE
-                        ( (`settings`.`value` * `t`." . $priceColumn . ")  >= `settings`.`value` * " . $price .")
-                        AND ( (`settings`.`value` * `t`." . $priceColumn . ")  <= `settings`.`value` * " . $price ." * 1.5)
-                	    AND t.`" . $idField . "` != " . (int)$id . "
-                    " . $addWhere . "
-                	ORDER BY (`settings`.`value` * `t`." . $priceColumn . ") ASC, `photo`. `photoID` ASC
+                            (   (`settings`.`value` * `t`." . $priceColumn . ")  >= " .   $rubPrice ." )
+                	    AND (   (`settings`.`value` * `t`." . $priceColumn . ")  <= " .  ( $rubPrice  * 1.5 ) . " )
+                        AND t.`" . $idField . "` != " . (int)$id . "
+                        " . $addWhere . "
+                	ORDER BY rub_price ASC, `photo`. `photoID` ASC
                 	LIMIT 2
                 ) b
                 GROUP BY `tid`
+                ORDER BY rub_price ASC
                 ";
 
         $res = nga_config::db()->query($sql);
-//        echo $sql;
         if (!$res){
-            echo nga_config::db()->error; // return false;
-            echo $sql;
-            debug_print_backtrace();
+            return false;
         }
 
         $data = array();

@@ -96,8 +96,8 @@ $flat_elite_check[0] = $flat->add('Отображать в элитной', 'eli
 $flat->addOrderBy('flatID', 'DESC');
 
 
-$flat->setListShow($comment[0], $comment[1],
- $comment[4], $comment[5],$comment[6],$comment[7],$comment[8] //,$contacts[3],$contacts[4]
+$flat->setListShow($comment[1], $comment[0], $comment[26],
+ $comment[4], $comment[5],$comment[6],$comment[7],$comment[9] //,$contacts[3],$contacts[4]
     );
 $flat->setFormNoShow($flat_ID);
 $flat->setSearchForm(

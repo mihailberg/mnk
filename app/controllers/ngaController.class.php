@@ -174,7 +174,8 @@ abstract class ngaController
         $in = array();
         foreach ($_GET['room'] as $r) {
             if ((int)$r > 5 || (int)$r < 1) {
-                die("Don't hack this");
+                return false;
+                //die("Don't hack this");
             }
 
             switch ($r) {

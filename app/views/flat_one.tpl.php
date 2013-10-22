@@ -35,35 +35,25 @@
 
 
 <?php
-//
-//if (!empty($flatData['price_m'])) {
-//    echo '<span>Стоимость за 1м<sup>2</sup>:&nbsp;</span>';
-//    if(!empty($flatData['currency'])){
-//       //Forign & Eilte
-//       echo number_format($flatData['price_m'], 0, '.', ' ') . ' ' . $currencyList[$flatData['currency']];
-//    } else {
-//       echo number_format($flatData['price_m'] / $currencyValue, 0, '.', ' ') . ' ' . $currencyList[$currency];
-//    }
-//    echo '<br>';
-//}
-
 if (!empty($flatData['price'])) {
     echo '<span>Стоимость:&nbsp;</span>';
-    if(!empty($flatData['currency'])){
-       //Forign & Eilte
-       echo number_format($flatData['price'], 0, '.', ' ') . ' ' . $currencyList[$flatData['currency']];
-    } else {
-       echo number_format($flatData['price'] / $currencyValue, 0, '.', ' ') . ' ' . $currencyList[$currency];
-    }
+    if(empty($flatData['currency'])) $flatData['currency'] = 1;
+
+    echo number_format($flatData['price'], 0, '.', ' ') . ' ' . $currencyList[$flatData['currency']];
     echo '<br>';
 }
 
- if (!empty($flatData['type'])): ?><span>Тип дома:&nbsp;</span><?php echo $house_types[$flatData['type']]; ?><br><?php endif;?>
-<span>Количество комнат:&nbsp;</span><?php if ($flatData['room'] == 0) {
-                echo 'комната';
-            } else {
-                echo $flatData['room'];
-            };?><br />
+if (!empty($flatData['type'])&&isset($house_types[$flatData['type']])):
+    ?><span>Тип дома:&nbsp;</span><?php echo $house_types[$flatData['type']]; ?><br /><?php
+endif;
+
+if ($flatData['room'] > 0){
+    echo '<span>Количество комнат:&nbsp;</span>'.$flatData['room'].'<br />';
+}
+if($flatData['isroom']||$flatData['room']==0) {
+    echo '<span>Комната</span><br />';
+}
+?>
 <?php if (!empty($flatData['floor'])):                                              ?><span>Этаж<?php if(!empty($flatData['floors'])&&$flatData['floors']!="0") echo '/Этажность';?>:&nbsp;</span><?php echo  $flatData['floor']; echo ((!empty($flatData['floors'])&&$flatData['floors']!="0") ? "/" . $flatData['floors']:''); ?><br><?php endif;?>
 <?php if (!empty($flatData['square'])&&$flatData['square']!='0.0'):                 ?><span>Общая площадь:&nbsp;</span><?php echo $flatData['square']; ?> м<sup>2</sup><br><?php endif;?>
 <?php if (!empty($flatData['square_live'])&&$flatData['square_live']!='0.0'):       ?><span>Жилая площадь:&nbsp;</span><?php echo $flatData['square_live']; ?> м<sup>2</sup><br><?php endif;?>
