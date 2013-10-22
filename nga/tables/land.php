@@ -112,7 +112,7 @@ if (isset($_GET['id'])) {
 }
 
 
-$land_table->setListShow($land_table_block[1], $land_table_block[12], $land_table_block[3],$land_table_block[10],$land_table_block[9]);
+$land_table->setListShow($land_table_block[1], $land_table_block[12], $land_table_block[3],$land_table_block[10],$land_table_block[9],$land_table_block[0]);
 
 $land_table->setFormNoShow($landID);
 

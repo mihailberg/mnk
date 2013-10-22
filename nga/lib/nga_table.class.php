@@ -366,11 +366,14 @@ class nga_table implements Iterator
         }
     }
 
+    public $listShowSort = array();
     public function setListShow()
     {
         $ListShow = func_get_args();
+
         foreach ($ListShow as $v) {
             $v->listShow();
+            $this->listShowSort[] = $v;
         }
     }
 

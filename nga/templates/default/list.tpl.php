@@ -48,7 +48,7 @@ if (isset($_GET['from'])) {
             <thead>
             <tr>
                 <th width="1%">№</th>
-                <?php foreach ($Data->table as $f) { ?>
+                <?php foreach ($Data->table->listShowSort as $f) { ?>
                 <?php if ($f->ListShow) { ?>
                     <th><?php echo $f->getName(); ?></th>
                     <?php } ?>
@@ -62,7 +62,7 @@ if (isset($_GET['from'])) {
                 foreach ($ListData as $v) {
                     echo '<tr>';
                     echo '<th>'.$v['tid'].'</th>';
-                    foreach ($Data->table as $f) {
+                    foreach ($Data->table->listShowSort as $f) {
                         if ($f->ListShow) {
                             //ListEdit
                             //echo '<td>'.$f->getListEdit('id['.$v['tid'].']['.$f->sqlField.']',$v[$f->sqlField],30).'</td>';
@@ -121,7 +121,7 @@ if (isset($_GET['from'])) {
             <tfoot>
             <tr>
                 <th width="1%">№</th>
-                <?php foreach ($Data->table as $f) { ?>
+                <?php foreach ($Data->table->listShowSort as $f) { ?>
                 <?php if ($f->ListShow) { ?>
                     <th><?php echo $f->getName(); ?></th>
                     <?php } ?>
