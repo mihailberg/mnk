@@ -20,7 +20,7 @@ echo "
             <div class='objId'>id&nbsp;" . $gk['tid'] . "</div>
             <ul>";
 
-                if(!empty($gk['title'])) echo"<li><h3 class='widthLimit'>".$gk['title']."</h3></li>";
+                if(!empty($title)) echo"<li><h3 class='widthLimit'>".$title."</h3></li>";
                 if(!empty($gk['address'])) echo"<li class='widthLimit'><strong>Адрес:</strong>&nbsp;" . $gk['address'] . "</li>";
 
 if (isset($gk['stationID']) && (int)$gk['stationID'] > 0 && isset($metro[$gk['stationID']]['name']))

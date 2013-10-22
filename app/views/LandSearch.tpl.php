@@ -138,7 +138,7 @@
                 window.addGet = '?'+$('.tabjs#'+value).attr('rel');
                 $('.all_view_link').attr('href',window.all_view_href+window.addGet);
 
-                $('.typeHidden').attr('value',value.substr(1));
+                $('.typeHidden').attr('value',value.substr(2));
 
                 $(value).addClass('current');
 
@@ -149,9 +149,11 @@
                 }
                 if('#l2' == value){
                     $('.squareHouse').parent().css('display','none');
+                    $('.squareHouse').parent().find('input').attr('disabled','disabled');
                 } else {
                     $('.squareHousePrice2').css('display','block');
                     $('.squareHouse').parent().css('display','block');
+                    $('.squareHouse').parent().find('input').removeAttr('disabled');
                 }
             } else {
                 $('.tabjs').removeClass('current');
@@ -165,7 +167,7 @@
 			var value = $(this).attr('id');
             window.location.hash = value;
             type =
-				$('.typeHidden').attr('value',value);
+                $('.typeHidden').attr('value',value.substr(1));
 			if('l4' == value){
 				$('.b-form-title-item.squareHouse.line-height').text('Площадь таунхауса');
 			} else {
@@ -173,9 +175,11 @@
 			}
 			if('l2' == value){
 				$('.squareHouse').parent().css('display','none');
+                $('.squareHouse').parent().find('input').attr('disabled','disabled');
 			} else {
 				$('.squareHousePrice2').css('display','block');
 				$('.squareHouse').parent().css('display','block');
+                $('.squareHouse').parent().find('input').removeAttr('disabled');
 			}
 		});
 	});

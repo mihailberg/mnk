@@ -29,19 +29,21 @@ class field_select_multi extends field_select implements fieldI{
 
     
 	public function getView(){
-		if($this->value==0){
-			$aValue = '<i>не указано</i>';
-		} else {
-			if(!isset($this->values[$this->value])){
-				$aValue = '<i>не указано</i>';
-			} else {
-				$aValue = $this->values[$this->value];
-			}
-		}
+        $html = '';
+        if(!is_array($this->value)){
+            $this->value = $this->value2Array($this->value);
+            $newval = array();
+            foreach($this->value as $v){
+                if(isset($this->values[$v])) $newval[] = $this->values[$v];
+            }
+
+            $html = implode(', ',$newval);
+        }
+
 		$html='
 		<tr>
 			<td class="edit_label">'.$this->name.':</td>
-	        <td>'.$aValue.'</td>
+	        <td>'.$html.'</td>
 		</tr>
 		';
 		return $html;

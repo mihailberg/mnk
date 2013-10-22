@@ -305,30 +305,30 @@ $first = array_shift($photos);
             echo '<div class="like-box">';
 
 
-//                                            if(!empty($o['currency'])){
-//                                                //Forign & Eilte
-//                                                echo number_format($o['price'], 0, '.', ' ') . ' ' . $currencyList[$o['currency']];
-//                                            } else {
-//                                                echo number_format($o['price'] / $currencyValue, 0, '.', ' ') . ' ' . $currencyList[$currency];
-//                                            }
+//                if(!empty($o['currency'])){
+//                    //Forign & Eilte
+//                    echo number_format($o['price'], 0, '.', ' ') . ' ' . $currencyList[$o['currency']];
+//                } else {
+//                    echo number_format($o['price'] / $currencyValue, 0, '.', ' ') . ' ' . $currencyList[$currency];
+//                }
 
 
             if (!empty($o['THUMB'])) {
-                echo '<a href="/' . $urlArray[0] . '/' . $oneUrl . '/' . $o['tid'] . '"><img src="' . $o['THUMB'] . '" alt = "' . $title . '" />';
+                echo '<a href="/' . $urlArray[0] . '/' . $oneUrl . '/' . $o['tid'] . '"><img src="' . $o['THUMB'] . '" alt = "' . $o['title'] . '" />';
             } else {
-                echo '<a href="/' . $urlArray[0] . '/' . $oneUrl . '/' . $o['tid'] . '"><img data-src="holder.js/258x189/text:' . $title . '" alt="' . $title . '">';
+                echo '<a href="/' . $urlArray[0] . '/' . $oneUrl . '/' . $o['tid'] . '"><img data-src="holder.js/258x189/text:' . $o['title'] . '" alt="' . $title . '">';
             }
 
             echo '
                     <span>Площадь' . (($oneUrl == 'gk') ? ' от' : '') . ': </span> ' . $o['square'] . ' м<sup>2</sup><br />
                     <span>Стоимость' . (($oneUrl == 'gk') ? ' от' : '') . ': </span> ';
 
-            if (!empty($o['currency'])) {
+//            if (!empty($o['currency'])) {
                 //Forign & Eilte
-                echo number_format($o['price'], 0, '.', ' ') . "&nbsp;<span class='price_units_rub'>" . $currencyList[$o['currency']];
-            } else {
-                echo number_format($o['price'] / $currencyValue, 0, '.', ' ') . "&nbsp;<span class='price_units_rub'>" . $currencyList[$currency];
-            }
+             echo number_format($o['price'], 0, '.', ' ') . "&nbsp;<span class='price_units_rub'>" . $currencyList[$o['currency']];
+//            } else {
+//                echo number_format($o['price'] / $currencyValue, 0, '.', ' ') . "&nbsp;<span class='price_units_rub'>" . $currencyList[$currency];
+//            }
             echo
             '<br />
             </a>

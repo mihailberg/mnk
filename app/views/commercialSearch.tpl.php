@@ -214,7 +214,7 @@
 
         $('.all_view_link').attr('href',function(){
            var rentCheck = $(this).val();
-           return UpdateQueryString('rent',$('input[name="rent"]').val(),this.href);
+           return UpdateQueryString('rent',$('input[name="rent"]:checked').val(),this.href);
         });
 
 
@@ -229,6 +229,7 @@
 			$('.b-form-box.city').css('display', 'block');
 			$('.b-form-box.district').css('display', 'none');
             $('.typeHidden').attr('value', 1);
+
 		} else {
             $('.b-form-box.city').css('display', 'none');
             $('.b-form-box.district').css('display', 'block');
@@ -236,6 +237,10 @@
         }
 
 		$('.tabjs').click(function () {
+
+            var $passTab = $(this).addClass('current').siblings().removeClass('current');
+            $passTab.parents('div.section').find('div.box').hide().eq($(this).index()).fadeIn(300);
+
 			var value = $(this).attr('id');
 			$('.typeHidden').attr('value', value);
 			if (1 == value) {
@@ -247,6 +252,18 @@
 				$('.b-form-box.district').css('display', 'block');
                 window.location.hash = 'msk';
 			}
+
+
+            $('.all_view_link').attr('href',function(){
+               return UpdateQueryString('mo',value,this.href);
+            });
+
+            $('.all_view_link').attr('href',function(){
+               return UpdateQueryString('rent',$('input[name="rent"]:checked').val(),this.href);
+            });
+            console.log($('input[name="rent"]:checked').val());
+
+            return false;
 		});
 
 

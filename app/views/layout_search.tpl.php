@@ -173,7 +173,7 @@
                 $('.all_view_link').attr('href',window.all_view_href+window.addGet);
 
                 var $passTab = $(this).addClass('current').siblings().removeClass('current');
-                $passTab.parents('div.section').find('div.box').hide().eq($(this).index()).fadeIn(150);
+                $passTab.parents('div.section').find('div.box').hide().eq($(this).index()).fadeIn(300);
 
                 //Map
                 <?php    if($urlArray[0] != "elitnaja-nedvizhimost") echo 'initialize_map();';             ?>

@@ -1,12 +1,23 @@
 <?php
+/**
+ *
+ * Price From session
+ * $gk['type'] array
+ *
+ */
 
-$title = '';
+//print_r($gk);
 $title = $gk['title'];
+//MicroHack
+if($gk['square_house'] == '0.00') $gk['square_house'] = '';
+$gk['price'] = $gk['price']*$this->exchange[$gk['currency']] / $currencyValue;
 
-/* $gk['type'] - это массив. Если title пустой, то берётся ПЕРВОЕ значение типа из массива type. */
+
+//Пустой титл
 if(empty($title)){
-    if (isset($landTypes[$gk['type'][0]])) {
-        $title .= $landTypes[$gk['type'][0]];
+    if (!empty($land['typeArray'])){
+        reset($land['typeArray']);
+        $title .= current($land['typeArray']);
     }
     if (!empty($gk['settlement'])) {
         if ($title != '') $title .= " в ";
@@ -20,7 +31,6 @@ if (isset($gk['eliteType'])) {
 
 echo "
     <td class='results_item " . $class . "'>";
-
 
 
 if(
@@ -43,23 +53,30 @@ echo "
             </div>
             <div class='resultItemInfo'>
                 <div class='objId'>id&nbsp;" . $gk['tid'] . "</div>
-                    <ul>
-                        " . (($gk['type'] != 0) ? "<li><strong style=\"font-weight:bold;\">" . $title . "</strong></li>" : '');
+                    <ul>";
 
-                    echo "<li><strong>Цена:</strong>&nbsp;" . number_format($gk['price'], 0, '.', ' ') . " " . $currencyList[$gk['currency']] . "</li>";
-                    echo isset($highway[$gk['highwayID']]['title']) ? "<li><strong>Шоссе:</strong>&nbsp;" . $highway[$gk['highwayID']]['title'] . "</li>" : "";
-                    echo isset($region[$gk['regionID']]['title']) ? "<li><strong>Район:</strong>&nbsp;" . $region[$gk['regionID']]['title'] . "</li>" : '';
-                    echo "<li><strong>Населеный пункт:</strong>&nbsp;" . $gk['settlement'] . "</li>";
-if ($gk['type'] != 2&&!empty($gk['train_way'])) {
-    echo "<li><strong>ЖД направление:</strong>&nbsp;" . $train_wayTypes[$gk['train_way']] . "</li>";
-}
-if ($gk['type'] == 1 || $gk['type'] == 3) {
-    echo "<li><strong>Площадь дома:</strong>&nbsp;" . $gk['square_house'] . " м<sup>2</sup></li>";
-}
-if ($gk['type'] == 4) {
-    echo "<li><strong>Площадь таунхауса:</strong>&nbsp;" . $gk['square_house'] . " м<sup>2</sup></li>";
-}
-if (!empty($gk['square_land'])) echo "<li><strong>Площадь участка:</strong>&nbsp;" . $gk['square_land'] . " соток</li>";
+                    if(!empty($title)){
+                        echo"<li><h3 class='widthLimit'>".$title."</h3></li>";
+                    }
+                        echo "<li><strong>Стоимость:</strong>&nbsp;" . number_format($gk['price'], 0, '.', ' ') . " " . $currencyList[$currency] . "</li>";
+
+                        echo isset($highway[$gk['highwayID']]['title']) ? "<li><strong>Шоссе:</strong>&nbsp;" . $highway[$gk['highwayID']]['title'] . "</li>" : "";
+
+                        echo isset($region[$gk['regionID']]['title']) ? "<li><strong>Район:</strong>&nbsp;" . $region[$gk['regionID']]['title'] . "</li>" : '';
+
+                    if(!empty($gk['settlement'])) echo "<li><strong>Населеный пункт:</strong>&nbsp;" . $gk['settlement'] . "</li>";
+
+                    if (!in_array(2,$gk['type']) && ! empty($gk['train_way']) && isset($train_wayTypes[$gk['train_way']])) {
+                        echo "<li><strong>ЖД направление:</strong>&nbsp;" . $train_wayTypes[$gk['train_way']] . "</li>";
+                    }
+                    if ( (in_array(1,$gk['type']) || in_array(3,$gk['type']) ) && !empty($gk['square_house'])) {
+                        echo "<li><strong>Площадь дома:</strong>&nbsp;" . $gk['square_house'] . " м<sup>2</sup></li>";
+                    }
+                    if ( in_array(4,$gk['type']) && ! empty($gk['square_house'])) {
+                        echo "<li><strong>Площадь таунхауса:</strong>&nbsp;" . $gk['square_house'] . " м<sup>2</sup></li>";
+                    }
+
+                    if (!empty($gk['square_land'])) echo "<li><strong>Площадь участка:</strong>&nbsp;" . $gk['square_land'] . " соток</li>";
 echo "</ul>
             </div>
             <div class='cb'></div>

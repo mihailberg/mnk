@@ -77,20 +77,26 @@ class commercial extends ngaController
         WHERE `parent`=0 AND `cityID` ";
 
 
+        //Moscow - moscow region(MO)
        $mo = 0;
-       if(isset($_GET['mo'])&&$_GET['mo']==1)$mo = 1;
+       if( isset($_GET['mo']) && $_GET['mo']==1 ) $mo = 1;
        if($mo == 0){
            $commercial->OverrideQuerySelect .= " = 1 ";
        } else {
            $commercial->OverrideQuerySelect .= " !=1 ";
        }
 
-       if(isset($_GET['rent']) && in_array($_GET['rent'],array(0,1))){
-            $commercial->OverrideQuerySelect .= " AND `rent`=".(int)$_GET['rent']." ";
+        //Rent
+        if(isset($_GET['rent'])){
+            $rent = (int)$_GET['rent'];
+        } else {
+            $rent = 0;
         }
 
+        $commercial->OverrideQuerySelect .= " AND `rent`=".$rent." ";
+
         $commercial->OverrideQuerySelect .= " GROUP BY `commercial`.`commercialID`
-        ORDER BY ".$rub_price_sql." ASC
+        ORDER BY ".$rub_price_sql." ASC,  `photo`. `photoID` ASC
         ";
 
         $commercial->OverrideQuerySelect .= " LIMIT " . ($this->page - 1) * $this->perPage . ", " . $this->perPage;
@@ -144,7 +150,7 @@ class commercial extends ngaController
                 LEFT JOIN `photo` ON (`commercial`.`commercialID` = photo.R_ID AND photo.R_TYPE = 4)
                 WHERE `parent`=" . $id . "
                 GROUP BY `commercial`.`commercialID`
-                ORDER BY `commercial`.`price` ASC";
+                ORDER BY (`commercial`.`price` * `settings`.`value`) ASC";
 
         $res = nga_config::db()->query($sql);
         $data = array();
@@ -270,7 +276,7 @@ class commercial extends ngaController
 
 
         //Похожие объекты
-        $this->layoutData['similarObjects'] = $this->getSimilarObjects(__CLASS__, $id, $data[$id]['price'], 4, $data[$id]['currency'], ' AND `parent`=0 '.$typeSQL.$assignSQL.' AND rent = '.$data[$id]['rent'].$city);
+        $this->layoutData['similarObjects'] = $this->getSimilarObjects(__CLASS__, $id, $data[$id]['price'], 4, $data[$id]['currency'], ' '.$typeSQL.$assignSQL.' AND rent = '.$data[$id]['rent'].$city);
 
 
         $this->tplData['id'] = $id;
@@ -473,7 +479,7 @@ class commercial extends ngaController
 
         $Fsql = "
             GROUP BY `commercial`.`commercialID`
-            ORDER BY `rub_price` ASC
+            ORDER BY `rub_price` ASC,  `photo`. `photoID` ASC
             ";
         $Fsql .= " LIMIT " . ($this->page - 1) * $this->perPage . ", " . $this->perPage;
 
@@ -556,6 +562,7 @@ class commercial extends ngaController
                 	 t .`" . $idField . "` as `tid`,
                 	 t." . $squareColumn . " as `square`,
                 	 t." . $priceColumn . " as `price`,
+                	 t.title as `title`,
                 	 (`settings`.`value` * `t`." . $priceColumn . " ) AS `rub_price`,
                 	 photo.THUMB, photo.MID,
                 	 t.currency as `currency`
@@ -573,6 +580,7 @@ class commercial extends ngaController
                 	SELECT t .`" . $idField . "` as `tid`,
                 	t." . $squareColumn . " as `square`,
                 	t." . $priceColumn . " as `price`,
+                	t.title as `title`,
                 	(`settings`.`value` * `t`." . $priceColumn . " ) AS `rub_price`,
                 	 photo.THUMB, photo.MID,
                 	 t.currency as `currency`
@@ -594,9 +602,11 @@ class commercial extends ngaController
         $res = nga_config::db()->query($sql);
 //        echo $sql;
         if (!$res){
-            echo nga_config::db()->error; // return false;
-            echo $sql;
-            debug_print_backtrace();
+
+//            echo nga_config::db()->error;
+//            echo $sql;
+//            debug_print_backtrace();
+            return false;
         }
 
         $data = array();

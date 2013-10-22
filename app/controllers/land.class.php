@@ -50,53 +50,71 @@ class land extends ngaController
     {
         $this->layout = 'layout_white';
         include('nga/tables/land.php');
-        $this->tplData['landTypes'] = $land_table_block[0]->getValues();
-        $this->tplData['landTypes'][0] = '';
 
+
+        //  ==>     Type multiselect  Тип объекта   $_GET <==  //
+        $type = $land_table_block[0]->getValues();
+        $type[0] = '';
+        $this->typeValues = $type;
+
+        $typeSQL = '';
+        if (!empty($_GET['type'])) {
+            if(!isset($this->typeValues[$_GET['type']])) return false;
+            $typeSQL = " AND `land`.`type` LIKE '%_".(int)$_GET['type']."_%' ";
+        }
+
+        $sql = "SELECT
+         `land`.`landID` AS `tid`,
+         `land`.*,
+         `photo`.THUMB, photo.MID,
+         (`land`.`price` * `settings`.`value`) as `rub_price`
+
+        FROM `land`
+        JOIN `settings` ON (`settingsID` = land.currency)
+        LEFT JOIN `photo` ON (`land`.`landID` = photo.R_ID AND photo.R_TYPE = 5)
+
+
+        WHERE (`land`.`elite`=0 OR `land`.`elite_check`=1) ".$typeSQL."
+        GROUP BY `land`.`landID`
+        ORDER BY (`settings`.`value` * land.price) ASC,  `photo`. `photoID` ASC
+";
+        $sql .= " LIMIT " . ($this->page - 1) * $this->perPage . ", " . $this->perPage;
+
+        $res = nga_config::db()->query($sql);
+        if(!$res){
+
+//            echo nga_config::db()->error;
+        }
+
+        $this->tplData['rowCount'] = $this->getFoundRows();
+        $data = array();
+        while($row = $res->fetch_assoc()){
+            //self values
+            $row['type'] = $this->value2Array($row['type']);
+            $row['typeArray'] = array_intersect_key($this->typeValues,array_flip($row['type']));
+            $data[$row['tid']] = $row;
+        }
+
+        $this->tplData['searchResult'] = $data;
+
+
+        /////Assignes/////
+
+
+
+        //Шоссе
         $this->assignHighway();
+        $this->assignRegion();
 
+        //ЖД-направление
         $this->tplData['train_wayTypes'] = $land_table_block[6]->getValues();
         $this->tplData['train_wayTypes'][0] = '';
-
-        $this->tplData['region'] = $outmsk->getData();
-        //print_R($this->tplData['region']);
-        //Тип объекта
-        $sql = '';
-        if (!empty($_GET['type'])){
-            $t = (int)($_GET['type']);
-            if($t>0){
-                $sql = ' AND `type` = '.(int)$_GET['type'];
-            }
-        }
-        $land_table->OverrideQuerySelect = "SELECT
-         `land`.`landID` AS `tid`, `land`.`type`, `land`.`cityID`,
-`land`.`highwayID`, `land`.`cottage_setID`, `land`.`regionID`, `land`.`settlement`, `land`.`train_way`, `land`.`square_house`, `land`.`square_land`, `land`.`price`, `land`.`mkad_remoteness`, `land`.`floors`, `land`.`year`, `land`.`otdelka`, `land`.`mebel`, `land`.`foundation`, `land`.`roof`, `land`.`ceilings`, `land`.`layout`, `land`.`form`, `land`.`fence`, `land`.`gate`, `land`.`landscape_design`, `land`.`parking`, `land`.`communication_electricity`, `land`.`communication_water`, `land`.`heating`, `land`.`internet`, `land`.`phone`, `land`.`ecology`, `land`.`probka`, `land`.`metro_access`, `land`.`infrastructure`, `land`.`latitude`, `land`.`longitude`, `land`.`elite`,
-`land`.`currency`,
-`land`.`title`,
-`land`.`best`,photo.THUMB, photo.MID,
-`highway`.`title` as `highway`
-FROM `land`
-LEFT JOIN `photo` ON (`land`.`landID` = photo.R_ID AND photo.R_TYPE = 5)
-JOIN `highway` ON (land.highwayID = highway.highwayID)
-JOIN `settings` ON (`settingsID` = land.currency)
-WHERE (`land`.`elite`=0 OR `land`.`elite_check`=1) ".$sql."
-GROUP BY `land`.`landID`
-ORDER BY (`settings`.`value` * land.price) ASC
-";
-        $land_table->OverrideQuerySelect .= " LIMIT " . ($this->page - 1) * $this->perPage . ", " . $this->perPage;
-
-        $this->tplData['searchResult'] = $land_table->getData();
-        // $this->tplData['searchResult']['type'] = explode(',',$this->tplData['searchResult']['type']);
-        // т.к. searchResult - массив объектов недвижимости, вместо единичного explode сделал foreach. Но нужен ли вообще explode типа в этом экшне?  
-        foreach ($this->tplData['searchResult'] as $key => $item) {
-        	$this->tplData['searchResult'][$key]['item'] = explode(',',$item['type']);
-        }
-        $this->tplData['rowCount'] = $land_table->foundRows;
 
         $this->layoutData['title'] = 'Загородная недвижимость > все предложения';
         $this->layoutData['h1'] = 'Загородная недвижимость';
     }
 
+    protected $typeValues;
     public function actionLand($url)
     {
         if (!isset($url[0])) return false;
@@ -104,34 +122,64 @@ ORDER BY (`settings`.`value` * land.price) ASC
         if ($id == 0) return false;
         include('nga/tables/land.php');
         $cottage_set->perPage = 1000;
+
+        $land_table->where = array();
+        $land_table->addWhere('landID', $id);
+
+        $data = $land_table->getData();
+//        print_r($data);
+
         
-        $sql = "SELECT `land`.`landID` as `tid`,
-                `land`.*,
-                (`settings`.`value` * `land`.price) AS `rub_price`
-                FROM `land`
-                JOIN `settings` ON (`settingsID` = `land`.currency)
-                WHERE `landID` = ".$id;
+//        $sql = "SELECT `land`.`landID` as `tid`,
+//                `land`.*,
+//                (`settings`.`value` * `land`.price) AS `rub_price`,
+//
+//
+//                FROM `land`
+//                JOIN `settings` ON (`settingsID` = `land`.currency)
+//                LEFT JOIN `photo` ON (`land`.`landID` = photo.R_ID AND photo.R_TYPE = 5)
+//                WHERE `landID` = ".$id;
+//
+//        $res = nga_config::db()->query($sql);
+//
+//        if(!$res){
+//            //echo nga_config::db()->error;
+//            return false;
+//        }
+//
+//        $data[$id] = $res->fetch_assoc();
 
-        $res = nga_config::db()->query($sql);
 
-        if(!$res){
-            //echo nga_config::db()->error;
-            return false;
+
+        //  ==>     Type multiselect   <==  //
+        $type = $land_table_block[0]->getValues();
+        $type[0] = '';
+        $this->typeValues = $type;
+        //self values
+        $data[$id]['type'] = $this->value2Array($data[$id]['type']);
+
+        // 2 template
+        $typeArray = array();
+
+
+        foreach($data[$id]['type'] as $as){
+            $typeArray[] = $type[$as];
         }
+        $data[$id]['typeArray'] = $typeArray;
 
-        $data[$id] = $res->fetch_assoc();
+        // 2 sql
+        $typeSQL = ' AND'.self::makeMultiSelectSql('`type`',$data[$id]['type']);
+        if($typeSQL == ' AND') $typeSQL = '';
 
 
-        $this->layoutData['similarObjects'] = $this->getSimilarObjects(__CLASS__, $id, $data[$id]['price'], 5, 'AND (`elite`=0 OR `elite_check`=1) AND type = '.$data[$id]['type'], 'price', 'square_house');
-        $data[$id]['type'] = explode(',',$data[$id]['type']);
+
+
+        $this->layoutData['similarObjects'] = $this->getSimilarObjects(__CLASS__, $id, $data[$id]['price'], 5,$data[$id]['currency'], 'AND (`elite`=0 OR `elite_check`=1) '.$typeSQL, 'price', 'square_house');
         
         
         $this->layoutData['photos'] = $this->getPhoto(5, $id);
         $this->layout = 'layout_one';
         $this->tpl = 'land_one';
-        $this->tplData['landTypes'] = $land_table_block[0]->getValues();
-        $this->tplData['landTypes'][0] = '';
-
 
 
         $this->layoutData['title'] = $data[$id]['title'];
@@ -156,29 +204,36 @@ ORDER BY (`settings`.`value` * land.price) ASC
     {
 
         $this->layout = 'layout_white';
-        //print_r($_GET);
+        include('nga/tables/land.php');
+
+        $type = $land_table_block[0]->getValues();
+        $type[0] = '';
+        $this->typeValues = $type;
+
+
         $res = $this->search();
 
 
         if (!$res) {
+//            print_r(nga_config::db()->error);
             return false;
         }
 
         $result = array();
         while ($row = $res->fetch_assoc()) {
-            $row['type'] = explode(',',$row['type']);
+            $row['type'] = $this->value2Array($row['type']);
+            $row['typeArray'] = array_intersect_key($this->typeValues,array_flip($row['type']));
             $result[] = $row;
         }
         $this->assignMetro();
         $this->assignCountry();
         $this->assignCity();
+        $this->assignRegion();
         $this->assignHighway();
 
-        include('nga/tables/land.php');
+
         $this->tplData['train_wayTypes'] = $land_table_block[6]->getValues();
         $this->tplData['train_wayTypes'][0] = '';
-        $this->tplData['landTypes'] = $land_table_block[0]->getValues();
-        $this->tplData['landTypes'][0] = '';
 
         $this->tplData['landObject'] = $land_table_block[3]->getValues();
         //$this->tplData['searchResult'] = $land_table->getData();
@@ -195,34 +250,44 @@ ORDER BY (`settings`.`value` * land.price) ASC
     // ПОИСК
     protected function search()
     {
+        $rub_price_sql = "(`land`.`price` * `settings`.`value`)";
+
         $sql = $Hsql = "
-                SELECT SQL_CALC_FOUND_ROWS `land`.`landID` AS `tid`, `land`.*,
+                SELECT SQL_CALC_FOUND_ROWS
+                `land`.`landID` AS `tid`,
+                 `land`.*,
                 photo.THUMB, photo.MID,
-                photo.SRC as `SRC`
+                photo.SRC as `SRC`,
+                (`land`.`price` * `settings`.`value`) as `rub_price`
+
 
                 FROM `land`
+                JOIN `settings` ON (`settingsID` = land.currency)
                 LEFT JOIN `photo` ON (`land`.`landID` = photo.R_ID AND photo.R_TYPE = 5)
-                WHERE (`elite`=0 OR `elite_check`=1)";
+                WHERE (land.`elite`=0 OR land.`elite_check`=1)";
 
         $glue = ' AND ';
 
         //type
         //Тип объекта
-        if (!empty($_GET['type'])&&(int)$_GET['type']>0){
-            $sql .= $glue . '`type` = '.(int)$_GET['type'];
+        if (!empty($_GET['type'])) {
+            if(!isset($this->typeValues[$_GET['type']])) return false;
+            $sql .= $glue . "`land`.`type` LIKE '%_".(int)$_GET['type']."_%' ";
             $glue = ' AND ';
         }
-        //Цена
+
+        //Цена with rub_price
         if (!empty($_GET['price'])) {
             //от
             if ((int)$_GET['price']['from'] > 0) {
-                $sql .= $glue . '`price` >= ' . $this->currencyValue * (int)$_GET['price']['from'] . '';
+                $sql .= $glue . $rub_price_sql . ' >= ' . $this->currencyValue  * (int)$_GET['price']['from'];
             }
             //до
             if ((int)$_GET['price']['to'] > 0 && (int)$_GET['price']['to'] > (int)$_GET['price']['from']) {
-                $sql .= $glue . '`price` <=' . $this->currencyValue * (int)$_GET['price']['to'];
+                $sql .= $glue . $rub_price_sql . ' <= ' . $this->currencyValue  * (int)$_GET['price']['to'];
             }
         }
+
 
         //square_select
         if (!empty($_GET['square_house'])) {
@@ -362,7 +427,7 @@ ORDER BY (`settings`.`value` * land.price) ASC
 
         $Fsql = "
             GROUP BY `land`.`landID`
-            ORDER BY `land`.`landID` DESC
+            ORDER BY (`settings`.`value` * land.price) ASC,  `photo`. `photoID` ASC
             ";
         $Fsql .= " LIMIT " . ($this->page - 1) * $this->perPage . ", " . $this->perPage;
 
@@ -381,10 +446,14 @@ ORDER BY (`settings`.`value` * land.price) ASC
         return $res;
     }
 
-    protected function getSimilarObjects($table, $id, $price, $photoType, $addWhere = '', $priceColumn = 'price', $squareColumn = 'square', $idField = false)
+
+    protected function getSimilarObjects($table, $id, $price, $photoType, $currency = 1, $addWhere = '', $priceColumn = 'price', $squareColumn = 'square', $idField = false)
     {
         if (empty($price)) $price = 0;
         if (!$idField) $idField = $table . "ID";
+
+        // Price in rubles
+        $rubPrice = $price *  $this->exchange[$currency];
 
         $sql = "
                 SELECT * FROM (
@@ -392,38 +461,51 @@ ORDER BY (`settings`.`value` * land.price) ASC
                 	 t .`" . $idField . "` as `tid`,
                 	 t." . $squareColumn . " as `square`,
                 	 t." . $priceColumn . " as `price`,
-                	 photo.THUMB, photo.MID
-
+                	 t.title as `title`,
+                	 (`settings`.`value` * `t`." . $priceColumn . " ) AS `rub_price`,
+                	 photo.THUMB, photo.MID,
+                	 t.currency as `currency`
                 	FROM `" . $table . "` t
+                	JOIN `settings` ON (`settingsID` = t.currency)
                 	LEFT JOIN `photo` ON (t .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
-                	WHERE 
-                	  " . $priceColumn . "<= " . $price . " 
-                	  AND " . $priceColumn . ">= " . $price . " * 0.5 
-                	  AND t.`" . $idField . "` != " . (int)$id . "
-                	" . $addWhere . "
-                	ORDER BY `price` DESC,  `photo`. `photoID` ASC
+                	WHERE
+                            (   (`settings`.`value` * `t`." . $priceColumn . ")  <= " .   $rubPrice ." )
+                	    AND (   (`settings`.`value` * `t`." . $priceColumn . ")  >= " .  ( $rubPrice * 0.5 ) . " )
+                        AND t.`" . $idField . "` != " . (int)$id . "
+                	    " . $addWhere . "
+                	ORDER BY rub_price DESC,  `photo`. `photoID` ASC
                 	LIMIT 1) a UNION
                 SELECT * FROM (
                 	SELECT t .`" . $idField . "` as `tid`,
                 	t." . $squareColumn . " as `square`,
                 	t." . $priceColumn . " as `price`,
-                	 photo.THUMB, photo.MID
+                	t.title as `title`,
+                	(`settings`.`value` * `t`." . $priceColumn . " ) AS `rub_price`,
+                	 photo.THUMB, photo.MID,
+                	 t.currency as `currency`
                 	FROM `" . $table . "` t
+                	JOIN `settings` ON (`settingsID` = t.currency)
                 	LEFT JOIN `photo` ON (t .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
-                	WHERE " . $priceColumn . ">= " . $price . " AND t.`" . $idField . "` != " . (int)$id . "
-                    " . $addWhere . "
-                	ORDER BY `price` ASC, `photo`. `photoID` ASC
+                	WHERE
+                            (   (`settings`.`value` * `t`." . $priceColumn . ")  >= " .   $rubPrice ." )
+                	    AND (   (`settings`.`value` * `t`." . $priceColumn . ")  <= " .  ( $rubPrice  * 1.5 ) . " )
+                        AND t.`" . $idField . "` != " . (int)$id . "
+                        " . $addWhere . "
+                	ORDER BY rub_price ASC, `photo`. `photoID` ASC
                 	LIMIT 2
                 ) b
                 GROUP BY `tid`
+                ORDER BY rub_price ASC
                 ";
 
         $res = nga_config::db()->query($sql);
 //        echo $sql;
         if (!$res){
-            echo nga_config::db()->error; // return false;
-            echo $sql;
-            debug_print_backtrace();
+
+//            echo nga_config::db()->error;
+//            echo $sql;
+//            debug_print_backtrace();
+            return false;
         }
 
         $data = array();

@@ -21,7 +21,7 @@ $land_table_block[0]->addValues('Выберите значение', 'Дом', '
 $land_table_block[1] = $land_table->add('Город', 'cityID', 'select');
 $land_table_block[1]->constructFromTable($city);
 
-
+$land_table_block[12] = $land_table->add("Название", "title", "string");
 $land_table_block[2] = $land_table->add('Шоссе', 'highwayID', 'select');
 $land_table_block[2]->constructFromTable($highway);
 
@@ -38,7 +38,7 @@ $land_table_block[4]->constructFromTable($outmsk);
 $land_table_block[5] = $land_table->add('Населенный пункт', 'settlement', 'string');
 $land_table_block[6] = $land_table->add('Ж/д направление', 'train_way', 'select');
 $land_table_block[6]->addValues('Не указано', 'Белорусское', 'Горьковское', 'Казанское', 'Киевское', 'Курское', 'Ленинградское', 'Павелецкое', 'Рижское', 'Савеловское', 'Ярославское', 'Кольцевое');
-$land_table_block[7] = $land_table->add('Площадь в дома(м2)', 'square_house', 'num');
+$land_table_block[7] = $land_table->add('Площадь дома(м2)', 'square_house', 'num');
 $land_table_block[8] = $land_table->add('Площадь участка(соток)', 'square_land', 'num');
 
 $land_table_block[9] = $land_table->add('Валюта', 'currency', 'select');
@@ -48,9 +48,9 @@ $land_table_block[9]->setValueList(array(
         3 => 'Евро'
     ));
 
-$land_table_block[10] = $land_table->add('Цена', 'price', 'num');
+$land_table_block[10] = $land_table->add('Стоимость', 'price', 'num');
 $land_table_block[11] = $land_table->add('Расстояние от МКАД', 'mkad_remoteness', 'num');
-$land_table_block[12] = $land_table->add("Название", "title", "string");
+
 
 
 $land_table_block2 = $land_table->addBlock('Характеристика дома');
@@ -112,7 +112,7 @@ if (isset($_GET['id'])) {
 }
 
 
-$land_table->setListShow($land_table_block[0], $land_table_block[1], $land_table_block[2], $land_table_block[3],$land_table_block[10],$land_table_block[9]);
+$land_table->setListShow($land_table_block[1], $land_table_block[12], $land_table_block[3],$land_table_block[10],$land_table_block[9]);
 
 $land_table->setFormNoShow($landID);
 

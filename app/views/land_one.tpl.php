@@ -1,10 +1,13 @@
-<?php if (!empty($land['type'])){
-    foreach($land['type'] as $t){
-        echo '<span>'.$landTypes[$t].'</span><br />';
-    }
+<?php
+/**
+ *
+ * Price As is
+ * $land['type'] array
+ *
+ */
+?><?php if (!empty($land['typeArray'][0])){
+    echo implode(', ',$land['typeArray']);echo '<br />';
 } ?>
-
-
 
 <?php if (!empty($city[$land['cityID']])): ?>
     <span>Населенный пункт:&nbsp;</span><?php echo $city[$land['cityID']]['title']; ?><br><?php endif; ?>
@@ -16,21 +19,15 @@
 <?php if (!empty($trainway[$land['train_way']])&&!empty($land['train_way'])): ?>
     <span>ЖД направление:&nbsp;</span><?php echo $trainway[$land['train_way']]; ?><br><?php endif; ?>
 
-<?php if (2 != $land['type'] && !empty($land['square_house'])) echo "<span>Площадь дома:&nbsp;</span>" . $land['square_house'] . " м<sup>2</sup><br>"; ?>
+<?php if (!in_array(2,$land['type']) && !empty($land['square_house'])) echo "<span>Площадь дома:&nbsp;</span>" . $land['square_house'] . " м<sup>2</sup><br>"; ?>
 
 <?php
 if (!empty($land['square_land'])) echo "<span>Площадь участка:&nbsp;</span>" . $land['square_land'] . " соток<br>";
 
-//echo '<!--'.print_r($land,1).'-->';
 if (!empty($land['price'])) {
+
     echo '<span>Стоимость:&nbsp;</span>';
-    if (!empty($land['currency'])) {
-        //Forign & Eilte
-        echo number_format($land['price'], 0, '.', ' ') . ' ' . $currencyList[$land['currency']];
-    } else {
-        echo number_format($land['price'] / $currencyValue, 0, '.', ' ') . ' ' . $currencyList[$currency];
-    }
-    echo '<br>';
+    echo number_format($land['price'], 0, '.', ' ') . "&nbsp;" . $currencyList[$land['currency']] . "<br />";
 }
 
 

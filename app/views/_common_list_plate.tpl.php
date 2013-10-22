@@ -1,17 +1,16 @@
 <div id="searchResult" class="searchResult <?php echo $this->entityName;?>">
     <?php
-    if (!is_array($searchResult)) {
-        echo 'Нет объектов</div>';
+    if (!is_array($searchResult)||!count($searchResult)) {
+        echo 'Предложения не найдены.
+        </div>';
         return;
-    }?>
+    }
+    ?>
 
     <?php if (isset($rowCount)){
 
-
             $page = $this->page;
-
             $nav_block = '';
-
 
             $page_num = 1;
             if ($rowCount > $this->perPage) {
