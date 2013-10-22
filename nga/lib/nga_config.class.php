@@ -175,8 +175,14 @@ class mysqliLayer extends mysqli{
 //        debug_print_backtrace();
 //        $o = debug_backtrace();
 //        print_r($o); die();
-        if($_SERVER['HTTP_HOST'] == 'mnk.local')
+
+        if($_SERVER['HTTP_HOST'] == 'mnk.local' || isset($_GET['NGA_MYSQL_DEBUG']) || isset($_SESSION['NGA_MYSQL_DEBUG'])){
+            $_SESSION['NGA_MYSQL_DEBUG'] = 1;
             echo '<script>console.log("'.str_replace("\n"," ",$sql).'");</script>';//."<br />\n\n\n<br />";
+        }
+        if(isset($_GET['NGA_MYSQL_DEBUG_STOP'])){
+            unset($_SESSION['NGA_MYSQL_DEBUG']);
+        }
         // if(mb_strpos($sql,'UPDATE')!==false){
             // print_r($_POST);
             // die();
