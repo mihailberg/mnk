@@ -1,17 +1,13 @@
-<h2><?php echo $flatData['address'];?>
-    <?php
-    //print_r($flatData);
-    $echo = '';
-    if (!empty($flatData['district']) && isset($districts[$flatData['district']])) {
-        $echo = $districts[$flatData['district']];
-    }
+<h2><?php echo $flatData['address'];?></h2>
+<?php
+if (!empty($flatData['district']) && isset($districts[$flatData['district']])) {
+    echo '<span>Округ:</span> ' . $districts[$flatData['district']] . '<br />';
+}
 
-    if (!empty($flatData['stationID']) && isset($metro[$flatData['stationID']]) && $flatData['cityID']==1) {
-        $echo .= ' м.&nbsp;«' . $metro[$flatData['stationID']]['name'] . '»';
-    }
-
-    if (!empty($echo)) echo '<span style="font-weight:normal;">( ' . $echo . ')</span>';
-    ?></h2>
+if (!empty($flatData['stationID']) && isset($metro[$flatData['stationID']]) && $flatData['cityID']==1) {
+    echo '<span>Метро:</span> «' . $metro[$flatData['stationID']]['name'] . '»<br />';
+}
+?>
 
 <?php if($flatData['cityID']!=1){?>
     <?php if (!empty($flatData['cityID'])&&isset($city[$flatData['cityID']])):?><span>Город:&nbsp;</span><?php echo  $city[$flatData['cityID']]['title'];?><br /><?php endif;?>
@@ -27,7 +23,7 @@
 <?php } else {?>
 <!--    --><?php //if (!empty($flatData['cityID']) && isset($city[$flatData['cityID']])): ?><!--  <span>Город:&nbsp;</span>--><?php //echo  $city[$flatData['cityID']]['title'];?><!--<br />--><?php //endif;?>
     <?php if (!empty($flatData['regionID'])):                                    ?><span>Район:&nbsp;</span><?php echo $flatData['regionID']; ?><br><?php endif;?>
-    <?php if (!empty($flatData['stationID']) && isset($metro[$flatData['stationID']])):?> <span>Ближайшее метро:&nbsp;</span><?php echo  $metro[$flatData['stationID']]['name'];?><br /><?php endif;?>
+
 <?php }?>
 
 <!--<span>Адрес:&nbsp;</span>--><?php //echo $flatData['address']; ?><!--<br>-->
@@ -50,7 +46,8 @@ endif;
 if ($flatData['room'] > 0){
     echo '<span>Количество комнат:&nbsp;</span>'.$flatData['room'].'<br />';
 }
-if($flatData['isroom']||$flatData['room']==0) {
+//var_dump((bool)$flatData['isroom']);
+if($flatData['isroom']) {
     echo '<span>Комната</span><br />';
 }
 ?>

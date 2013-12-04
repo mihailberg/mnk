@@ -39,11 +39,14 @@ echo "
 
     <div class='resultItemInfo'>
         <div class='objId'>id&nbsp;" . $gk['tid'] . "</div>
-        <h3 class='widthLimit'>" . $gk['title'];
-if (isset($gk['stationID']) && (int)$gk['stationID'] > 0 && isset($metro[$gk['stationID']]['name'])) echo "&nbsp;<small>(<span> м.&nbsp;«" . $metro[$gk['stationID']]['name'] . "»</span>)</small>";
-echo "</h3>
+        <h3 class='widthLimit'>" . $gk['title'] . "</h3>";
+echo "
         <ul>
             <li><strong>Адрес:</strong>&nbsp;" . $gk['address'] . "</li>";
+
+if (isset($gk['stationID']) && (int)$gk['stationID'] > 0 && isset($metro[$gk['stationID']]['name']))
+    echo "<li><strong>Метро:</strong> «" . $metro[$gk['stationID']]['name'] . "»</li>";
+
 
 
       echo "<li><strong>Стоимость 1м<sup>2</sup>:</strong>&nbsp;" . number_format($gk['price_m'], 0, '.', ' ') . "&nbsp;<span class='price_units_rub'>" . $currencyList[$gk['currency']] . "</span></li>";
