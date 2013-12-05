@@ -19,6 +19,8 @@
 <?php if (!empty($trainway[$land['train_way']])&&!empty($land['train_way'])): ?>
     <span>ЖД направление:&nbsp;</span><?php echo $trainway[$land['train_way']]; ?><br><?php endif; ?>
 
+<?php if (!empty($land['mkad_remoteness'])): ?>  <span>Расстояние от МКАД:&nbsp;</span><?php echo $land['mkad_remoteness']; ?><br><?php endif; ?>
+
 <?php if (!in_array(2,$land['type']) && !empty($land['square_house'])) echo "<span>Площадь дома:&nbsp;</span>" . $land['square_house'] . " м<sup>2</sup><br>"; ?>
 
 <?php
@@ -29,6 +31,9 @@ if (!empty($land['price'])) {
     echo '<span>Стоимость:&nbsp;</span>';
     echo number_format($land['price'], 0, '.', ' ') . "&nbsp;" . $currencyList[$land['currency']] . "<br />";
 }
+
+
+
 
 
 if (in_array(2, $land['type'])) {
