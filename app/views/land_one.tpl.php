@@ -36,8 +36,17 @@ if (!empty($land['price'])) {
 
 
 
-if (in_array(2, $land['type'])) {
-//    echo '<span class="caption_span">Характеристики дома:</span>';
+//if (in_array(2, $land['type'])) {
+if (!empty($land['floors'])||
+    !empty($land['year'])||
+    !empty($land['otdelka'])||
+    !empty($land['mebel'])||
+    !empty($land['foundation'])||
+    !empty($land['roof'])||
+    !empty($land['ceilings'])||
+    !empty($land['layout'])
+){
+    echo '<span class="caption_span">Характеристики дома:</span>';
     if (!empty($land['floors'])) echo '    <span>Этажность/уровни:&nbsp;</span>' . $land['floors'] . '<br>';
     if (!empty($land['year'])) echo '    <span>Год постройки:&nbsp;</span>' . $land['year'] . '<br>';
     if (!empty($land['otdelka'])) echo '    <span>Состояние отделки:&nbsp;</span>' . $land['otdelka'] . '<br>';
@@ -46,6 +55,7 @@ if (in_array(2, $land['type'])) {
     if (!empty($land['roof'])) echo '    <span>Крыша:&nbsp;</span>' . $land['roof'] . '<br>';
     if (!empty($land['ceilings'])) echo '    <span>Перекрытия:&nbsp;</span>' . $land['ceilings'] . '<br>';
     if (!empty($land['layout'])) echo '    <span>Планировка:&nbsp;</span>' . $land['layout'] . '<br>';
+    echo '<br />';
 }
 ?>
 <!--    <span class="caption_span">Описание участка:</span>-->
