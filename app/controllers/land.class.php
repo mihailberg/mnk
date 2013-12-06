@@ -452,8 +452,18 @@ class land extends ngaController
         if (empty($price)) $price = 0;
         if (!$idField) $idField = $table . "ID";
 
+
+
+
+        $curquery = "SELECT settingsID, value FROM settings WHERE 1";
+        $curres = nga_config::db()->query($curquery);
+        $exchange = array();
+        while ($row = $curres->fetch_assoc()) {
+            $exchange[$row['settingsID']] = $row['value'];
+        }
+
         // Price in rubles
-        $rubPrice = $price *  $this->exchange[$currency];
+        $rubPrice = $price *  $exchange[$currency];
 
         $sql = "
                 SELECT * FROM (

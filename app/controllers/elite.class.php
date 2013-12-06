@@ -893,6 +893,10 @@ class elite extends ngaController
         while ($row = $curres->fetch_assoc()) {
 			$exchange[$row['settingsID']] = $row['value'];
 		}
+
+        // Price in rubles
+        $rubPrice = $price *  $exchange[$currency];
+
 		
         $sql = "
                 SELECT * FROM (
@@ -900,13 +904,19 @@ class elite extends ngaController
                 	 t .`" . $idField . "` as `tid`,
                 	 t." . $squareColumn . " as `square`,
                 	 t." . $priceColumn . " as `price`,
-                	 photo.THUMB, photo.MID
+                	 photo.THUMB, photo.MID,
+                    (`settings`.`value` * `t`." . $priceColumn . " ) AS `rub_price`,
+                	 t.currency as `currency`
+
+
 
                 	FROM `" . $table . "` t
+                    JOIN `settings` ON (`settingsID` = t.currency)
+
                 	LEFT JOIN `photo` ON (t .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
                 	WHERE 
-                	  " . $priceColumn . "<= " . $price  . " * ". $exchange[$currency] . " 
-                	  AND " . $priceColumn . ">= " . $price  . " * ". $exchange[$currency] . " * 0.5
+	                (   (`settings`.`value` * `t`." . $priceColumn . ")  >= " .   $rubPrice ." )
+                AND (   (`settings`.`value` * `t`." . $priceColumn . ")  <= " .  ( $rubPrice  * 0.5 ) . " )
                 	  AND t.`" . $idField . "` != " . (int)$id . "
                 	" . $addWhere . "
                 	ORDER BY `price` DESC,  `photo`. `photoID` ASC
@@ -915,12 +925,20 @@ class elite extends ngaController
                 	SELECT t .`" . $idField . "` as `tid`,
                 	t." . $squareColumn . " as `square`,
                 	t." . $priceColumn . " as `price`,
-                	 photo.THUMB, photo.MID
+                	 photo.THUMB, photo.MID,
+
+                     (`settings`.`value` * `t`." . $priceColumn . " ) AS `rub_price`,
+                	 t.currency as `currency`
+
                 	FROM `" . $table . "` t
+                	JOIN `settings` ON (`settingsID` = t.currency)
                 	LEFT JOIN `photo` ON (t .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
-                	WHERE 
-                	  " . $priceColumn . ">= " . $price  . " * ". $exchange[$currency] . " 
-                	  AND " . $priceColumn . "<= " . $price  . " * ". $exchange[$currency] . " * 1.5
+                	WHERE
+
+                	 (   (`settings`.`value` * `t`." . $priceColumn . ")  >= " .   $rubPrice ." )
+                AND (   (`settings`.`value` * `t`." . $priceColumn . ")  <= " .  ( $rubPrice  * 1.5 ) . " )
+
+
                 	  AND t.`" . $idField . "` != " . (int)$id . "
                     " . $addWhere . "
                 	ORDER BY `price` ASC, `photo`. `photoID` ASC
