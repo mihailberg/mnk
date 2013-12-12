@@ -179,7 +179,10 @@ class newFlat extends ngaController
 		/* все поля должны быть заполнены, иначе валится MySQL-запрос */
 		if ($data[$id]['room'] == null) $data[$id]['room'] = "'Не установлено'";
 		/* */
-        $this->layoutData['similarObjects'] = $this->getSimilarObjects('newflat_gk', $id, $data[$id]['price'], 2, $city.' AND newflat.room = '.$data[$id]['room']);
+
+//        print_r($data[$id]);die();
+
+        $this->layoutData['similarObjects'] = $this->getSimilarObjects('newflat', $id, $data[$id]['price'], 2,$data[$id]['currency'], $city.' AND newflat.room = '.$data[$id]['room']);
         if(!count($this->layoutData['similarObjects'])) unset($this->layoutData['similarObjects']);
         if (count($url)) {
             //print_r($url);
@@ -598,61 +601,146 @@ select
         return $res;
     }
 
-    protected function getSimilarObjects($table, $id, $price, $photoType, $addWhere = '', $priceColumn = 'price', $squareColumn = 'square', $idField = false)
+
+
+//$this->layoutData['similarObjects'] = $this->getSimilarObjects('newflat', $id, $data[$id]['price'], 2, $city.' AND newflat.room = '.$data[$id]['room']);
+
+
+    protected function getSimilarObjects($table, $id, $price, $photoType, $currency = 1, $addWhere = '', $priceColumn = 'price', $squareColumn = 'square', $idField = false)
     {
         if (empty($price)) $price = 0;
-        if (!$idField) $idField = $table . "ID";
+
+        $curquery = "SELECT `settingsID`, `value` FROM `settings`";
+        $curres = nga_config::db()->query($curquery);
+        $exchange = array();
+        while ($row = $curres->fetch_assoc()) {
+            $exchange[$row['settingsID']] = $row['value'];
+        }
+
+        // Price in rubles
+//        echo $price;echo '<br />';
+//        echo $currency;echo '<br />';
+
+        $rubPrice = $price *  $exchange[$currency];
 
         $sql = "
-                SELECT * FROM (
-                	SELECT
-                	 `newflat_gk`.`newflat_gkID` as `tid`,
-                	 min(`newflat`.`square`) as `square`,
-                	 min(`newflat`.`price`) as `price`,
-                	 photo.THUMB, photo.MID
+SELECT
+newflat.newflat_gkID as tid,
+newflat_gk.title as `title`,
+`newflat`.`currency` as `currency`,
+`newflat`.`square` as `square`,
+`newflat`.`price` as price,
+(`settings`.`value` * `newflat`.`price`) as rub_price,
 
-                	FROM `newflat_gk`
-                	JOIN `newflat`  on (newflat.newflat_gkID = newflat_gk .`" . $idField . "`)
-                	LEFT JOIN `photo` ON (newflat_gk .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
-                	WHERE 
-                	  `" . $priceColumn . "`<= " . $price . " 
-                	  AND `" . $priceColumn . "`>= " . $price . " * 0.5
-                	  AND newflat_gk.`" . $idField . "` != " . (int)$id . "
-                	  " . $addWhere . "
-                	GROUP BY `tid`
-                	ORDER BY `price` DESC,  `photo`. `photoID` ASC
-                	LIMIT 1) a UNION
+photo.THUMB, photo.MID
+FROM `newflat`
+JOIN `settings` ON (`newflat`.currency = settings.`settingsID`)
 
-                SELECT * FROM (
-                    SELECT
-                	 `newflat_gk`.`newflat_gkID` as `tid`,
-                	 min(`newflat`.`square`) as `square`,
-                	 min(`newflat`.`price`) as `price`,
-                	photo.THUMB, photo.MID
-                	FROM `newflat_gk`
-                	JOIN `newflat`  on (newflat.newflat_gkID = newflat_gk .`" . $idField . "`)
-                	LEFT JOIN `photo` ON (newflat_gk .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
-                	WHERE 
-                	  (`elite`!=1 OR `elite_check` = 1) 
-                	  AND " . $priceColumn . ">= " . $price . "
-                	  AND " . $priceColumn . "<= " . $price . " * 1.5
-                	  AND `newflat_gk`.`" . $idField . "` != " . (int)$id . "
-                      " . $addWhere . "
-                    GROUP BY `tid`
-                	ORDER BY `price` ASC, `photo`. `photoID` ASC
-                	LIMIT 2
-                ) b
+JOIN `newflat_gk` ON (newflat.`newflat_gkID` = newflat_gk.newflat_gkID)
+JOIN `photo` ON (`newflat_gk`.`newflat_gkID` = `photo`.`R_ID` AND `R_TYPE` = 2)
 
-                ";
-        //echo $sql;
-        //die();
+
+WHERE
+
+    `newflat_gk`.`newflat_gkID` != " . (int)$id . " AND cityID != 1
+
+    AND `settings`.`value` * `newflat`.`price` IN (	SELECT	MIN(`settings`.`value` * `newflat`.`price`) as rubPrice
+	                FROM `newflat`	JOIN `settings` ON `newflat`.currency = settings.`settingsID`	GROUP BY `newflat_gkID`
+	)
+
+AND (`settings`.`value` * `newflat`.`price`) >= ".( $rubPrice * 0.5 )."
+GROUP BY newflat.`newflat_gkID`
+ORDER BY (`settings`.`value` * `newflat`.`price`) ASC, `photo`. `photoID` ASC
+";
+
         $res = nga_config::db()->query($sql);
+        echo '<pre>';
+        echo $sql;
+        if (!$res){
 
-        if (!$res) echo nga_config::db()->error; // return false;
+//            echo nga_config::db()->error;
+//            echo $sql;
+//            debug_print_backtrace();
+            return false;
+        }
+
         $data = array();
         while ($row = $res->fetch_assoc()) {
             $data[$row['tid']] = $row;
         }
+
+//        print_r($data);die();
         return $data;
     }
+
+
+
+
+
+
+    /************************/
+
+
+
+
+
+
+//
+//    protected function getSimilarObjects($table, $id, $price, $photoType, $addWhere = '', $priceColumn = 'price', $squareColumn = 'square', $idField = false)
+//    {
+//        if (empty($price)) $price = 0;
+//        if (!$idField) $idField = $table . "ID";
+//
+//        $sql = "
+//                SELECT * FROM (
+//                	SELECT
+//                	 `newflat_gk`.`newflat_gkID` as `tid`,
+//                	 min(`newflat`.`square`) as `square`,
+//                	 min(`newflat`.`price`) as `price`,
+//                	 photo.THUMB, photo.MID
+//
+//                	FROM `newflat_gk`
+//                	JOIN `newflat`  on (newflat.newflat_gkID = newflat_gk .`" . $idField . "`)
+//                	LEFT JOIN `photo` ON (newflat_gk .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
+//                	WHERE
+//                	  `" . $priceColumn . "`<= " . $price . "
+//                	  AND `" . $priceColumn . "`>= " . $price . " * 0.5
+//                	  AND newflat_gk.`" . $idField . "` != " . (int)$id . "
+//                	  " . $addWhere . "
+//                	GROUP BY `tid`
+//                	ORDER BY `price` DESC,  `photo`. `photoID` ASC
+//                	LIMIT 1) a UNION
+//
+//                SELECT * FROM (
+//                    SELECT
+//                	 `newflat_gk`.`newflat_gkID` as `tid`,
+//                	 min(`newflat`.`square`) as `square`,
+//                	 min(`newflat`.`price`) as `price`,
+//                	photo.THUMB, photo.MID
+//                	FROM `newflat_gk`
+//                	JOIN `newflat`  on (newflat.newflat_gkID = newflat_gk .`" . $idField . "`)
+//                	LEFT JOIN `photo` ON (newflat_gk .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
+//                	WHERE
+//                	  (`elite`!=1 OR `elite_check` = 1)
+//                	  AND " . $priceColumn . ">= " . $price . "
+//                	  AND " . $priceColumn . "<= " . $price . " * 1.5
+//                	  AND `newflat_gk`.`" . $idField . "` != " . (int)$id . "
+//                      " . $addWhere . "
+//                    GROUP BY `tid`
+//                	ORDER BY `price` ASC, `photo`. `photoID` ASC
+//                	LIMIT 2
+//                ) b
+//
+//                ";
+//        //echo $sql;
+//        //die();
+//        $res = nga_config::db()->query($sql);
+//
+//        if (!$res) echo nga_config::db()->error; // return false;
+//        $data = array();
+//        while ($row = $res->fetch_assoc()) {
+//            $data[$row['tid']] = $row;
+//        }
+//        return $data;
+//    }
 }
