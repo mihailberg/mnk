@@ -654,8 +654,8 @@ ORDER BY (`settings`.`value` * `newflat`.`price`) ASC, `photo`. `photoID` ASC
 ";
 
         $res = nga_config::db()->query($sql);
-        echo '<pre>';
-        echo $sql;
+//        echo '<pre>';
+//        echo $sql;
         if (!$res){
 
 //            echo nga_config::db()->error;
