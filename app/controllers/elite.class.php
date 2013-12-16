@@ -866,7 +866,7 @@ WHERE
 AND (`settings`.`value` * `newflat`.`price`) >= ".( $rubPrice * 0.5 )."
 GROUP BY newflat.`newflat_gkID`
 ORDER BY (`settings`.`value` * `newflat`.`price`) ASC, `photo`. `photoID` ASC
-LIMIT 4
+LIMIT 3
 ";
 
         $res = nga_config::db()->query($sql);
