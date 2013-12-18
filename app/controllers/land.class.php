@@ -122,6 +122,7 @@ class land extends ngaController
         if ($id == 0) return false;
         include('nga/tables/land.php');
         $cottage_set->perPage = 1000;
+        $cottage_set->where = array();
 
         $land_table->where = array();
         $land_table->addWhere('landID', $id);
@@ -181,12 +182,12 @@ class land extends ngaController
         $this->layout = 'layout_one';
         $this->tpl = 'land_one';
 
-
+        $CSDATA = $cottage_set->getData();
         $this->layoutData['title'] = $data[$id]['title'];
         $this->layoutData['h1'] = $data[$id]['title'];
         $this->layoutData['id'] = $id;
         $this->layoutData['land'] = $this->tplData['land'] = $data[$id];
-        $this->layoutData['cottage_set'] = $cottage_set->getData();
+        $this->layoutData['cottage_set'] = $CSDATA;
 
         $this->tplData['coords'] = array('title' => $data[$id]['settlement'], 'latitude' => $this->tplData['land']['latitude'], 'longitude' => $this->tplData['land']['longitude']);
         $this->tplData['id'] = $id;
@@ -198,6 +199,7 @@ class land extends ngaController
         $this->assignTrainway();
 
         $this->layoutData['description'] = $data[$id]['description'];
+        $this->layoutData['description'] .= $CSDATA[$data[$id]['cottage_setID']]['description'];
     }
     
     public function actionSearch()
