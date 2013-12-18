@@ -99,12 +99,18 @@ class elite extends ngaController
         $id = (int)$url[0];
         if ($id == 0) return false;
         include('nga/tables/land_elite.php');
+
+        $cottage_set->perPage = 1000;
+        $cottage_set->where = array();
+
         $land_table->where = '';
         $land_table->addWhere('landID', $id);
 
 
         $data = $land_table->getData();
 		$data[$id]['type'] = explode(',',$data[$id]['type']);
+        $CSDATA = $cottage_set->getData();
+
         //
         //$data[$id]
         //Wrong id
@@ -133,6 +139,7 @@ class elite extends ngaController
         $this->assignTrainway();
 
         $this->layoutData['description'] = $data[$id]['description'];
+        $this->layoutData['description'] .= $CSDATA[$data[$id]['cottage_setID']]['description'];
     }
 
 
