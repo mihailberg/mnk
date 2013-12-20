@@ -990,7 +990,7 @@ LIMIT 3
                 ";
 
         $res = nga_config::db()->query($sql);
-//        echo $sql;
+        echo '<!-- '.$sql.' -->';
         if (!$res){
             echo nga_config::db()->error; // return false;
             echo $sql;
