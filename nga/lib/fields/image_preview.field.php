@@ -107,7 +107,7 @@ class field_image_preview extends fieldGeneral implements fieldI
         if ($img) {
             $newfname = '';
             $newfname .= time();
-            mt_srand((float)microtime() * 1000000); //если вдруг 2 админа копировали картинки и имена
+            mt_srand((float)microtime() * 1000000); //если вдруг 2 админа копировали картинки и имена ахахааха прекрати
             $rndnum1 = mt_rand(0, 9); //совпали... снизим эту вероятность
             $rndnum2 = mt_rand(0, 9);
             $newfname .= $rndnum1 . $rndnum2;

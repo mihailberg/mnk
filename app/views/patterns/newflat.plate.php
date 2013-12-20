@@ -19,7 +19,7 @@ if (isset($gk['elite'])&&$gk['elite'] == 1){
 echo "
         <div class='img_s'>";
 if (!empty($gk['THUMB'])) {
-    echo "<img src='" . $gk['THUMB'] . "' alt='" . $title . "' width='158' />";
+    echo "<img src='" . $gk['THUMB'] . "' alt='" . $title . "' />";
 } else {
     echo '<img data-src="holder.js/158x158/text:' . $title . '" alt="' . $title . '">';
 }

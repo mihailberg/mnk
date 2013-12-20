@@ -13,7 +13,7 @@ echo "
             <a href='/zarubezhnaja-nedvizhimost/foreign/" . $gk['tid'] . "'>
                 <div class='img_s'>";
 if (!empty($gk['THUMB'])) {
-    echo "<img src='" . $gk['THUMB'] . "' alt='" . $title . "' width='158' />";
+    echo "<img src='" . $gk['THUMB'] . "' alt='" . $title . "' />";
 } else {
     echo '<img data-src="holder.js/158x158/text:' . $title . '" alt="' . $title . '">';
 }
