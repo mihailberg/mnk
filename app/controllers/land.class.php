@@ -186,7 +186,6 @@ class land extends ngaController
         $this->layoutData['title'] = $data[$id]['title'];
         $this->layoutData['h1'] = $data[$id]['title'];
         $this->layoutData['id'] = $id;
-        $this->layoutData['land'] = $this->tplData['land'] = $data[$id];
         $this->layoutData['cottage_set'] = $CSDATA;
 
         $this->tplData['coords'] = array('title' => $data[$id]['settlement'], 'latitude' => $this->tplData['land']['latitude'], 'longitude' => $this->tplData['land']['longitude']);
@@ -200,6 +199,7 @@ class land extends ngaController
 
         $this->layoutData['description'] = $data[$id]['description'];
         $this->layoutData['description'] .= $CSDATA[$data[$id]['cottage_setID']]['description'];
+        $this->layoutData['land'] = $this->tplData['land'] = $data[$id];
     }
     
     public function actionSearch()
@@ -453,9 +453,6 @@ class land extends ngaController
     {
         if (empty($price)) $price = 0;
         if (!$idField) $idField = $table . "ID";
-
-
-
 
         $curquery = "SELECT settingsID, value FROM settings WHERE 1";
         $curres = nga_config::db()->query($curquery);

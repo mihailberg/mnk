@@ -138,7 +138,9 @@ class newFlat extends ngaController
                           `newflat_gk`.`kvartal`,
                           `newflat`.`currency`,
                           `newflat`.`room`,
-                            MIN( `newflat`.`price`) as `price`, MIN( `newflat`.`price_m`) as `price_m`, MIN( `newflat`.`square`) as `square`,
+                            MIN( `newflat`.`price`) as `price`,
+                            MIN( `newflat`.`price_m`) as `price_m`,
+                            MIN( `newflat`.`square`) as `square`,
                            `newflat_gk`.`banks`, `newflat_gk`.`description`, `newflat_gk`.`cityID`, `newflat_gk`.`latitude`, `newflat_gk`.`longitude`, `newflat_gk`.`address`,
                             `newflat_gk`.`district`, `newflat_gk`.`stationID`, `newflat_gk`.`howget`, `newflat_gk`.`best`,
                         `newflat_gk`.`elite`,
@@ -148,7 +150,8 @@ class newFlat extends ngaController
                     LEFT JOIN `newflat`  on (newflat.newflat_gkID = `newflat_gk`.newflat_gkID)
                     LEFT JOIN `photo` ON (`newflat_gk`.`newflat_gkID` = photo.R_ID AND photo.R_TYPE = 2)
                     WHERE `newflat_gk`.newflat_gkID = ".$id."
-                    GROUP BY  `newflat_gk`.`newflat_gkID`";
+                    GROUP BY  `newflat_gk`.`newflat_gkID`
+                    ORDER BY `newflat_gk`.`newflat_gkID` DESC, `newflat`.`price` ASC";
         $data = $newflat_gk->getData();
 
 

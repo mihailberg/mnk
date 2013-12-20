@@ -96,7 +96,7 @@ class foreign extends ngaController
         if (!is_array($data))
             return false;
 
-        $this->layoutData['similarObjects'] = $this->getSimilarObjects(__CLASS__, $id, $data[$id]['price'], 7, ' AND countryID ='.$data[$id]['countryID']);
+        $this->layoutData['similarObjects'] = $this->getSimilarObjects(__CLASS__, $id, $data[$id]['price'], 7, ' AND countryID ='.$data[$id]['countryID'],'price','square',false,$data[$id]['currency']);
         $this->layoutData['photos'] = $this->getPhoto(7, $id);
 
 
@@ -278,23 +278,32 @@ class foreign extends ngaController
 
 
 
-    protected function getSimilarObjects($table, $id, $price, $photoType, $addWhere = '', $priceColumn = 'price', $squareColumn = 'square', $idField = false)
+    protected function getSimilarObjects($table, $id, $price, $photoType, $addWhere = '', $priceColumn = 'price', $squareColumn = 'square', $idField = false,$currency)
     {
         if (empty($price)) $price = 0;
         if (!$idField) $idField = $table . "ID";
+
+        $curquery = "SELECT settingsID, value FROM settings WHERE 1";
+        $curres = nga_config::db()->query($curquery);
+        $exchange = array();
+        while ($row = $curres->fetch_assoc()) {
+            $exchange[$row['settingsID']] = $row['value'];
+        }
+
+        // Price in rubles
+        $rubPrice = $price *  $exchange[$currency];
+
 
         $sql = "
                 SELECT * FROM (
                 	SELECT
                 	 t.`" . $idField . "` as `tid`,
                 	 t." . $squareColumn . " as `square`,
-
-                	 (`settings`.`value` * `t`.price) AS `rub_price`,
-                         `t`.price AS `price`,
-                         t.`currency`,
-
-
-                	 photo.THUMB, photo.MID
+                    (`settings`.`value` * `t`.price) AS `rub_price`,
+                	 t.price AS `price`,
+                     t.`currency`,
+                	 photo.THUMB,
+                	 photo.MID
 
                 	FROM `" . $table . "` t
                 	LEFT JOIN `photo` ON (t .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
@@ -302,8 +311,8 @@ class foreign extends ngaController
 
                 	WHERE
 
-                	    ( (`settings`.`value` * `t`.price)  <= " .   $this->currencyValue * $price ." )
-                	    AND ( (`settings`.`value` * `t`.price)  >= " .   $this->currencyValue * $price ." * 0.5 )
+                	    ( (`settings`.`value` * `t`.price)  <= " .   $rubPrice ." )
+                	    AND ( (`settings`.`value` * `t`.price)  >= " .   $rubPrice ." * 0.5 )
 
                 	AND t.`" . $idField . "` != " . (int)$id . " " . $addWhere . "
                 	ORDER BY `rub_price` DESC,  `photo`. `photoID` ASC
@@ -312,11 +321,9 @@ class foreign extends ngaController
                 SELECT * FROM (
                 	SELECT t .`" . $idField . "` as `tid`,
                 	t." . $squareColumn . " as `square`,
-
                     (`settings`.`value` * `t`.price) AS `rub_price`,
                 	 `t`.price AS `price`,
                 	 t.`currency`,
-
                 	 photo.THUMB, photo.MID
 
                 	FROM `" . $table . "` t
@@ -324,8 +331,8 @@ class foreign extends ngaController
                 	JOIN `settings` ON (`settingsID` = t.currency)
                 	WHERE
 
-                    ( (`settings`.`value` * `t`.price)  >= " .   $this->currencyValue * $price ." )
-                    AND ( (`settings`.`value` * `t`.price)  <= " .   $this->currencyValue * $price ." * 1.5)
+                    ( (`settings`.`value` * `t`.price)  >= " .   $rubPrice ." )
+                    AND ( (`settings`.`value` * `t`.price)  <= " .   $rubPrice ." * 1.5)
 
                 	AND t.`" . $idField . "` != " . (int)$id . " " . $addWhere . "
                 	ORDER BY `rub_price` ASC, `photo`. `photoID` ASC
@@ -335,9 +342,8 @@ class foreign extends ngaController
                 ORDER BY `rub_price` ASC
                 ";
 
-//                	(SELECT `value`* t." . $priceColumn . " FROM `settings` WHERE `settingsID` = t.currency) as `price`,
         $res = nga_config::db()->query($sql);
-        echo '<!--'.$sql.'-->';
+//        echo '<!--'.$sql.'-->';
         if (!$res){
             echo nga_config::db()->error; // return false;
             //echo $sql;

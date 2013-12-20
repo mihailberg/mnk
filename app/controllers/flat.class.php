@@ -299,7 +299,6 @@ class flat extends ngaController
         $this->assignCity();
         $this->assignMetro();
         $rooms = ' AND `room` ='.$data['room'].' ';
-		
 		$city = ($data['cityID'] == 1) ? ' AND cityID = 1' : 'AND cityID != 1';
         $this->layoutData['similarObjects'] = $this->getSimilarObjects(__CLASS__, $id, $data['price'], 3, $data['currency'], 'AND (`elite`=0 OR `elite_check`=1)'.$rooms.$city, 'price');
 

@@ -228,9 +228,9 @@ class invest extends ngaController
         $this->tplData['ird_files'] = $this->getFiles(2, $id);
         $this->tplData['akt_files'] = $this->getFiles(3, $id);
 
-        $this->layoutData['similarObjects'] = $this->getSimilarObjects('invest', $id, $data[$id]['price'], 6, ' AND type = '.$data[$id]['type'], 'price');
+        $this->layoutData['similarObjects'] = $this->getSimilarObjects('invest', $id, $data[$id]['price'], 6, ' AND type = '.$data[$id]['type'], 'price','square','investID',$data[$id]['currency']);
 
-        $this->tplData['invest'] = $data[$id];
+
         if(isset($regionData[$data[$id]['regionID']]['title']))    $this->tplData['invest']['regionID'] = $regionData[$data[$id]['regionID']]['title'];
         if(isset($highwayData[$data[$id]['highwayID']]['title']))    $this->tplData['invest']['highwayID'] = $highwayData[$data[$id]['highwayID']]['title'];
         if(isset($regionData[$data[$id]['regionID']]['title']))       $this->tplData['coords'] = array('title' => $regionData[$data[$id]['regionID']]['title'] . " район", 'latitude' => $this->tplData['invest']['latitude'], 'longitude' => $this->tplData['invest']['longitude']);
@@ -248,11 +248,21 @@ class invest extends ngaController
             <span class='desc_header'>Описание градостроительных решений:</span>
             <div>".nl2br($data[$id]['desc_sol'])."</div>";
 
-
+        $this->tplData['invest'] = $data[$id];
     }
 
-    protected function getSimilarObjects($table, $id, $price, $photoType, $addWhere = '', $priceColumn = 'price', $squareColumn = 'square', $idField = false)
+    protected function getSimilarObjects($table, $id, $price, $photoType, $addWhere = '', $priceColumn = 'price', $squareColumn = 'square', $idField = false,$currency)
     {
+        $curquery = "SELECT `settingsID`, `value` FROM `settings`";
+        $curres = nga_config::db()->query($curquery);
+        $exchange = array();
+        while ($row = $curres->fetch_assoc()) {
+            $exchange[$row['settingsID']] = $row['value'];
+        }
+
+        // Price in rubles
+        $rubPrice = $price *  $exchange[$currency];
+
         if (empty($price)) $price = 0;
         if (!$idField) $idField = $table . "ID";
 
@@ -262,14 +272,17 @@ class invest extends ngaController
                 	 t .`" . $idField . "` as `tid`,
                 	 t." . $squareColumn . " as `square`,
                 	 t." . $priceColumn . " as `price`,
-                	 photo.THUMB, photo.MID
+                	 photo.THUMB, photo.MID,
+                    (`settings`.`value` * t.price) AS `rub_price`
 
                 	FROM `" . $table . "` t
+                    JOIN `settings` ON (`settingsID` = `t`.currency)
                 	LEFT JOIN `photo` ON (t .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
-                	WHERE 
-                	  " . $priceColumn . "<= " . $price . " 
-                	  AND " . $priceColumn . ">= " . $price . " * 0.5
-                	  AND t.`" . $idField . "` != " . (int)$id . "
+                	WHERE
+
+                        (   (`settings`.`value` * `t`." . $priceColumn . ")  <= " .   $rubPrice ." )
+                	    AND (   (`settings`.`value` * `t`." . $priceColumn . ")  >= " .  ( $rubPrice * 0.5 ) . " )
+                	    AND t.`" . $idField . "` != " . (int)$id . "
                 	  " . $addWhere . "
                 	ORDER BY `price` DESC,  `photo`. `photoID` ASC
                 	LIMIT 1) a UNION
@@ -277,12 +290,15 @@ class invest extends ngaController
                 	SELECT t .`" . $idField . "` as `tid`,
                 	t." . $squareColumn . " as `square`,
                 	t." . $priceColumn . " as `price`,
-                	 photo.THUMB, photo.MID
+                	 photo.THUMB, photo.MID,
+                     (`settings`.`value` * `t`.price) AS `rub_price`
+
                 	FROM `" . $table . "` t
+                	JOIN `settings` ON (`settingsID` = `t`.currency)
                 	LEFT JOIN `photo` ON (t .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
                 	WHERE 
-                	  " . $priceColumn . ">= " . $price . " 
-                	  AND " . $priceColumn . "<= " . $price . " * 1.5 
+                            (   (`settings`.`value` * `t`." . $priceColumn . ")  >= " .   $rubPrice ." )
+                	    AND (   (`settings`.`value` * `t`." . $priceColumn . ")  <= " .  ( $rubPrice  * 1.5 ) . " )
                 	  AND t.`" . $idField . "` != " . (int)$id . "
                       " . $addWhere . "
                 	ORDER BY `price` ASC, `photo`. `photoID` ASC
@@ -294,9 +310,10 @@ class invest extends ngaController
         $res = nga_config::db()->query($sql);
 //        echo $sql;
         if (!$res){
-            echo nga_config::db()->error; // return false;
-            echo $sql;
-            debug_print_backtrace();
+
+//            echo nga_config::db()->error; // return false;
+//            echo $sql;
+//            debug_print_backtrace();
         }
 
         $data = array();

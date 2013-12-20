@@ -108,7 +108,7 @@ class elite extends ngaController
 
 
         $data = $land_table->getData();
-		$data[$id]['type'] = explode(',',$data[$id]['type']);
+//		$data[$id]['type'] = explode(',',$data[$id]['type']);
         $CSDATA = $cottage_set->getData();
 
         //
@@ -124,10 +124,35 @@ class elite extends ngaController
 
         $this->layoutData['title'] = 'Элитная загородная недвижимость > '.$data[$id]['title'];
         $this->layoutData['h1'] = $data[$id]['title'];
-        $this->tplData['land'] = $data[$id];
+
         $this->tplData['coords'] = array('title' => $data[$id]['tid'], 'latitude' => $data[$id]['latitude'], 'longitude' => $data[$id]['longitude']);
+
         $this->tplData['landTypes'] = $land_table_block[0]->getValues();
-        $this->layoutData['similarObjects'] = $this->getSimilarObjects('land', $id, $data[$id]['price'], 5, $data[$id]['currency'], 'AND (`elite`=1 OR `elite_check`=1)', 'price', 'square_house');
+
+        //  ==>     Type multiselect   <==  //
+        $type = $land_table_block[0]->getValues();
+        $type[0] = '';
+        $this->typeValues = $type;
+        //self values
+        $data[$id]['type'] = $this->value2Array($data[$id]['type']);
+
+        // 2 template
+        $typeArray = array();
+
+
+        foreach($data[$id]['type'] as $as){
+            $typeArray[] = $type[$as];
+        }
+        $data[$id]['typeArray'] = $typeArray;
+
+        // 2 sql
+        $typeSQL = ' AND'.self::makeMultiSelectSql('`type`',$data[$id]['type']);
+        if($typeSQL == ' AND') $typeSQL = '';
+
+
+
+
+        $this->layoutData['similarObjects'] = $this->getSimilarObjects('land', $id, $data[$id]['price'], 5, $data[$id]['currency'], 'AND (`elite`=1 OR `elite_check`=1)'.$typeSQL, 'price', 'square_house');
         if(!count($this->layoutData['similarObjects'])) unset($this->layoutData['similarObjects']);
         $this->layoutData['oneObjectUrl'] = 'land';
         $this->tplData['id'] = $this->layoutData['id'] = $id;
@@ -138,8 +163,11 @@ class elite extends ngaController
         $this->assignCity();
         $this->assignTrainway();
 
+//        print_r($data);
+
         $this->layoutData['description'] = $data[$id]['description'];
         $this->layoutData['description'] .= $CSDATA[$data[$id]['cottage_setID']]['description'];
+        $this->tplData['land'] = $data[$id];
     }
 
 
@@ -339,7 +367,12 @@ class elite extends ngaController
         $this->tplData['house_types'][0] = '';
 
         $this->layoutData['photos'] = $this->getPhoto(3, $id);
-        $this->layoutData['similarObjects'] = $this->getSimilarObjects('flat', $id, $data['price'], 3, $data['currency'], 'AND `elite`=1', 'price');
+
+        //Add Where
+        $rooms = ' AND `room` ='.$data['room'].' ';
+        $city = ($data['cityID'] == 1) ? ' AND cityID = 1' : 'AND cityID != 1';
+
+        $this->layoutData['similarObjects'] = $this->getSimilarObjects('flat', $id, $data['price'], 3, $data['currency'], 'AND (`elite`=1 OR `elite_check`=1)'.$rooms.$city, 'price');
 
 
         $this->layoutData['description'] = $data['description'];
@@ -917,7 +950,6 @@ LIMIT 3
                 	 photo.THUMB, photo.MID,
                     (`settings`.`value` * `t`." . $priceColumn . " ) AS `rub_price`,
                 	 t.currency as `currency`
-
 
 
                 	FROM `" . $table . "` t
