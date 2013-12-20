@@ -957,8 +957,8 @@ LIMIT 3
 
                 	LEFT JOIN `photo` ON (t .`" . $idField . "` = `photo`.`R_ID` AND `R_TYPE` = " . $photoType . ")
                 	WHERE 
-	                (   (`settings`.`value` * `t`." . $priceColumn . ")  >= " .   $rubPrice ." )
-                AND (   (`settings`.`value` * `t`." . $priceColumn . ")  <= " .  ( $rubPrice  * 0.5 ) . " )
+	                (   (`settings`.`value` * `t`." . $priceColumn . ")  <= " .   $rubPrice ." )
+                AND (   (`settings`.`value` * `t`." . $priceColumn . ")  >= " .  ( $rubPrice  * 0.5 ) . " )
                 	  AND t.`" . $idField . "` != " . (int)$id . "
                 	" . $addWhere . "
                 	ORDER BY `price` DESC,  `photo`. `photoID` ASC
