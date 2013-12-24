@@ -198,9 +198,13 @@ class commercial extends ngaController
         $this->layout = 'layout_one';
         $this->tpl = 'commercial_one';
         include('nga/tables/commercial.php');
+        /**
+         * @var $commercial nga_table
+         */
         $commercial->addWhere('commercialID', $id);
         $data = $commercial->getData();
-		
+
+
 
         //Wrong id
         if (!is_array($data))
@@ -319,6 +323,14 @@ class commercial extends ngaController
         $this->layoutData['title'] = 'Коммерческая недвижимость > '.$data[$id]['title'];
         $this->layoutData['h1'] = $data[$id]['title'];
         $this->layoutData['id'] = $id;
+
+        if(!empty($data[$id]['parent'])){
+            $pid = $data[$id]['parent'];
+            $commercial->where = false;
+            $commercial->addWhere('commercialID', $data[$id]['parent'],'=');
+            $parentData = $commercial->getData();
+            $this->layoutData['description'].=$parentData[$pid]['desc_bc'];
+        }
     }
 
 
