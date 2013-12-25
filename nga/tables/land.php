@@ -5,7 +5,7 @@ include (nga_config::i()->pathServer['nga'] . '/tables/city.php');
 
 include(nga_config::i()->pathServer['nga'] . '/tables/highway.php');
 include(nga_config::i()->pathServer['nga'] . '/tables/cottage_set.php');
-$cottage_set->addWhere('elite', 0);
+//$cottage_set->addWhere('elite', 0);
 
 $land_table = new nga_table('land', 'Загородная недвижимость');
 

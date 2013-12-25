@@ -136,11 +136,11 @@ class field_select extends fieldGeneral implements fieldI{
     
     public function getName(){
     	
-    	if($this->source == 'table'&&$this->sqlField!='parent'){
-			return '&nbsp;<a href="'.$this->table->name.'.php" target="_blank">'.$this->name.'</a>';
-		} else {
+//    	if($this->source == 'table'&&$this->sqlField!='parent'){
+//			return '&nbsp;<a href="'.$this->table->name.'.php" target="_blank">'.$this->name.'</a>';
+//		} else {
 			return $this->name;
-		}
+//		}
     }
 }
 ?>
