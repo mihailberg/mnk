@@ -128,10 +128,11 @@ if ($urlArray[0] == "kommercheskaja-nedvizhimost" && $urlArray[1] == "commercial
 
 ?>
 
-<div style="float:left;width:810px;margin-right: 20px;">
+
 <?php
-
-
+if(!empty($similarObjects)){
+    echo '<div style="float:left;width:810px;margin-right: 20px;">';
+}
 //Есть массив фотки
 if (isset($photos) && !empty($photos) && is_array($photos)) {
 $first = array_shift($photos);
@@ -289,6 +290,7 @@ $first = array_shift($photos);
 
 </div>
 <?php if (!empty($similarObjects)) { ?>
+    </div>
     <div class="flat_3">
     <div class="flat-like-box">
         <span class="margin">Похожие объекты:</span>
