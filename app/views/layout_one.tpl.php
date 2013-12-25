@@ -128,7 +128,7 @@ if ($urlArray[0] == "kommercheskaja-nedvizhimost" && $urlArray[1] == "commercial
 
 ?>
 
-
+<div style="float:left;width:810px;margin-right: 20px;">
 <?php
 
 
@@ -136,7 +136,7 @@ if ($urlArray[0] == "kommercheskaja-nedvizhimost" && $urlArray[1] == "commercial
 if (isset($photos) && !empty($photos) && is_array($photos)) {
 $first = array_shift($photos);
 ?>
-<div style="float:left;width:810px;margin-right: 20px;">
+
     <div class="flat_1">
         <div class="flat-img-box">
             <div class="flat-img-big">
