@@ -128,8 +128,8 @@ class field_select extends fieldGeneral implements fieldI{
     	$d=$this->table->getData();
         if(is_array($d)){
     	foreach($d as $k=>$v){
-    		if(isset($v['title']))	$this->values[$k] = '#'.$v['tid']." ".$v['title'];
-	   		if(isset($v['name']))	$this->values[$k] = '#'.$v['tid']." ".$v['name'];
+    		if(isset($v['title']))	$this->values[$k] = $v['title'];
+	   		if(isset($v['name']))	$this->values[$k] = $v['name'];
   		}
         }
     }
