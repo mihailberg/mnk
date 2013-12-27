@@ -587,6 +587,8 @@ class commercial extends ngaController
                             (   (`settings`.`value` * `t`." . $priceColumn . ")  <= " .   $rubPrice ." )
                 	    AND (   (`settings`.`value` * `t`." . $priceColumn . ")  >= " .  ( $rubPrice * 0.5 ) . " )
                         AND t.`" . $idField . "` != " . (int)$id . "
+                        AND `parent` != " . (int)$id . "
+
                 	    " . $addWhere . "
                 	ORDER BY rub_price DESC,  `photo`. `photoID` ASC
                 	LIMIT 1) a UNION
@@ -605,6 +607,7 @@ class commercial extends ngaController
                             (   (`settings`.`value` * `t`." . $priceColumn . ")  >= " .   $rubPrice ." )
                 	    AND (   (`settings`.`value` * `t`." . $priceColumn . ")  <= " .  ( $rubPrice  * 1.5 ) . " )
                         AND t.`" . $idField . "` != " . (int)$id . "
+                        AND `parent` != " . (int)$id . "
                         " . $addWhere . "
                 	ORDER BY rub_price ASC, `photo`. `photoID` ASC
                 	LIMIT 2
