@@ -44,8 +44,8 @@ if(
 
 echo "
           <div class='img_s'>";
-if (!empty($gk['MID'])) {
-    echo "<img src='" . $gk['MID'] . "' alt='" . $title . "' />";
+if (!empty($gk['THUMB'])) {
+    echo "<img src='" . $gk['THUMB'] . "' alt='" . $title . "' />";
 } else {
     echo '<img data-src="holder.js/158x158/text:' . $title . '" alt="' . $title . '">';
 }
