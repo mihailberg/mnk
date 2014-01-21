@@ -44,8 +44,8 @@ if(
 
 echo "
           <div class='img_s'>";
-if (!empty($gk['THUMB'])) {
-    echo "<img src='" . $gk['THUMB'] . "' alt='" . $title . "' />";
+if (!empty($gk['MID'])) {
+    echo "<img src='" . $gk['MID'] . "' alt='" . $title . "' />";
 } else {
     echo '<img data-src="holder.js/158x158/text:' . $title . '" alt="' . $title . '">';
 }
@@ -68,19 +68,19 @@ echo "
 
                     if (
                     (
-                        (is_array($gk['type']) && !in_array(2,$gk['type'])) || $gk['type']==2
+                        (is_array($gk['type']) && !in_array(2,$gk['type'])) || $gk['type']=='_2_'
                     ) &&   ! empty($gk['train_way']) && isset($train_wayTypes[$gk['train_way']])
                     ) {
                         echo "<li><strong>ЖД направление:</strong>&nbsp;" . $train_wayTypes[$gk['train_way']] . "</li>";
                     }
 
                     if (
-                        (is_array($gk['type']) &&  (in_array(1,$gk['type']) || in_array(3,$gk['type']) )   ) || ( $gk['type']==1 || $gk['type']==3 )
+                        (is_array($gk['type']) &&  (in_array(1,$gk['type']) || in_array(3,$gk['type']) )   ) || ( $gk['type']=='_1_' || $gk['type']=='_3_' )
                         && !empty($gk['square_house'])) {
                         echo "<li><strong>Площадь дома:</strong>&nbsp;" . $gk['square_house'] . " м<sup>2</sup></li>";
                     }
                     if (
-                        ((is_array($gk['type']) &&  in_array(4,$gk['type']) ) || $gk['type']==4) && ! empty($gk['square_house'])) {
+                        ((is_array($gk['type']) &&  in_array(4,$gk['type']) ) || $gk['type']=='_4_') && ! empty($gk['square_house'])) {
                         echo "<li><strong>Площадь таунхауса:</strong>&nbsp;" . $gk['square_house'] . " м<sup>2</sup></li>";
                     }
 
